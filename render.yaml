@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: routewise-dashboard
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /v1
+        destination: /v1/index.html

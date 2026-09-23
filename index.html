@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>RouteWise Desk 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F5F5F7;--surface:#FFFFFF;--fill:rgba(118,118,128,.12);--fill-2:rgba(118,118,128,.07);
+  --ink:#1D1D1F;--ink-2:#6E6E73;--ink-3:#86868B;--sep:rgba(60,60,67,.16);
+  --blue:#0071E3;--blue-ink:#0066CC;--blue-soft:rgba(0,113,227,.10);--ring:rgba(0,113,227,.45);
+  --red:#FF3B30;--red-ink:#C4001A;--red-soft:rgba(255,59,48,.12);
+  --orange:#FF9500;--orange-ink:#A85B00;--orange-soft:rgba(255,149,0,.16);
+  --green:#34C759;--green-ink:#1F7A35;--green-soft:rgba(52,199,89,.16);
+  --side:#EFEFF2;--bar:rgba(245,245,247,.82);--seg-on:#FFFFFF;
+  --edge:0 0 0 1px rgba(0,0,0,.04);--lift:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04);
+  --hud:rgba(30,30,32,.88);
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--grid:#E8E8ED;--axis:#D2D2D7;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Inter","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#000000;--surface:#1C1C1E;--fill:rgba(118,118,128,.24);--fill-2:rgba(118,118,128,.14);
+    --ink:#F5F5F7;--ink-2:#A1A1A6;--ink-3:#8E8E93;--sep:rgba(84,84,88,.65);
+    --blue:#0A84FF;--blue-ink:#4DA3FF;--blue-soft:rgba(10,132,255,.20);--ring:rgba(10,132,255,.6);
+    --red:#FF453A;--red-ink:#FF6B62;--red-soft:rgba(255,69,58,.20);
+    --orange:#FF9F0A;--orange-ink:#FFB340;--orange-soft:rgba(255,159,10,.20);
+    --green:#30D158;--green-ink:#4CD471;--green-soft:rgba(48,209,88,.20);
+    --side:#161618;--bar:rgba(0,0,0,.72);--seg-on:#636366;
+    --edge:0 0 0 1px rgba(255,255,255,.08);--lift:0 1px 3px rgba(0,0,0,.5);
+    --hud:rgba(72,72,74,.92);
+    --s1:#3987e5;--s2:#d95926;--s3:#199e70;--grid:#2C2C2E;--axis:#48484A;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#000000;--surface:#1C1C1E;--fill:rgba(118,118,128,.24);--fill-2:rgba(118,118,128,.14);
+  --ink:#F5F5F7;--ink-2:#A1A1A6;--ink-3:#8E8E93;--sep:rgba(84,84,88,.65);
+  --blue:#0A84FF;--blue-ink:#4DA3FF;--blue-soft:rgba(10,132,255,.20);--ring:rgba(10,132,255,.6);
+  --red:#FF453A;--red-ink:#FF6B62;--red-soft:rgba(255,69,58,.20);
+  --orange:#FF9F0A;--orange-ink:#FFB340;--orange-soft:rgba(255,159,10,.20);
+  --green:#30D158;--green-ink:#4CD471;--green-soft:rgba(48,209,88,.20);
+  --side:#161618;--bar:rgba(0,0,0,.72);--seg-on:#636366;
+  --edge:0 0 0 1px rgba(255,255,255,.08);--lift:0 1px 3px rgba(0,0,0,.5);
+  --hud:rgba(72,72,74,.92);
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--grid:#2C2C2E;--axis:#48484A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--font);-webkit-font-smoothing:antialiased;letter-spacing:-.008em}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+:focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+h1,h2,h3,h4,p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+
+/* shell */
+.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow:auto;padding:18px 12px 14px;background:var(--side);border-right:1px solid var(--sep);display:flex;flex-direction:column;gap:2px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px 10px}
+.brand-mark{width:32px;height:32px;border-radius:8px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;letter-spacing:.02em}
+.brand-name{font-weight:700;font-size:16px;letter-spacing:-.02em;line-height:1.1}
+.brand-sub{font-size:12px;color:var(--ink-2)}
+.side-h{font-size:11.5px;font-weight:600;color:var(--ink-3);padding:14px 10px 4px}
+.nav{display:flex;align-items:center;gap:10px;min-height:36px;padding:0 10px;border-radius:9px;border:0;background:transparent;font-weight:500;font-size:14px;cursor:pointer;width:100%;text-align:left}
+.nav svg{color:var(--blue);flex:none}
+.nav:hover{background:var(--fill-2)}
+.nav.on{background:var(--fill)}
+.badge{margin-left:auto;font-size:12px;font-weight:600;color:var(--ink-2)}
+.team{list-style:none;margin:2px 0 0;padding:0 10px;display:flex;flex-direction:column;gap:9px}
+.team li{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:13px;align-items:center}
+.team .tb{grid-column:1/-1;height:4px;border-radius:2px;background:var(--fill)}
+.team .tb i{display:block;height:100%;border-radius:2px;background:var(--ink-3)}
+.team li.warn{color:var(--red-ink);font-weight:600}
+.team li.warn .tb i{background:var(--red)}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px 8px 0;border-top:1px solid var(--sep)}
+.av{width:30px;height:30px;border-radius:50%;background:var(--fill);display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--ink-2);flex:none}
+.av.sm{width:22px;height:22px;font-size:9.5px}
+.me-name{font-weight:600;font-size:13.5px;line-height:1.15}.me-role{font-size:12px;color:var(--ink-2)}
+.main{min-width:0;display:flex;flex-direction:column}
+.bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:0 28px;min-height:52px;background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--sep)}
+.bar-title{font-weight:600;font-size:15px}
+.grow{flex:1}
+.clock{font-size:13px;color:var(--ink-2)}
+.content{padding:26px 28px 96px;max-width:1280px;width:100%;margin:0 auto}
+.tabbar{display:none}
+
+/* type */
+.eyebrow{font-size:15px;font-weight:600;color:var(--ink-2)}
+.hero{font-size:40px;font-weight:700;letter-spacing:-.028em;line-height:1.08;max-width:22ch;margin-top:6px;text-wrap:balance}
+.hero .hl{color:var(--red-ink)}
+.lt{font-size:34px;font-weight:700;letter-spacing:-.024em;line-height:1.1}
+.sub{color:var(--ink-2);font-size:17px;margin-top:8px;max-width:60ch}
+.sec-h{font-size:22px;font-weight:700;letter-spacing:-.02em;margin:34px 0 12px}
+
+/* pieces */
+.card{background:var(--surface);border-radius:18px;box-shadow:var(--edge)}
+.pad{padding:20px 22px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:6px;background:var(--fill);color:var(--ink-2);white-space:nowrap;line-height:18px}
+.tag svg{color:var(--orange)}
+.tag.red{background:var(--red-soft);color:var(--red-ink)}
+.tag.orange{background:var(--orange-soft);color:var(--orange-ink)}
+.tag.green{background:var(--green-soft);color:var(--green-ink)}
+.tag.blue{background:var(--blue-soft);color:var(--blue-ink)}
+.btn{border:0;border-radius:980px;padding:0 16px;min-height:36px;font-weight:500;font-size:14px;cursor:pointer;background:var(--fill);color:var(--blue-ink);display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+.btn:hover{filter:brightness(.97)}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.tint{background:var(--blue-soft);color:var(--blue-ink)}
+.btn.sm{min-height:30px;font-size:13px;padding:0 12px}
+.btn.lg{min-height:52px;font-size:17px;font-weight:600;padding:0 26px}
+.btn.block{display:flex;width:100%}
+.btn.text{background:transparent;padding:0 4px}
+.btn:disabled{opacity:.45;cursor:default;filter:none}
+.field{min-height:36px;border-radius:10px;border:0;background:var(--fill);padding:0 12px;color:var(--ink)}
+textarea.field{padding:10px 12px;line-height:1.5;width:100%;resize:vertical;display:block}
+.field::placeholder{color:var(--ink-3)}
+.seg{display:inline-flex;background:var(--fill);border-radius:9px;padding:2px}
+.seg button{border:0;background:transparent;padding:0 14px;min-height:32px;border-radius:7px;font-weight:500;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--seg-on);box-shadow:var(--lift)}
+.seg.full{display:flex}.seg.full button{flex:1;padding:0 6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0 4px}
+.search{position:relative;flex:1;min-width:200px;max-width:340px}
+.search svg{position:absolute;left:10px;top:9px;color:var(--ink-3)}
+.search input{width:100%;padding-left:34px}
+.tip{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:var(--blue-soft);color:var(--ink);font-size:14px;margin-bottom:22px}
+.tip svg{color:var(--blue-ink);flex:none;margin-top:1px}
+.tip .btn{margin-left:auto;flex:none}
+.stats3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.stats4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1100px){.stats4{grid-template-columns:1fr 1fr}}
+.stat{padding:18px 20px}
+.stat .n{font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.stat .l{font-size:15px;font-weight:600;margin-top:8px}
+.stat .h{font-size:13px;color:var(--ink-2);margin-top:2px;display:flex;gap:4px;align-items:center}
+.stat .h.warn{color:var(--orange-ink)}
+.stat .h.ok{color:var(--green-ink)}
+.stat .n.red{color:var(--red-ink)}
+.start{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:center;padding:18px 20px;margin-top:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.two h3,.fig h3{font-size:17px;font-weight:600;letter-spacing:-.015em}
+.lead{font-size:15px;color:var(--ink-2);margin:4px 0 14px}
+.brow{display:grid;grid-template-columns:140px 1fr 44px;gap:10px;align-items:center;font-size:14px;min-height:30px}
+.brow .bt{height:10px;border-radius:5px;background:var(--fill)}
+.brow .bt i{display:block;height:100%;border-radius:0 5px 5px 0;background:var(--s1)}
+.brow .bv{text-align:right;font-weight:600}
+.pats{display:grid;gap:12px}
+.pat{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;padding:18px 22px}
+.pat .pn{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pat .pu{font-size:12px;color:var(--ink-2);margin-top:4px;line-height:1.25}
+.pat .pt{font-size:17px;font-weight:600;letter-spacing:-.015em}
+.pat .pe{color:var(--ink-2);margin-top:2px}
+.try{margin-top:10px;padding:10px 12px;background:var(--fill-2);border-radius:10px;font-size:14px;display:flex;gap:8px}
+.try svg{color:var(--orange-ink);flex:none;margin-top:1px}
+
+/* problems list */
+.work{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:20px;align-items:start}
+.group-h{display:flex;align-items:baseline;gap:8px;margin:22px 4px 8px}
+.group-h h3{font-size:20px;font-weight:700;letter-spacing:-.018em}
+.group-h span{color:var(--ink-2);font-size:13px}
+.list{background:var(--surface);border-radius:16px;overflow:hidden;box-shadow:var(--edge)}
+.row{display:grid;grid-template-columns:40px minmax(0,1fr) auto 16px;gap:12px;align-items:center;padding:12px 12px 12px 14px;cursor:pointer;position:relative;min-height:68px}
+.row+.row::before{content:"";position:absolute;left:66px;right:0;top:0;height:1px;background:var(--sep)}
+.row:hover{background:var(--fill-2)}
+.row.sel{background:var(--blue-soft)}
+.ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none}
+.ico.now{background:var(--red-soft);color:var(--red-ink)}
+.ico.next{background:var(--orange-soft);color:var(--orange-ink)}
+.ico.later{background:var(--fill);color:var(--ink-2)}
+.ico.done{background:var(--green-soft);color:var(--green-ink)}
+.ico.blue{background:var(--blue-soft);color:var(--blue-ink)}
+.r-title{font-weight:600}
+.r-sub{color:var(--ink-2);font-size:13.5px}
+.r-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
+.r-id{font-size:12px;color:var(--ink-3)}
+.r-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right}
+.due{font-size:13px;font-weight:600;white-space:nowrap}
+.due.red{color:var(--red-ink)}.due.orange{color:var(--orange-ink)}.due.gray{color:var(--ink-2);font-weight:500}
+.owner{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2)}
+.chev{color:var(--ink-3);display:grid}
+.empty{padding:28px;text-align:center;color:var(--ink-2)}
+
+/* detail */
+.detail{position:sticky;top:72px;max-height:calc(100vh - 92px);overflow:auto}
+.d-head{padding:20px 22px 16px}
+.told{display:flex;gap:8px;align-items:flex-start;margin-top:12px;padding:10px 12px;border-radius:12px;font-size:14px;line-height:1.4}
+.told svg{flex:none;margin-top:1px}
+.told.ok{background:var(--green-soft)}
+.told.ok svg{color:var(--green-ink)}
+.told.warn{background:var(--orange-soft)}
+.told.warn svg{color:var(--orange-ink)}
+.d-title{font-size:24px;font-weight:700;letter-spacing:-.022em;line-height:1.15;margin:10px 0 4px;text-wrap:balance}
+.d-sec{padding:16px 22px 18px;border-top:1px solid var(--sep)}
+.d-sec h4{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:10px}
+.kv{display:grid;grid-template-columns:112px 1fr;gap:8px 12px;font-size:14px}
+.kv dt{color:var(--ink-2)}.kv dd{margin:0}
+.gauge{display:flex;align-items:center;gap:14px}
+.gauge .gt{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.gauge .gs{font-size:13px;color:var(--ink-2)}
+.factors{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:12px}
+.factors li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:14px}
+.factors .ft{height:6px;border-radius:3px;background:var(--fill);grid-column:1/-1}
+.factors .ft i{display:block;height:100%;border-radius:3px;background:var(--blue)}
+.factors .fw{grid-column:1/-1;font-size:13px;color:var(--ink-2)}
+.factors .fp{font-size:13px;color:var(--ink-2)}
+.note{font-size:12.5px;color:var(--ink-2);margin-top:10px}
+.err{color:var(--red-ink)}
+.next{background:var(--fill-2);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.rowb{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.inline{display:flex;gap:8px;margin-top:12px}
+.inline .field{flex:1;min-width:0}
+.tl{list-style:none;margin:12px 0 0;padding:0}
+.tl li{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--sep);font-size:14px}
+.tl li:first-child{border-top:0}
+.tl .t{font-size:12.5px;color:var(--ink-2)}
+.tl .who{font-weight:600;display:flex;align-items:center;gap:6px}
+.tl .who i{width:7px;height:7px;border-radius:50%;background:var(--ink-3);flex:none}
+.tl .k-action .who i{background:var(--blue)}.tl .k-status .who i{background:var(--orange)}.tl .k-message .who i{background:var(--green)}
+
+/* trends */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.fig{padding:18px 20px}
+.fig.wide{grid-column:1/-1}
+.fig-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.fig-h .fs{font-size:13px;color:var(--ink-2)}
+.fig-h .fig-act{margin-left:auto;display:flex;gap:2px}
+.fig-body{position:relative}
+.chart{display:block;overflow:visible}
+.chart text{fill:var(--ink-2);font-family:var(--font);font-size:12px}
+.chart text.val{fill:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.chart .bar{fill:var(--s1);transition:opacity .12s}
+.chart .bar.lift,.chart .sg.lift{opacity:.7}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lk{display:inline-block;width:18px;height:2px;background:var(--c)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--c)}
+.tipbox{position:absolute;pointer-events:none;background:var(--surface);box-shadow:var(--lift),0 8px 24px rgba(0,0,0,.12);padding:7px 10px;border-radius:10px;font-size:12.5px;white-space:nowrap;z-index:2;color:var(--ink)}
+.tipbox b{font-weight:700;font-size:13.5px}
+.tipbox .trow{display:flex;align-items:center;gap:6px}
+.tipbox .lk{width:12px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--sep);font-size:12.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--sep);font-size:14px;vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+/* driver */
+.drv{display:grid;grid-template-columns:minmax(0,1fr) 380px minmax(0,1fr);gap:28px;align-items:start;margin-top:22px}
+.drv-side h3{font-size:17px;font-weight:600;letter-spacing:-.015em;margin-bottom:8px}
+.drv-side ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.drv-side li{display:flex;gap:10px;font-size:14.5px}
+.drv-side li svg{color:var(--green-ink);flex:none;margin-top:2px}
+.phone{width:380px;max-width:100%;height:770px;border-radius:52px;background:#0B0B0C;padding:11px;box-shadow:0 0 0 1px rgba(0,0,0,.25),0 30px 60px rgba(0,0,0,.18)}
+.screen{background:var(--bg);border-radius:42px;height:100%;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:104px;height:30px;border-radius:20px;background:#0B0B0C;z-index:2}
+.p-status-bar{display:flex;justify-content:space-between;align-items:center;padding:16px 30px 6px;font-weight:600;font-size:15px;flex:none}
+.p-status-bar span{display:flex;gap:5px;align-items:center}
+.p-body{flex:1;overflow:auto;padding:14px 18px 20px}
+.p-home{height:5px;width:128px;border-radius:3px;background:var(--ink);opacity:.85;margin:8px auto 9px;flex:none}
+.p-nav{display:flex;align-items:center;gap:2px;margin:0 0 8px -8px}
+.p-nav .btn{font-size:16px}
+.p-hello{font-size:32px;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.p-route{color:var(--ink-2);font-size:14.5px;margin:4px 0 18px}
+.p-note{text-align:center;font-size:13px;color:var(--ink-2);margin-top:10px}
+.p-sec{font-size:20px;font-weight:700;letter-spacing:-.018em;margin:24px 2px 10px}
+.prow{display:grid;grid-template-columns:36px 1fr;gap:12px;padding:12px 14px;position:relative}
+.prow+.prow::before{content:"";position:absolute;left:62px;right:0;top:0;height:1px;background:var(--sep)}
+.p-state{font-size:13.5px;font-weight:600;margin-top:4px;color:var(--orange-ink)}
+.p-state.ok{color:var(--green-ink)}
+.p-msg{font-size:13.5px;margin-top:6px;padding:8px 10px;border-radius:10px;background:var(--fill-2)}
+.p-empty{padding:18px;color:var(--ink-2);text-align:center;font-size:14px}
+.ptiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ptile{background:var(--surface);border-radius:18px;padding:16px;min-height:108px;display:flex;flex-direction:column;justify-content:space-between;border:0;text-align:left;font-weight:600;font-size:16px;cursor:pointer;box-shadow:var(--edge)}
+.ptile svg{color:var(--blue)}
+.ptile:active{background:var(--fill)}
+.pick{display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%;border:0;background:transparent;text-align:left;cursor:pointer;position:relative;min-height:60px}
+.pick+.pick::before{content:"";position:absolute;left:14px;right:0;top:0;height:1px;background:var(--sep)}
+.pick .ck{margin-left:auto;color:var(--blue);display:grid}
+.p-done{text-align:center;padding-top:70px}
+.p-done .big{width:84px;height:84px;border-radius:50%;background:var(--green-soft);color:var(--green-ink);display:grid;place-items:center;margin:0 auto 18px}
+.p-done h3{font-size:26px;font-weight:700;letter-spacing:-.022em}
+.p-done p{color:var(--ink-2);margin:8px auto 26px;max-width:26ch}
+
+/* data */
+.src{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;position:relative;min-height:64px}
+.src+.src::before{content:"";position:absolute;left:62px;right:0;top:0;height:1px;background:var(--sep)}
+.src .st{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.src .st i{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.src .st.warn{color:var(--orange-ink)}.src .st.warn i{background:var(--orange)}
+.src .sm{font-size:12.5px;color:var(--ink-2);text-align:right}
+.drop{border:1.5px dashed var(--ink-3);border-radius:16px;padding:28px 20px;text-align:center;color:var(--ink-2)}
+.drop .dt{font-size:17px;font-weight:600;color:var(--ink)}
+.preview{margin-top:14px;overflow-x:auto}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--hud);color:#fff;padding:12px 20px;border-radius:14px;font-weight:500;font-size:14.5px;z-index:20;max-width:calc(100% - 32px);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center}
+
+@media (max-width:1180px){.work{grid-template-columns:1fr}.detail{position:static;max-height:none}.drv{grid-template-columns:1fr;justify-items:center}.drv-side{max-width:520px;width:100%}}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}.side{display:none}
+  .content{padding:20px 16px 110px}.bar{padding:0 16px}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--sep);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:500;color:var(--ink-3);min-height:46px;cursor:pointer}
+  .tabbar button.on{color:var(--blue-ink)}
+  .toast{bottom:84px}
+  .charts,.two{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .hero{font-size:32px}.lt{font-size:28px}
+  .stats3{grid-template-columns:1fr}
+  .start{grid-template-columns:44px 1fr}.start .btn{grid-column:1/-1}
+  .row{grid-template-columns:40px minmax(0,1fr) 16px}
+  .r-right{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between;width:100%}
+  .row .chev{grid-row:1;grid-column:3}
+  .pat{grid-template-columns:1fr}
+  .kv{grid-template-columns:100px 1fr}
+  .brow{grid-template-columns:110px 1fr 40px}
+  .clock{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <aside class="side" aria-label="Sections">
+    <div class="brand"><span class="brand-mark">RW</span><div><div class="brand-name">RouteWise</div><div class="brand-sub">Harrisburg hub</div></div></div>
+    <div class="side-h">Overview</div>
+    <button class="nav on" type="button" data-view="today" data-ic="today">Today</button>
+    <div class="side-h">Dispatch</div>
+    <button class="nav" type="button" data-view="problems" data-ic="alert">Problems <span class="badge num" data-count></span></button>
+    <button class="nav" type="button" data-view="trends" data-ic="chart">Trends</button>
+    <button class="nav" type="button" data-view="data" data-ic="tray">Data</button>
+    <div class="side-h">On the road</div>
+    <button class="nav" type="button" data-view="driver" data-ic="phone">Driver app</button>
+    <div class="side-h">Team today</div>
+    <ul class="team" id="team"></ul>
+    <div class="me"><span class="av">JT</span><div><div class="me-name">Jamal Turner</div><div class="me-role">Dispatch manager</div></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="bar">
+      <div class="bar-title" id="barTitle">Today</div>
+      <span class="grow"></span>
+      <span class="clock num">Mon, Sep 14 · 9:42 AM</span>
+      <span class="tag">Sample data</span>
+    </header>
+
+    <main class="content">
+      <section id="view-today" class="view"></section>
+
+      <section id="view-problems" class="view" hidden>
+        <h1 class="lt">Problems</h1>
+        <p class="sub">Every delivery that needs help, with the most urgent on top.</p>
+        <div class="toolbar">
+          <div class="seg" role="group" aria-label="Which problems to show">
+            <button type="button" data-status="open" class="on">Open</button>
+            <button type="button" data-status="noowner">No owner</button>
+            <button type="button" data-status="done">Done</button>
+          </div>
+          <select class="field" id="fType" aria-label="Kind of problem"><option value="all">All kinds</option></select>
+          <label class="search"><span data-ic="search" data-size="16"></span><input class="field" type="search" id="fQ" placeholder="Search customer, order, route" aria-label="Search"></label>
+        </div>
+        <div class="work">
+          <div id="groups"></div>
+          <aside class="card detail" id="detail" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section id="view-trends" class="view" hidden>
+        <h1 class="lt">Trends</h1>
+        <p class="sub">What keeps going wrong, and what to change so it stops.</p>
+        <div class="toolbar">
+          <div class="seg" role="group" aria-label="Time range">
+            <button type="button" data-range="7">7 days</button>
+            <button type="button" data-range="14" class="on">14 days</button>
+            <button type="button" data-range="30">30 days</button>
+          </div>
+        </div>
+        <div class="stats3 stats4" id="tStats"></div>
+        <div class="charts">
+          <div class="card fig"><div class="fig-h"><h3>What goes wrong most</h3><span class="fig-act"><button class="btn text sm" type="button" data-copy="cause">Copy for Excel</button><button class="btn text sm" type="button" data-table="cause">Show numbers</button></span></div><div class="fig-body" id="cCause"></div></div>
+          <div class="card fig"><div class="fig-h"><h3>Problems per 100 deliveries</h3><span class="fs">by carrier</span><span class="fig-act"><button class="btn text sm" type="button" data-copy="carrier">Copy for Excel</button><button class="btn text sm" type="button" data-table="carrier">Show numbers</button></span></div><div class="fig-body" id="cCarrier"></div></div>
+          <div class="card fig wide"><div class="fig-h"><h3>New problems and fixed problems</h3><span class="fs">per day</span><span class="fig-act"><button class="btn text sm" type="button" data-copy="trend">Copy for Excel</button><button class="btn text sm" type="button" data-table="trend">Show numbers</button></span></div><div class="fig-body" id="cTrend"></div></div>
+          <div class="card fig"><div class="fig-h"><h3>How long open problems have waited</h3><span class="fs">right now</span><span class="fig-act"><button class="btn text sm" type="button" data-copy="aging">Copy for Excel</button><button class="btn text sm" type="button" data-table="aging">Show numbers</button></span></div><div class="fig-body" id="cAging"></div></div>
+          <div class="card fig"><div class="fig-h"><h3>How problems ended</h3><span class="fig-act"><button class="btn text sm" type="button" data-copy="outcome">Copy for Excel</button><button class="btn text sm" type="button" data-table="outcome">Show numbers</button></span></div><div class="fig-body" id="cOutcome"></div></div>
+        </div>
+        <h2 class="sec-h">Problems that keep coming back</h2>
+        <div class="pats" id="tPats"></div>
+      </section>
+
+      <section id="view-driver" class="view" hidden></section>
+
+      <section id="view-data" class="view" hidden>
+        <h1 class="lt">Data</h1>
+        <p class="sub">Where the information comes from. There is no live link to carriers or trucks yet, so RouteWise reads files, emails, and driver messages.</p>
+        <div class="two" style="margin-top:22px;align-items:start">
+          <div>
+            <div class="group-h"><h3>Sources</h3></div>
+            <div class="list" id="sources"></div>
+          </div>
+          <div>
+            <div class="group-h"><h3>Add a file</h3></div>
+            <div class="card pad">
+              <div class="drop">
+                <div class="dt">Drop a delivery file here</div>
+                <div style="font-size:13px;margin-top:4px">A CSV with one row per delivery update</div>
+                <div class="rowb" style="justify-content:center;margin-top:14px"><button class="btn" type="button" id="chooseFile">Choose a file</button><button class="btn primary" type="button" id="loadSample">Use the sample file</button></div>
+              </div>
+              <div id="preview" class="preview" hidden></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="Sections">
+  <button type="button" class="on" data-view="today" data-ic="today" data-size="22">Today</button>
+  <button type="button" data-view="problems" data-ic="alert" data-size="22">Problems</button>
+  <button type="button" data-view="trends" data-ic="chart" data-size="22">Trends</button>
+  <button type="button" data-view="driver" data-ic="phone" data-size="22">Driver</button>
+  <button type="button" data-view="data" data-ic="tray" data-size="22">Data</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script>
+const NOW=582, ME='Jamal Turner';
+const OWNERS=['Maria Delgado','Andre Gibson','Sam Whitaker','Jamal Turner','Priya Nair'];
+const STATUSES=['New','Working','Waiting','Done'];
+const ICONS={
+  today:'<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  alert:'<path d="M12 4l9 15.5H3z"/><path d="M12 10v4.5M12 17.2h.01"/>',
+  chart:'<path d="M5 20V11M12 20V5M19 20v-6"/>',
+  tray:'<path d="M4 14l2.5-8h11L20 14v5H4z"/><path d="M4 14h4.5l1 2h5l1-2H20"/>',
+  phone:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+  car:'<path d="M4 13l2-5.5A2 2 0 0 1 7.9 6h8.2a2 2 0 0 1 1.9 1.5L20 13v4H4z"/><path d="M6 17v2M18 17v2M7.5 13.5h.01M16.5 13.5h.01"/>',
+  person:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/><path d="M4 4l16 16"/>',
+  user:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/>',
+  box:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/>',
+  pin:'<path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  pickup:'<path d="M4 13v6h16v-6"/><path d="M12 15V4M8 8l4-4 4 4"/>',
+  truck:'<path d="M2.5 6.5h11v10h-11zM13.5 10h4l3 3.5v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
+  chevron:'<path d="M9 6l6 6-6 6"/>',
+  back:'<path d="M15 6l-6 6 6 6"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  star:'<path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.6 9.7l5.8-.8z" fill="currentColor" stroke="none"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/>',
+  bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  camera:'<path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.2"/>',
+  call:'<path d="M6 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6.5 6.5l1.5-2L21 15v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/>',
+  up:'<path d="M5 16l5-5 3 3 6-7M15 7h4v4"/>',
+  info:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/>',
+  mail:'<rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4 7.5l8 6 8-6"/>',
+  file:'<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/>'
+};
+const TYPES={
+  'Traffic delay':{plain:'Stuck in traffic',icon:'car',sev:6,why:'The driver is still moving toward the stop'},
+  'Failed attempt':{plain:'Nobody there',icon:'person',sev:11,why:'The driver left the stop and needs a second try'},
+  'Damaged package':{plain:'Damaged box',icon:'box',sev:13,why:'The contents may need to be replaced'},
+  'Address issue':{plain:'Wrong address',icon:'pin',sev:10,why:'The driver cannot finish without the right address'},
+  'Missed pickup':{plain:'Pickup missed',icon:'pickup',sev:15,why:'The delivery does not move until a new pickup is booked'},
+  'Carrier delay':{plain:'Carrier is late',icon:'truck',sev:9,why:"The delivery is in another company's hands"}
+};
+const NEXT={
+  'Address issue':"Call the customer and get the exact address and suite. Then send it to the driver before they leave the area.",
+  'Carrier delay':"Ask the carrier for a firm new arrival time. Then tell the customer before the promised time passes.",
+  'Failed attempt':"Call the customer to make sure someone will be there. Then plan a second try on the driver's way back.",
+  'Missed pickup':"Book a new pickup with the carrier. If that is too late, send one of our own trucks.",
+  'Damaged package':"Ask the driver for a photo. Check our stock for a replacement. File the claim today.",
+  'Traffic delay':"Ask the driver for a new arrival time. Tell any customer whose delivery will be late."
+};
+const CASES=[
+{id:'RW-91427',customer:'Keystone Dental Partners',key:true,contact:'Renee',city:'Scranton, PA',route:'R-17 Scranton',carrier:'Keystone Freight',driver:'Keystone truck 22',type:'Address issue',detected:475,due:630,status:'New',owner:null,source:'a driver text',contents:'Dental supplies, 3 cartons',critical:false,
+ plain:'The label has no suite number. The driver is holding the package.',custDetail:'the delivery address on the order is missing a suite number',newEta:null,
+ timeline:[{t:475,who:'Keystone truck 22',kind:'event',text:'Text from the driver: "No suite number on the label. The building has 3 entrances and no directory. Holding the package on the truck."'},{t:481,who:'Carrier website',kind:'event',text:'Keystone Freight marked this stop as a problem: address.'}]},
+{id:'RW-91290',customer:'Mid-Atlantic Office Supply Co',key:false,contact:'Greg',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'Allegheny Express',driver:'Allegheny truck 7',type:'Carrier delay',detected:400,due:570,status:'Waiting',owner:'Maria Delgado',source:'the carrier website',contents:'Office paper and toner, 6 cartons',critical:false,
+ plain:"The carrier's truck left 2 hours late. The package is still on the road.",custDetail:"the shipment left our carrier partner's terminal later than planned",newEta:675,
+ timeline:[{t:400,who:'Carrier website',kind:'event',text:'Allegheny Express: the truck left 2 hours behind schedule.'},{t:430,who:'Maria Delgado',kind:'action',text:'Emailed the Allegheny contact and asked for a new arrival time.'},{t:495,who:'Allegheny Express',kind:'event',text:'Reply from the carrier: it is on the truck, arriving about 11:15 AM.'},{t:497,who:'Maria Delgado',kind:'status',text:'Status changed to Waiting.'}]},
+{id:'RW-91402',customer:'Lehigh Valley Orthopedics',key:true,contact:'Dana',city:'Allentown, PA',route:'R-09 Lehigh',carrier:'RouteWise fleet',driver:'Ray Okafor',type:'Failed attempt',detected:500,due:720,status:'Working',owner:'Maria Delgado',source:'a driver text',contents:'Surgical kits for 1:00 PM procedures',critical:true,
+ plain:'Nobody was at the front desk at 8:20. The office opens at 9:00.',custDetail:'our driver arrived at 8:20 AM, before the office opened',newEta:645,
+ timeline:[{t:500,who:'Ray Okafor',kind:'event',text:'Text from the driver: "Nobody at the front desk. The sign says they open at 9. I can come back after Bethlehem."'},{t:511,who:'Maria Delgado',kind:'action',text:'Called the office and left a message. Ray, please go back after your Bethlehem stop. Someone will be at the desk from 9:00.'}]},
+{id:'RW-91250',customer:'Chester County Pharmacy',key:true,contact:'Alan',city:'West Chester, PA',route:'R-21 Chester',carrier:'Penn Line Carriers',driver:'Penn Line truck 4',type:'Missed pickup',detected:450,due:960,status:'New',owner:null,source:'the carrier website',contents:'Refrigerated vaccines, 2 coolers',critical:true,
+ plain:'The carrier skipped the 7:00 pickup. The vaccine coolers are still in our cold room.',custDetail:'the order was not picked up at its scheduled time this morning',newEta:null,
+ timeline:[{t:450,who:'Carrier website',kind:'event',text:'Penn Line Carriers: the 7:00 AM pickup was not attempted. Reason given: truck was full.'},{t:452,who:'RouteWise system',kind:'event',text:'Cold timer started. The coolers stay cold for 8 hours.'}]},
+{id:'RW-91355',customer:'Penn State Health Hershey',key:true,contact:'Marcus',city:'Hershey, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:660,status:'Working',owner:'Andre Gibson',source:'truck GPS',contents:'Clinic supplies, 4 cartons',critical:false,
+ plain:'I-83 is closed after a crash. The driver is taking another road.',custDetail:'a road closure on I-83',newEta:680,
+ timeline:[{t:545,who:'Truck GPS',kind:'event',text:'Truck 14 has not moved for 18 minutes at I-83 exit 41. The state reports a crash with all lanes closed.'},{t:552,who:'Andre Gibson',kind:'action',text:'Called Luis. He is going around on US-322. New arrival time is 11:20 AM.'},{t:553,who:'Andre Gibson',kind:'status',text:'Status changed to Working.'},{t:556,who:'Andre Gibson',kind:'message',text:'Message sent to Marcus: I-83 is closed, so the driver is going around. New arrival about 11:20 AM.',summary:'Told Marcus about the I-83 closure. New arrival about 11:20 AM.'}]},
+{id:'RW-91180',customer:'Pocono Medical Associates',key:true,contact:'Sylvia',city:'Stroudsburg, PA',route:'R-19 Pocono',carrier:'Keystone Freight',driver:'Keystone truck 31',type:'Carrier delay',detected:490,due:870,status:'Working',owner:'Maria Delgado',source:'the carrier website',contents:'Exam room supplies, 5 cartons',critical:false,
+ plain:"The carrier's truck was held for a brake check. It is cleared and leaves at 9:30.",custDetail:"our carrier partner's truck was held for a safety check",newEta:840,
+ timeline:[{t:490,who:'Carrier website',kind:'event',text:'Keystone Freight: truck 31 is out of service until a brake check is done.'},{t:535,who:'Maria Delgado',kind:'action',text:'Keystone says the truck is cleared and leaves at 9:30 AM. Asked them for a new arrival time.'},{t:543,who:'Keystone Freight',kind:'event',text:'Reply from the carrier: new arrival about 2:00 PM.'},{t:545,who:'Maria Delgado',kind:'message',text:'Message sent to Sylvia: the carrier truck was held for a safety check. New arrival about 2:00 PM.',summary:'Told Sylvia the truck was held for a safety check. New arrival about 2:00 PM.'}]},
+{id:'RW-91276',customer:'Wilkes-Barre Pediatrics',key:false,contact:'Joanne',city:'Wilkes-Barre, PA',route:'R-17 Scranton',carrier:'Keystone Freight',driver:'Keystone truck 22',type:'Address issue',detected:482,due:780,status:'New',owner:null,source:'customer service',contents:'Fridge thermometers, 1 carton',critical:false,
+ plain:'The customer moved to a new suite in June. The order still has the old one.',custDetail:'the address on the order looks like your old suite',newEta:null,
+ timeline:[{t:482,who:'Priya Nair',kind:'event',text:'Customer service ticket 4471: the customer called. They moved to Suite 210 in June and the label still says Suite 105.'}]},
+{id:'RW-91440',customer:'Lancaster Pediatric Dentistry',key:false,contact:'Beth',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Failed attempt',detected:578,due:810,status:'New',owner:null,source:'a driver text',contents:'Dental supplies, 2 cartons',critical:false,
+ plain:'The back door was locked and a signature is needed. The driver kept the package.',custDetail:'our driver could not get a signature at the back entrance',newEta:null,
+ timeline:[{t:578,who:'Dana Whitfield',kind:'event',text:'Text from the driver: "Back door locked, nobody answering, signature needed. Taking it with me for now."'}]},
+{id:'RW-91388',customer:'Bright Smiles Family Dentistry',key:false,contact:'Linda',city:'Reading, PA',route:'R-12 Berks',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Damaged package',detected:527,due:840,status:'New',owner:null,source:'a driver text',contents:'Sterile pouches and gloves, 2 cartons',critical:true,
+ plain:'One carton was crushed on the truck. The sterile pouches are torn open.',custDetail:'one of the two cartons was damaged on the way',newEta:null,
+ timeline:[{t:527,who:'Dana Whitfield',kind:'event',text:'Text from the driver with a photo: "Carton 2 of 2 got crushed under a pallet. The pouches are torn open."'}]},
+{id:'RW-91312',customer:'Susquehanna Veterinary Clinic',key:false,contact:'Pat',city:'Harrisburg, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:750,status:'Working',owner:'Andre Gibson',source:'truck GPS',contents:'Veterinary supplies, 3 cartons',critical:false,
+ plain:'Same I-83 closure. This stop comes later on the route.',custDetail:'a road closure on I-83',newEta:765,
+ timeline:[{t:545,who:'Truck GPS',kind:'event',text:'Truck 14 is stopped at I-83 exit 41. This is stop 9 of 14 on the route.'}]},
+{id:'RW-91103',customer:'Blue Mountain Physical Therapy',key:false,contact:'Chris',city:'Hamburg, PA',route:'R-11 Schuylkill',carrier:'Allegheny Express',driver:'Allegheny truck 12',type:'Missed pickup',detected:-470,due:1020,status:'Working',owner:'Sam Whitaker',source:'the carrier website',contents:'Therapy bands and supports, 2 cartons',critical:false,
+ plain:"The carrier missed yesterday's 4:00 PM pickup. A new pickup is booked but not confirmed.",custDetail:'the order was not picked up at its scheduled time yesterday',newEta:null,
+ timeline:[{t:-470,who:'Carrier website',kind:'event',text:'Allegheny Express: the 4:00 PM pickup was not attempted.'},{t:-455,who:'Sam Whitaker',kind:'action',text:'Booked a new pickup for today at 8:00 AM with Allegheny.'},{t:-450,who:'Sam Whitaker',kind:'status',text:'Status changed to Working.'}]},
+{id:'RW-91231',customer:'Delaware Valley Labs',key:false,contact:'Nadia',city:'Philadelphia, PA',route:'R-25 Philadelphia',carrier:'RouteWise fleet',driver:'Marcus Hale',type:'Failed attempt',detected:530,due:1020,status:'Working',owner:'Andre Gibson',source:'a driver text',contents:'Lab supplies, 4 cartons',critical:false,
+ plain:'The loading dock is closed until 1:00 PM. Security would not take the boxes.',custDetail:'the loading dock was closed when our driver arrived',newEta:810,
+ timeline:[{t:530,who:'Marcus Hale',kind:'event',text:'Text from the driver: "Dock is closed. Security says deliveries only after 1 PM."'},{t:541,who:'Andre Gibson',kind:'action',text:'Told Marcus to come back after his Center City stops. Emailed the customer.'}]},
+{id:'RW-91210',customer:'York Family Medicine',key:false,contact:'Kim',city:'York, PA',route:'R-05 York',carrier:'RouteWise fleet',driver:'Tom Reyes',type:'Traffic delay',detected:560,due:900,status:'New',owner:null,source:'truck GPS',contents:'Exam supplies, 2 cartons',critical:false,
+ plain:'Slow traffic on US-30. About 20 minutes behind.',custDetail:'heavy traffic on US-30',newEta:null,
+ timeline:[{t:560,who:'Truck GPS',kind:'event',text:'Truck 9 is 20 minutes behind its planned stop times.'}]},
+{id:'RW-91198',customer:'Cumberland Valley Dental',key:false,contact:'Ellen',city:'Carlisle, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:2040,status:'New',owner:null,source:'truck GPS',contents:'Dental supplies, 1 carton',critical:false,
+ plain:'Same I-83 closure. This delivery is not due until tomorrow morning.',custDetail:'a road closure on I-83',newEta:null,
+ timeline:[{t:545,who:'Truck GPS',kind:'event',text:'Truck 14 is stopped at I-83 exit 41. This is the last stop and it is promised for tomorrow.'}]},
+{id:'RW-91166',customer:'Harrisburg Orthodontics',key:false,contact:'Rita',city:'Harrisburg, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Damaged package',detected:435,due:690,status:'Done',owner:'Andre Gibson',source:'a driver text',contents:'Wire and brackets, 1 carton',critical:false,
+ plain:'A leaking cooler soaked the carton. A replacement was sent and delivered.',custDetail:'the first carton was damaged on the way',newEta:null,
+ timeline:[{t:435,who:'Luis Ortega',kind:'event',text:'Text from the driver with a photo: "Carton is soaked. The cooler above it leaked."'},{t:460,who:'Andre Gibson',kind:'action',text:'Took a replacement from our stock and sent it on the 8:00 AM shuttle.'},{t:463,who:'Andre Gibson',kind:'message',text:'Told the customer a replacement arrives before 11:30 AM.'},{t:520,who:'Andre Gibson',kind:'status',text:'Done. Replacement delivered at 8:38 AM. Claim filed.'}]},
+{id:'RW-91150',customer:'Schuylkill Valley Eye Care',key:false,contact:'Omar',city:'Pottsville, PA',route:'R-11 Schuylkill',carrier:'Allegheny Express',driver:'Allegheny truck 12',type:'Address issue',detected:510,due:930,status:'Done',owner:'Maria Delgado',source:'customer service',contents:'Optical supplies, 1 carton',critical:false,
+ plain:'The order had the billing address instead of the clinic. It is corrected.',custDetail:'the order listed your billing address',newEta:null,
+ timeline:[{t:510,who:'Priya Nair',kind:'event',text:'Customer service ticket 4468: the order shows the billing address, not the clinic.'},{t:530,who:'Maria Delgado',kind:'action',text:'Confirmed the clinic address with the customer and sent it to Allegheny.'},{t:550,who:'Maria Delgado',kind:'status',text:'Done. The carrier confirmed the corrected stop.'}]}
+];
+const IMPORT_CASES=[
+{id:'RW-91461',customer:'Lancaster General Surgical Center',key:true,contact:'Hannah',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'Allegheny Express',driver:'Allegheny truck 7',type:'Carrier delay',detected:580,due:660,status:'New',owner:null,source:'the carrier website',contents:'Surgical instrument trays for this afternoon',critical:true,
+ plain:"The surgical trays are still sitting at the carrier's terminal.",custDetail:"the shipment is still at our carrier partner's terminal",newEta:null,
+ timeline:[{t:580,who:'Carrier website',kind:'event',text:'Allegheny Express: scanned at their Harrisburg terminal at 9:40 AM. Not loaded on a truck yet.'}]},
+{id:'RW-91455',customer:'Berks Community Health',key:false,contact:'Sam',city:'Reading, PA',route:'R-12 Berks',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Traffic delay',detected:581,due:780,status:'New',owner:null,source:'truck GPS',contents:'Clinic supplies, 3 cartons',critical:false,
+ plain:'Road work on US-422. About 25 minutes behind.',custDetail:'road work on US-422',newEta:null,
+ timeline:[{t:581,who:'Truck GPS',kind:'event',text:'Truck 11 is 25 minutes behind its planned stop times near Wernersville.'}]}
+];
+const RAY_STOPS=[
+ {n:12,customer:'Bethlehem Family Dental',city:'Bethlehem, PA',due:690,key:false,contact:'Marta',contents:'Dental supplies, 2 cartons'},
+ {n:13,customer:"St. Luke's Outpatient Clinic",city:'Bethlehem, PA',due:750,key:true,contact:'Irene',contents:'Clinic supplies, 5 cartons'},
+ {n:14,customer:'Easton Eye Associates',city:'Easton, PA',due:810,key:false,contact:'Paul',contents:'Optical supplies, 1 carton'}
+];
+const DRIVER_TYPES=[
+ {type:'Traffic delay',label:'Stuck in traffic',plain:'The driver is stuck in traffic and will be late to this stop.',cust:'heavy traffic on the route'},
+ {type:'Failed attempt',label:'Nobody there',plain:'Nobody was there to take the delivery.',cust:'nobody was there to receive the delivery'},
+ {type:'Damaged package',label:'Damaged box',plain:'The driver reports a damaged box.',cust:'part of the shipment was damaged on the way'},
+ {type:'Address issue',label:'Wrong address',plain:'The driver cannot find the right address.',cust:'the address on the order does not match the building'},
+ {type:'Missed pickup',label:'Pickup missed',plain:'A pickup on this route was missed.',cust:'the order was not picked up at its scheduled time'}
+];
+const SOURCES=[
+ {name:'Driver texts',how:'Messages from drivers, simulated for this prototype',icon:'phone',last:578,n:27,st:'ok'},
+ {name:'Keystone Freight',how:'A file from their website, every hour',icon:'file',last:540,n:14,st:'ok'},
+ {name:'Allegheny Express',how:'A status email from the carrier',icon:'mail',last:495,n:6,st:'stale',msg:'Out of date'},
+ {name:'Penn Line Carriers',how:'Someone on our team checks their website',icon:'user',last:450,n:2,st:'manual',msg:'Checked by hand'},
+ {name:'Truck GPS',how:'Where our own trucks are, every 15 minutes',icon:'pin',last:570,n:41,st:'ok'},
+ {name:'Customer service',how:'Tickets from customers who called or wrote in',icon:'call',last:575,n:9,st:'ok'}
+];
+const AN={
+  causeLabels:['Stuck in traffic','Wrong address','Nobody there','Carrier is late','Damaged box','Pickup missed'],
+  causes:{30:[88,63,58,51,23,18],14:[44,34,28,25,12,10],7:[23,18,15,13,6,5]},
+  carrierLabels:['Our own trucks','Keystone Freight','Allegheny Express','Penn Line Carriers'],
+  carriers:{30:[135,82,53,31],14:[68,42,27,16],7:[36,22,14,8]},
+  rates:{30:[3.0,7.6,5.1,4.2],14:[3.1,7.9,5.3,4.4],7:[3.2,8.1,5.4,4.3]},
+  opened:[8,11,7,9,12,6,5,10,13,9,8,14,7,6,11,12,9,15,8,7,13,10,11,16,9,8,12,14,10,11],
+  resolved:[7,10,8,8,11,7,6,9,12,10,9,12,8,7,10,11,10,13,9,8,12,11,10,14,10,9,11,12,11,10],
+  median:{30:'2 h 15 min',14:'2 h 05 min',7:'1 h 50 min'},
+  before:{30:61,14:58,7:63},
+  recurring:{30:34,14:38,7:41},
+  delta:{30:4,14:9,7:12},
+  shipDelta:{30:6,14:12,7:10},
+  outcomes:{30:[61,27,12],14:[58,29,13],7:[63,25,12]},
+  patterns:[
+    {title:'Scranton route: orders arrive without a suite number',n:{30:'21',14:'11',7:'6'},unit:'times',ev:'Most of them are at two medical office parks.',tr:'Make the suite number a must-fill box when these customers order.'},
+    {title:'Keystone Freight: their trucks leave late',n:{30:'7.6',14:'7.9',7:'8.1'},unit:'problems per 100 deliveries',ev:'This is the highest of any carrier. It happens mostly on Mondays and Tuesdays.',tr:'Bring it up in the weekly call with Keystone. Move Monday loads for important customers to our own trucks.'},
+    {title:'Capital route: traffic on I-83',n:{30:'34',14:'19',7:'10'},unit:'times',ev:'Road work between exits 39 and 43, on weekdays from 7 to 10 AM.',tr:'Do the Hershey and Carlisle stops after 10 AM until the road work ends.'},
+    {title:'Offices that are still closed when we arrive',n:{30:'58%',14:'61%',7:'64%'},unit:'of "nobody there" problems',ev:'Offices that open at 9 get visited first because they are closest to the hub.',tr:'Add opening hours to each stop and start those routes from the far end.'}
+  ]
+};
+
+const state={view:'today',sel:null,f:{status:'open',type:'all',q:''},range:14,tables:{},imported:false,tipHidden:false,newCount:0,drv:{screen:'home',type:null,stop:0,note:'',photo:false,lastId:null}};
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function ic(name,size){size=size||20;return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;}
+function clock12(m,inSentence){let day='',x=m;if(x<0){day=inSentence?'yesterday at ':'Yesterday ';x+=1440}else if(x>=1440){day=inSentence?'tomorrow at ':'Tomorrow ';x-=1440}let h=Math.floor(x/60);const mm=x%60,ap=h>=12?'PM':'AM';h=h%12||12;return day+h+':'+String(mm).padStart(2,'0')+' '+ap;}
+function dur(m){m=Math.max(0,Math.round(m));if(m<60)return m+' min';const h=Math.floor(m/60),r=m%60;return r?`${h} h ${r} min`:`${h} h`;}
+const first=n=>n.split(' ')[0];
+const initials=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+const isOpen=c=>c.status!=='Done';
+const openCases=()=>CASES.filter(isOpen);
+let toastT;function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},2800);}
+
+function priority(c){
+  const toDue=c.due-NOW,age=NOW-c.detected;let d,dw;
+  if(toDue<0){d=40;dw=`Already ${dur(-toDue)} late`}
+  else if(toDue<=60){d=36;dw=`Due in ${dur(toDue)}`}
+  else if(toDue<=120){d=30;dw=`Due in ${dur(toDue)}`}
+  else if(toDue<=240){d=20;dw=`Due in ${dur(toDue)}`}
+  else if(toDue<=480){d=10;dw=`Due in ${dur(toDue)}`}
+  else{d=4;dw=`Not due until ${clock12(c.due,true)}`}
+  let ci=c.key?22:8,cw=c.key?'One of our important customers':'A regular customer';
+  if(c.critical){ci+=3;cw+=`. The contents cannot wait: ${c.contents.toLowerCase()}`}
+  const a=age>=180?20:age>=120?15:age>=60?10:5,aw=`First reported ${dur(age)} ago, from ${c.source}`;
+  const t=TYPES[c.type],score=d+ci+a+t.sev;
+  const tier=score>=70?'now':score>=55?'next':'later';
+  return {score,tier,label:{now:'Do now',next:'Do next',later:'Can wait'}[tier],factors:[
+    {name:'How close the deadline is',pts:d,max:40,why:dw},
+    {name:'How important the customer is',pts:ci,max:25,why:cw},
+    {name:'How long it has waited',pts:a,max:20,why:aw},
+    {name:'How stuck the delivery is',pts:t.sev,max:15,why:t.why}]};
+}
+function dueInfo(c){const d=c.due-NOW;if(c.status==='Done')return{text:'Done',cls:'gray'};if(d<0)return{text:`Late by ${dur(-d)}`,cls:'red'};if(d<=120)return{text:`Due in ${dur(d)}`,cls:'orange'};return{text:`Due ${clock12(c.due)}`,cls:'gray'};}
+function reasons(c){const out=[];if(c.status==='Done')return out;const toDue=c.due-NOW,age=NOW-c.detected;
+  if(toDue<0)out.push(['Late','red']);else if(toDue<=120)out.push(['Due soon','orange']);
+  if(c.key)out.push(['Important customer','star']);
+  if(c.critical)out.push(['Cannot wait','']);
+  if(age>=120)out.push(['Waiting '+dur(age),'']);
+  return out.slice(0,3);}
+const tagHTML=r=>`<span class="tag ${r[1]==='star'?'':r[1]}">${r[1]==='star'?ic('star',12):''}${esc(r[0])}</span>`;
+const statusTag=s=>`<span class="tag ${{New:'blue',Working:'',Waiting:'orange',Done:'green'}[s]}">${s}</span>`;
+function log(c,kind,text,who){c.timeline.push({t:NOW,who:who||ME,kind,text});}
+function sorted(list){const pr=c=>priority(c).score;return list.slice().sort((a,b)=>pr(b)-pr(a)||a.due-b.due);}
+
+function draftFor(c){
+  const owner=c.owner||'the RouteWise dispatch desk';
+  const firstLine={
+    'Traffic delay':`Your delivery is running late because of ${c.custDetail}.`,
+    'Failed attempt':`Our driver tried to deliver at ${clock12(c.detected)} but could not, because ${c.custDetail}.`,
+    'Damaged package':`Our driver found that ${c.custDetail}, so we are holding the damaged carton instead of delivering it.`,
+    'Address issue':`Before our driver can finish your delivery, we need to check the address: ${c.custDetail}.`,
+    'Missed pickup':`We are sorry: ${c.custDetail}.`,
+    'Carrier delay':`Your shipment is late because ${c.custDetail}.`}[c.type];
+  const next={
+    'Traffic delay':'Your driver is still on the way.',
+    'Failed attempt':'We will try again today. Please tell us if someone will be there to sign.',
+    'Damaged package':'We are sending a replacement from our Harrisburg hub. We will confirm once it is on a truck.',
+    'Address issue':'Please reply with the right address and suite number, or call us. We will pass it to the driver right away.',
+    'Missed pickup':'We have booked a new pickup. We will confirm the new delivery time as soon as it is on a truck.',
+    'Carrier delay':'We are working with our carrier partner to get it moving.'}[c.type];
+  const eta=c.newEta?`We now expect it to arrive by ${clock12(c.newEta)}.`:'We will send you a new delivery time within the hour.';
+  return `Hi ${c.contact}, this is RouteWise with an update on order ${c.id} for ${c.customer}.\n\n${firstLine} ${next} ${eta}\n\nYou can reply to this message or call ${owner} at (717) 555-0142. We are sorry for the trouble.`;
+}
+
+/* actions */
+function takeCase(c,name){c.owner=name;log(c,'status',name?`${name} took this problem.`:'Owner removed.');if(name&&c.status==='New')c.status='Working';}
+function refreshAll(){renderSide();if(state.view==='today')renderToday();if(state.view==='problems'){renderGroups();renderDetail();}}
+
+/* sidebar */
+function renderSide(){
+  const open=openCases();$$('[data-count]').forEach(e=>e.textContent=open.length);
+  const rows=OWNERS.map(o=>[first(o)+' '+o.split(' ')[1][0]+'.',open.filter(c=>c.owner===o).length,false]);
+  rows.push(['No owner',open.filter(c=>!c.owner).length,true]);
+  const max=Math.max(1,...rows.map(r=>r[1]));
+  $('#team').innerHTML=rows.map(r=>`<li class="${r[2]&&r[1]?'warn':''}"><span>${esc(r[0])}</span><span class="num">${r[1]}</span><span class="tb"><i style="width:${Math.round(r[1]/max*100)}%"></i></span></li>`).join('');
+}
+
+/* today */
+function rateNote(r){const p=AN.delta[r],d=AN.shipDelta[r],ch=((1+p/100)/(1+d/100)-1)*100;
+  if(ch<=-2)return{cls:'ok',text:`Deliveries went up ${d}%, so the problem rate is a little lower.`};
+  if(ch<2)return{cls:'',text:`Deliveries went up ${d}%, so the problem rate is about the same.`};
+  return{cls:'warn',text:`Deliveries went up only ${d}%, so problems grew faster than deliveries.`};}
+function renderToday(){
+  const open=openCases(),top=sorted(open)[0];
+  const nowN=open.filter(c=>priority(c).tier==='now').length;
+  const soon=open.filter(c=>c.due-NOW<=120).length,noOwner=open.filter(c=>!c.owner).length,keys=open.filter(c=>c.key).length;
+  const r=14,total=AN.causes[r].reduce((a,b)=>a+b,0),maxC=AN.causes[r][0];
+  const car=AN.carrierLabels.map((l,i)=>({l,v:AN.rates[r][i]})).sort((a,b)=>b.v-a.v),maxR=car[0].v;
+  const ratio=(AN.rates[r][1]/AN.rates[r][0]).toFixed(1);
+  const tp=top?priority(top):null;
+  $('#view-today').innerHTML=`
+  ${state.tipHidden?'':`<div class="tip">${ic('info',20)}<div>This is a prototype with sample data. Try this: open the top problem, take it, add a note, and write the customer message. Then look at Trends and the Driver app.</div><button class="btn sm" type="button" id="tipHide">Hide</button></div>`}
+  <p class="eyebrow">Monday, September 14</p>
+  <h1 class="hero">${open.length} deliveries have a problem. <span class="hl">${nowN} ${nowN===1?'needs':'need'} action right now.</span></h1>
+  <div class="stats3">
+    <div class="card stat"><div class="n num ${soon?'red':''}">${soon}</div><div class="l">late or due within 2 hours</div><div class="h">These come first</div></div>
+    <div class="card stat"><div class="n num">${noOwner}</div><div class="l">have no owner yet</div><div class="h">Nobody is working on them</div></div>
+    <div class="card stat"><div class="n num">${keys}</div><div class="l">important customers affected</div><div class="h">They call leadership when it goes wrong</div></div>
+  </div>
+  ${top?`<div class="card start"><span class="ico ${tp.tier}" style="width:44px;height:44px;border-radius:12px">${ic(TYPES[top.type].icon,24)}</span>
+    <div><div class="r-sub" style="font-weight:600;color:var(--ink-2)">Start here</div><div class="r-title" style="font-size:17px">${esc(top.customer)}</div><div class="r-sub">${esc(TYPES[top.type].plain)}. ${esc(top.plain)}</div><div class="r-meta">${reasons(top).map(tagHTML).join('')}${top.owner?'':'<span class="tag red">No owner</span>'}</div></div>
+    <button class="btn primary" type="button" id="openTop">Open this problem</button></div>`:''}
+  <h2 class="sec-h">The last 14 days</h2>
+  <div class="stats3" style="margin-top:0">
+    <div class="card stat"><div class="n num">${total}</div><div class="l">problems</div><div class="h warn">${ic('up',14)} ${AN.delta[r]}% more than the two weeks before</div><div class="h ${rateNote(r).cls}">${rateNote(r).text}</div></div>
+    <div class="card stat"><div class="n num">${AN.before[r]}%</div><div class="l">fixed before the customer's deadline</div><div class="h">About 6 out of 10</div></div>
+    <div class="card stat"><div class="n" style="font-size:34px;padding-top:6px">${AN.median[r]}</div><div class="l">typical time to fix one</div><div class="h">From first report to fixed</div></div>
+  </div>
+  <div class="two" style="margin-top:14px">
+    <div class="card pad"><h3>What goes wrong most</h3><p class="lead">The top three causes make up ${Math.round((AN.causes[r][0]+AN.causes[r][1]+AN.causes[r][2])/total*100)}% of all problems.</p>
+      ${[0,1,2].map(i=>`<div class="brow"><span>${AN.causeLabels[i]}</span><span class="bt"><i style="width:${Math.round(AN.causes[r][i]/maxC*100)}%"></i></span><span class="bv num">${AN.causes[r][i]}</span></div>`).join('')}</div>
+    <div class="card pad"><h3>Our trucks compared with outside carriers</h3><p class="lead">Keystone Freight has about ${ratio} times more problems than our own trucks. Numbers are problems per 100 deliveries.</p>
+      ${car.map(x=>`<div class="brow"><span>${x.l}</span><span class="bt"><i style="width:${Math.round(x.v/maxR*100)}%"></i></span><span class="bv num">${x.v.toFixed(1)}</span></div>`).join('')}</div>
+  </div>
+  <h2 class="sec-h">What to fix first</h2>
+  <div class="pats">${AN.patterns.slice(0,2).map(p=>patHTML(p,r)).join('')}</div>
+  <div class="rowb"><button class="btn" type="button" id="seeTrends">See all trends</button></div>`;
+  const th=$('#tipHide');if(th)th.addEventListener('click',()=>{state.tipHidden=true;renderToday();});
+  const ot=$('#openTop');if(ot)ot.addEventListener('click',()=>{state.sel=top.id;state.f={status:'open',type:'all',q:''};showView('problems');});
+  $('#seeTrends').addEventListener('click',()=>showView('trends'));
+}
+function patHTML(p,r){return `<div class="card pat"><div><div class="pn num">${p.n[r]}</div><div class="pu">${esc(p.unit)}</div></div><div><div class="pt">${esc(p.title)}</div><div class="pe">${esc(p.ev)}</div><div class="try">${ic('bulb',18)}<span><b>Try this.</b> ${esc(p.tr)}</span></div></div></div>`;}
+
+/* problems */
+function visible(){
+  let list=CASES.slice();const f=state.f;
+  if(f.status==='open')list=list.filter(isOpen);else if(f.status==='noowner')list=list.filter(c=>isOpen(c)&&!c.owner);else list=list.filter(c=>!isOpen(c));
+  if(f.type!=='all')list=list.filter(c=>c.type===f.type);
+  if(f.q){const q=f.q.toLowerCase();list=list.filter(c=>[c.id,c.customer,c.city,c.route,c.owner||'',TYPES[c.type].plain,c.driver].join(' ').toLowerCase().includes(q));}
+  return sorted(list);
+}
+function rowHTML(c){
+  const p=priority(c),d=dueInfo(c),t=TYPES[c.type],tier=isOpen(c)?p.tier:'done';
+  return `<div class="row${c.id===state.sel?' sel':''}" role="button" tabindex="0" data-id="${c.id}" aria-label="${esc(c.customer)}, ${esc(t.plain)}">
+    <span class="ico ${tier}">${ic(isOpen(c)?t.icon:'check',20)}</span>
+    <div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)}. ${esc(c.plain)}</div><div class="r-meta">${reasons(c).map(tagHTML).join('')}<span class="r-id num">${c.id} · ${esc(c.city)}</span></div></div>
+    <div class="r-right"><span class="due ${d.cls} num">${esc(d.text)}</span>${c.owner?`<span class="owner"><span class="av sm">${initials(c.owner)}</span>${esc(first(c.owner))}</span>`:(isOpen(c)?`<button class="btn sm tint" type="button" data-take="${c.id}">Take it</button>`:'')}</div>
+    <span class="chev">${ic('chevron',16)}</span></div>`;
+}
+function renderGroups(){
+  const list=visible(),el=$('#groups');
+  if(!list.length){el.innerHTML='<div class="card empty" style="margin-top:22px">Nothing here. Try a different filter.</div>';return;}
+  let html='';
+  if(state.f.status==='done'){html=`<div class="group-h"><h3>Done today</h3><span>${list.length}</span></div><div class="list">${list.map(rowHTML).join('')}</div>`;}
+  else{const G=[['now','Do now','Late, or about to be late'],['next','Do next','Due later today, and important'],['later','Can wait','On track for now']];
+    G.forEach(g=>{const items=list.filter(c=>priority(c).tier===g[0]);if(items.length)html+=`<div class="group-h"><h3>${g[1]}</h3><span>${items.length} · ${g[2]}</span></div><div class="list">${items.map(rowHTML).join('')}</div>`;});}
+  el.innerHTML=html;
+  el.querySelectorAll('.row').forEach(r=>{
+    const pick=()=>{state.sel=r.dataset.id;renderGroups();renderDetail();if(window.innerWidth<=1180)$('#detail').scrollIntoView({behavior:'smooth',block:'start'});};
+    r.addEventListener('click',pick);
+    r.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target===r){e.preventDefault();pick();}});
+  });
+  el.querySelectorAll('[data-take]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const c=CASES.find(x=>x.id===b.dataset.take);takeCase(c,ME);state.sel=c.id;refreshAll();toast(`You own ${c.customer} now`);}));
+}
+function renderDetail(){
+  const c=CASES.find(x=>x.id===state.sel),el=$('#detail');
+  if(!c){el.innerHTML='<div class="empty">Pick a problem on the left to see what happened and what to do.</div>';return;}
+  const p=priority(c),t=TYPES[c.type],d=dueInfo(c),C=2*Math.PI*26,col={now:'var(--red)',next:'var(--orange)',later:'var(--ink-3)'}[p.tier];
+  const told=c.timeline.slice().reverse().find(e=>e.kind==='message');
+  const toldHTML=told?`<div class="told ok">${ic('check',16)}<span><b>Last told the customer at ${clock12(told.t)}.</b> ${esc(told.summary||told.text)}</span></div>`:(isOpen(c)?`<div class="told warn">${ic('info',16)}<span><b>Customer not told yet.</b> Write the message below before they call us.</span></div>`:'');
+  el.innerHTML=`
+  <div class="d-head"><div class="r-meta" style="margin:0">${statusTag(c.status)}${isOpen(c)?`<span class="tag ${p.tier==='now'?'red':p.tier==='next'?'orange':''}">${p.label}</span>`:''}${c.key?`<span class="tag">${ic('star',12)}Important customer</span>`:''}</div>
+    <h2 class="d-title">${esc(c.customer)}</h2><div class="r-sub" style="font-size:15px">${esc(t.plain)}. ${esc(c.plain)}</div>${toldHTML}</div>
+  <div class="d-sec"><dl class="kv">
+    <dt>Deliver to</dt><dd>${esc(c.city)}</dd>
+    <dt>Promised by</dt><dd><span class="due ${d.cls} num">${esc(d.text)}</span>${isOpen(c)&&d.cls!=='gray'?` <span class="r-id">(${clock12(c.due)})</span>`:''}</dd>
+    <dt>Driver</dt><dd>${esc(c.driver)}</dd>
+    <dt>Carrier</dt><dd>${esc(c.carrier==='RouteWise fleet'?'Our own truck':c.carrier)} · route ${esc(c.route)}</dd>
+    <dt>In the box</dt><dd>${esc(c.contents)}</dd>
+    <dt>Order</dt><dd class="num">${c.id}</dd></dl></div>
+  ${isOpen(c)?`<div class="d-sec"><h4>Why this is ${p.tier==='later'?'lower on the list':'urgent'}</h4>
+    <div class="gauge"><svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Urgency ${p.score} out of 100"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--fill)" stroke-width="6"/><circle cx="32" cy="32" r="26" fill="none" stroke="${col}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(p.score/100*C).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 32 32)"/><text x="32" y="38" text-anchor="middle" font-size="18" font-weight="700" fill="var(--ink)" font-family="inherit">${p.score}</text></svg>
+      <div><div class="gt">${p.label}</div><div class="gs">Urgency ${p.score} out of 100</div></div></div>
+    <ul class="factors">${p.factors.map(f=>`<li><span>${f.name}</span><span class="fp num">${f.pts} of ${f.max}</span><span class="ft"><i style="width:${Math.round(f.pts/f.max*100)}%"></i></span><span class="fw">${esc(f.why)}</span></li>`).join('')}</ul>
+    <p class="note">Every problem is scored the same way, so everyone on the team sees the same order.</p></div>
+  <div class="d-sec"><h4>Suggested next step</h4><div class="next">${esc(NEXT[c.type])}</div>
+    <div class="rowb"><button class="btn sm" type="button" id="useNext">Copy to my note</button><span class="note" style="margin:0">Only a suggestion. Nothing happens by itself.</span></div></div>`:''}
+  <div class="d-sec"><h4>Who is on it</h4>
+    <div class="rowb" style="margin-top:0"><select class="field" id="ownerSel" aria-label="Owner" style="flex:1;min-width:0"><option value="">No owner</option>${OWNERS.map(o=>`<option value="${o}" ${c.owner===o?'selected':''}>${o}</option>`).join('')}</select><button class="btn tint" type="button" id="takeBtn" ${c.owner===ME?'disabled':''}>Take it</button></div>
+    <div class="seg full" role="group" aria-label="Status" style="margin-top:10px">${STATUSES.map(s=>`<button type="button" data-st="${s}" class="${c.status===s?'on':''}">${s}</button>`).join('')}</div></div>
+  <div class="d-sec"><h4>Notes and history</h4>
+    <form class="inline" id="noteForm" style="margin-top:0"><input class="field" type="text" id="noteInput" placeholder="What did you do?" aria-label="What did you do?"><button class="btn primary" type="submit">Add</button></form>
+    <p class="note err" id="noteErr" hidden>Write what you did first.</p>
+    <ul class="tl">${c.timeline.slice().reverse().map(e=>`<li class="k-${e.kind}"><span class="t num">${clock12(e.t)}</span><div><div class="who"><i></i>${esc(e.who)}</div><div>${esc(e.text)}</div></div></li>`).join('')}</ul></div>
+  <div class="d-sec"><h4>Message to the customer</h4>
+    <textarea class="field" id="draft" rows="9" placeholder="Click Write it for me to start from the facts above.">${esc(c.draft||'')}</textarea>
+    <div class="rowb"><button class="btn" type="button" id="draftBtn">${c.draft?'Write it again':'Write it for me'}</button><button class="btn" type="button" id="copyBtn" ${c.draft?'':'disabled'}>Copy</button><button class="btn primary" type="button" id="sentBtn" ${c.draft?'':'disabled'}>Mark as sent</button></div>
+    <p class="note">You always read and edit it first. Nothing is sent by itself.</p></div>`;
+  const un=$('#useNext');if(un)un.addEventListener('click',()=>{const i=$('#noteInput');i.value=NEXT[c.type];i.focus();});
+  $('#ownerSel').addEventListener('change',e=>{const v=e.target.value||null;takeCase(c,v);refreshAll();toast(v?`${first(v)} owns this now`:'This problem has no owner now');});
+  $('#takeBtn').addEventListener('click',()=>{takeCase(c,ME);refreshAll();toast('You own this problem now');});
+  el.querySelectorAll('[data-st]').forEach(b=>b.addEventListener('click',()=>{if(c.status===b.dataset.st)return;c.status=b.dataset.st;log(c,'status',`Status changed to ${c.status}.`);refreshAll();toast(c.status==='Done'?'Marked as done. You can find it under Done.':`Status is now ${c.status}`);}));
+  $('#noteForm').addEventListener('submit',e=>{e.preventDefault();const i=$('#noteInput'),v=i.value.trim();if(!v){$('#noteErr').hidden=false;i.focus();return;}log(c,'action',v);if(!c.owner)takeCase(c,ME);else if(c.status==='New')c.status='Working';refreshAll();toast('Note added');});
+  $('#noteInput').addEventListener('input',()=>{$('#noteErr').hidden=true;});
+  $('#draftBtn').addEventListener('click',()=>{c.draft=draftFor(c);renderDetail();$('#draft').focus();});
+  $('#draft').addEventListener('input',e=>{c.draft=e.target.value;const has=!!c.draft.trim();$('#copyBtn').disabled=!has;$('#sentBtn').disabled=!has;});
+  $('#copyBtn').addEventListener('click',()=>{const tx=$('#draft').value;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(()=>toast('Copied'),()=>toast('Select the text and copy it yourself'));else toast('Select the text and copy it yourself');});
+  $('#sentBtn').addEventListener('click',()=>{const tx=$('#draft').value.trim();if(!tx)return;const snip=tx.replace(/\s+/g,' ').slice(0,100);log(c,'message',`Message sent to ${c.contact}: "${snip}${tx.length>100?'...':''}"`);c.timeline[c.timeline.length-1].summary=`Told ${c.contact} what happened and what comes next.`+(c.newEta?` New arrival about ${clock12(c.newEta)}.`:' No new time given yet.');if(c.status==='New')c.status='Working';refreshAll();toast(`Marked as sent to ${c.contact}`);});
+}
+
+/* charts */
+function mkTip(el){let t=el.querySelector('.tipbox');if(!t){t=document.createElement('div');t.className='tipbox';t.hidden=true;el.appendChild(t);}return t;}
+function showTip(tip,el,x,y){tip.hidden=false;const tw=tip.offsetWidth,w=el.clientWidth;tip.style.left=(x+14+tw>w?Math.max(0,x-14-tw):x+14)+'px';tip.style.top=Math.max(0,y-10)+'px';}
+function rr(x,y,w,h,rl,rr_){w=Math.max(w,.5);rl=Math.min(rl,w/2,h/2);rr_=Math.min(rr_,w/2,h/2);return `M${x+rl} ${y}H${x+w-rr_}${rr_?`a${rr_} ${rr_} 0 0 1 ${rr_} ${rr_}`:''}V${y+h-rr_}${rr_?`a${rr_} ${rr_} 0 0 1 -${rr_} ${rr_}`:''}H${x+rl}${rl?`a${rl} ${rl} 0 0 1 -${rl} -${rl}`:''}V${y+rl}${rl?`a${rl} ${rl} 0 0 1 ${rl} -${rl}`:''}Z`;}
+function colPath(x,y,w,h){return `M${x} ${y+h}V${y+4}a4 4 0 0 1 4 -4H${x+w-4}a4 4 0 0 1 4 4V${y+h}Z`;}
+function tableView(el,heads,rows){const t=document.createElement('table'),th=document.createElement('thead'),trh=document.createElement('tr');heads.forEach((h,i)=>{const c=document.createElement('th');c.textContent=h;if(i>0)c.className='n';trh.appendChild(c);});th.appendChild(trh);t.appendChild(th);const tb=document.createElement('tbody');rows.forEach(r=>{const tr=document.createElement('tr');r.forEach((v,i)=>{const c=document.createElement('td');c.textContent=v;if(i>0)c.className='n';tr.appendChild(c);});tb.appendChild(tr);});t.appendChild(tb);el.innerHTML='';el.appendChild(t);}
+function bindHits(el,rows,tipFn,sel){const tip=mkTip(el),svg=el.querySelector('svg');el.querySelectorAll('.hit').forEach(hit=>{const i=+hit.dataset.i,mark=svg.querySelector(`${sel}[data-i="${i}"]`);
+  hit.addEventListener('pointermove',ev=>{const rc=svg.getBoundingClientRect();if(mark)mark.classList.add('lift');tip.innerHTML=tipFn(rows[i]);showTip(tip,el,ev.clientX-rc.left,ev.clientY-rc.top);});
+  hit.addEventListener('pointerleave',()=>{if(mark)mark.classList.remove('lift');tip.hidden=true;});});}
+function hbar(el,rows,opts){
+  const w=el.clientWidth||520,labelW=opts.labelW||140,rowH=32,barH=14,padR=54,x0=labelW,x1=w-padR,h=rows.length*rowH+8;
+  const max=Math.max(1,...rows.map(r=>r.value)),fmt=opts.fmt||(v=>String(v));
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="${esc(opts.aria)}">`;
+  rows.forEach((r,i)=>{const y=4+i*rowH+(rowH-barH)/2,bw=Math.max(2,(x1-x0)*r.value/max);
+    s+=`<text x="${x0-10}" y="${y+barH/2+4}" text-anchor="end">${esc(r.label)}</text><path class="bar" data-i="${i}" d="${rr(x0,y,bw,barH,0,4)}"/><text class="val" x="${(x0+bw+6).toFixed(1)}" y="${y+barH/2+4}">${esc(fmt(r.value))}</text>`;});
+  s+=`<line x1="${x0}" y1="4" x2="${x0}" y2="${h-4}" stroke="var(--axis)" stroke-width="1"/>`;
+  rows.forEach((r,i)=>{s+=`<rect class="hit" data-i="${i}" x="${x0}" y="${4+i*rowH}" width="${x1-x0+padR}" height="${rowH}" fill="transparent"/>`;});
+  el.innerHTML=s+'</svg>';bindHits(el,rows,opts.tip,'.bar');
+}
+function columns(el,rows,opts){
+  const w=el.clientWidth||520,h=200,padT=22,padB=28,y0=h-padB,n=rows.length,slot=(w-16)/n,bw=Math.min(24,slot*.5),max=Math.max(1,...rows.map(r=>r.value));
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="${esc(opts.aria)}"><line x1="8" x2="${w-8}" y1="${y0}" y2="${y0}" stroke="var(--axis)" stroke-width="1"/>`;
+  rows.forEach((r,i)=>{const cx=8+slot*i+slot/2,bh=(y0-padT)*r.value/max,x=cx-bw/2,y=y0-bh;
+    if(r.value>0)s+=`<path class="bar" data-i="${i}" d="${colPath(+x.toFixed(1),+y.toFixed(1),bw,+bh.toFixed(1))}"/>`;
+    s+=`<text class="val" x="${cx.toFixed(1)}" y="${(y-7).toFixed(1)}" text-anchor="middle">${r.value}</text><text x="${cx.toFixed(1)}" y="${h-8}" text-anchor="middle">${esc(r.label)}</text>`;});
+  rows.forEach((r,i)=>{s+=`<rect class="hit" data-i="${i}" x="${(8+slot*i).toFixed(1)}" y="${padT-14}" width="${slot.toFixed(1)}" height="${y0-padT+14}" fill="transparent"/>`;});
+  el.innerHTML=s+'</svg>';bindHits(el,rows,opts.tip,'.bar');
+}
+function lineChart(el,days,series){
+  const w=el.clientWidth||600,h=240,m={l:36,r:84,t:14,b:28},n=days.length,iw=w-m.l-m.r,ih=h-m.t-m.b;
+  const maxV=Math.max(...series.flatMap(s=>s.values)),yMax=Math.ceil(maxV/5)*5||5;
+  const X=i=>m.l+iw*i/(n-1),Y=v=>m.t+ih*(1-v/yMax);
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="New problems and fixed problems per day">`;
+  for(let k=0;k<=4;k++){const v=yMax*k/4,y=Y(v);s+=`<line x1="${m.l}" x2="${m.l+iw}" y1="${y}" y2="${y}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l-8}" y="${y+4}" text-anchor="end">${v}</text>`;}
+  const step=n>20?5:n>10?2:1;
+  days.forEach((d,i)=>{if((n-1-i)%step===0)s+=`<text x="${X(i).toFixed(1)}" y="${h-8}" text-anchor="middle">${esc(d)}</text>`;});
+  series.forEach(sr=>{s+=`<polyline points="${sr.values.map((v,i)=>`${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ')}" fill="none" stroke="${sr.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"${sr.dash?` stroke-dasharray="${sr.dash}"`:''}/>`;});
+  const ends=series.map(sr=>({y:Y(sr.values[n-1]),v:sr.values[n-1],name:sr.name,color:sr.color,ly:null}));
+  if(ends.length===2&&Math.abs(ends[0].y-ends[1].y)<15){const mid=(ends[0].y+ends[1].y)/2,topE=ends[0].y<=ends[1].y?ends[0]:ends[1],bot=topE===ends[0]?ends[1]:ends[0];topE.ly=mid-8;bot.ly=mid+8;}
+  ends.forEach(e=>{const ly=e.ly==null?e.y:e.ly;s+=`<circle cx="${X(n-1)}" cy="${e.y}" r="4" fill="${e.color}" stroke="var(--surface)" stroke-width="2"/><text class="val" x="${X(n-1)+9}" y="${ly+4}">${e.v} ${esc(e.name.toLowerCase())}</text>`;});
+  s+=`<line class="xh" x1="0" x2="0" y1="${m.t}" y2="${m.t+ih}" stroke="var(--axis)" stroke-width="1" style="display:none"/>`;
+  series.forEach((sr,si)=>{s+=`<circle class="mk" data-s="${si}" r="4" fill="${sr.color}" stroke="var(--surface)" stroke-width="2" style="display:none"/>`;});
+  s+=`<rect class="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/></svg>`;
+  el.innerHTML=s+`<div class="legend">${series.map(sr=>`<span><i class="lk" style="--c:${sr.color}"></i>${esc(sr.name)}${sr.dash?' (dashed)':''}</span>`).join('')}</div>`;
+  const svg=el.querySelector('svg'),hit=el.querySelector('.hit'),tip=mkTip(el),xh=svg.querySelector('.xh'),mks=Array.from(svg.querySelectorAll('.mk'));
+  hit.addEventListener('pointermove',ev=>{const rc=svg.getBoundingClientRect();let i=Math.round((ev.clientX-rc.left-m.l)/iw*(n-1));i=Math.max(0,Math.min(n-1,i));const x=X(i);
+    xh.setAttribute('x1',x);xh.setAttribute('x2',x);xh.style.display='block';
+    mks.forEach((mk,si)=>{mk.setAttribute('cx',x);mk.setAttribute('cy',Y(series[si].values[i]));mk.style.display='block';});
+    tip.innerHTML=`<b>${esc(days[i])}</b>`+series.map(sr=>`<div class="trow"><i class="lk" style="--c:${sr.color}"></i><b>${sr.values[i]}</b> ${esc(sr.name.toLowerCase())}</div>`).join('');
+    showTip(tip,el,x,m.t);});
+  hit.addEventListener('pointerleave',()=>{xh.style.display='none';mks.forEach(mk=>mk.style.display='none');tip.hidden=true;});
+}
+function stacked(el,segs){
+  const w=el.clientWidth||520,h=70,y=8,bh=22,gap=2,total=segs.reduce((a,s)=>a+s.v,0),avail=w-gap*(segs.length-1);
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="How problems ended">`,x=0;const xs=[];
+  segs.forEach((sg,i)=>{const sw=avail*sg.v/total;xs.push([x,sw]);s+=`<path class="sg" data-i="${i}" d="${rr(+x.toFixed(1),y,+sw.toFixed(1),bh,i===0?5:0,i===segs.length-1?5:0)}" fill="${sg.color}"/><text class="val" x="${(x+sw/2).toFixed(1)}" y="${y+bh+19}" text-anchor="middle">${sg.v}%</text>`;x+=sw+gap;});
+  xs.forEach((p,i)=>{s+=`<rect class="hit" data-i="${i}" x="${p[0].toFixed(1)}" y="0" width="${p[1].toFixed(1)}" height="${h}" fill="transparent"/>`;});
+  el.innerHTML=s+'</svg>'+`<div class="legend">${segs.map(sg=>`<span><i class="sw" style="--c:${sg.color}"></i>${esc(sg.label)}</span>`).join('')}</div>`;
+  bindHits(el,segs,sg=>`<b>${sg.v}%</b> ${esc(sg.label)}`,'.sg');
+}
+function dayLabels(n){const end=new Date(2026,8,13);return Array.from({length:n},(_,i)=>{const d=new Date(end);d.setDate(end.getDate()-(n-1-i));return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});});}
+
+const TT={};
+function copyTable(key){const t=TT[key];if(!t)return;const tsv=[t.heads].concat(t.rows).map(r=>r.join('\t')).join('\n');
+  const ok=()=>toast('Copied. Paste it into Excel or PowerPoint.'),no=()=>toast('Copying is blocked here. Click Show numbers, then select the table and copy it.');
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tsv).then(ok,no);else no();}
+function renderTrends(){
+  const r=state.range,total=AN.causes[r].reduce((a,b)=>a+b,0);
+  $('#tStats').innerHTML=`
+    <div class="card stat"><div class="n num">${total}</div><div class="l">problems</div><div class="h warn">${ic('up',14)} ${AN.delta[r]}% more than before</div><div class="h ${rateNote(r).cls}">${rateNote(r).text}</div></div>
+    <div class="card stat"><div class="n" style="font-size:30px;padding-top:8px">${AN.median[r]}</div><div class="l">typical time to fix</div><div class="h">First report to fixed</div></div>
+    <div class="card stat"><div class="n num">${AN.before[r]}%</div><div class="l">fixed before the deadline</div><div class="h">Of problems closed</div></div>
+    <div class="card stat"><div class="n num">${AN.recurring[r]}%</div><div class="l">are repeat problems</div><div class="h">Same cause, same route, 3+ times</div></div>`;
+  $$('[data-table]').forEach(b=>{b.textContent=state.tables[b.dataset.table]?'Show chart':'Show numbers';});
+  const cause=AN.causeLabels.map((l,i)=>({label:l,value:AN.causes[r][i]}));
+  TT.cause={heads:['Cause','Problems','Share'],rows:cause.map(x=>[x.label,String(x.value),Math.round(x.value/total*100)+'%'])};
+  if(state.tables.cause)tableView($('#cCause'),['Cause','Problems','Share'],cause.map(x=>[x.label,String(x.value),Math.round(x.value/total*100)+'%']));
+  else hbar($('#cCause'),cause,{aria:'What goes wrong most',tip:x=>`<b>${x.value}</b> ${esc(x.label)} · ${Math.round(x.value/total*100)}% of all problems`});
+  const car=AN.carrierLabels.map((l,i)=>({label:l,value:AN.rates[r][i],count:AN.carriers[r][i]}));
+  TT.carrier={heads:['Carrier','Per 100 deliveries','Problems'],rows:car.map(x=>[x.label,x.value.toFixed(1),String(x.count)])};
+  if(state.tables.carrier)tableView($('#cCarrier'),['Carrier','Per 100 deliveries','Problems'],car.map(x=>[x.label,x.value.toFixed(1),String(x.count)]));
+  else hbar($('#cCarrier'),car,{aria:'Problems per 100 deliveries by carrier',fmt:v=>v.toFixed(1),tip:x=>`<b>${x.value.toFixed(1)}</b> per 100 deliveries · ${x.count} problems · ${esc(x.label)}`});
+  const days=dayLabels(r),op=AN.opened.slice(-r),rs=AN.resolved.slice(-r);
+  TT.trend={heads:['Day','New','Fixed'],rows:days.map((d,i)=>[d,String(op[i]),String(rs[i])])};
+  if(state.tables.trend)tableView($('#cTrend'),['Day','New','Fixed'],days.map((d,i)=>[d,String(op[i]),String(rs[i])]));
+  else lineChart($('#cTrend'),days,[{name:'New',values:op,color:'var(--s1)'},{name:'Fixed',values:rs,color:'var(--s2)',dash:'6 4'}]);
+  const bands=[['Under 30 min',30],['30 to 60 min',60],['1 to 2 h',120],['2 to 4 h',240],['Over 4 h',Infinity]];let prev=0;
+  const age=bands.map(b=>{const v=openCases().filter(c=>{const a=NOW-c.detected;return a>=prev&&a<b[1];}).length;prev=b[1];return{label:b[0],value:v};});
+  TT.aging={heads:['Waiting time','Open problems'],rows:age.map(x=>[x.label,String(x.value)])};
+  if(state.tables.aging)tableView($('#cAging'),['Waiting time','Open problems'],age.map(x=>[x.label,String(x.value)]));
+  else columns($('#cAging'),age,{aria:'How long open problems have waited',tip:x=>`<b>${x.value}</b> open ${x.value===1?'problem':'problems'}, ${esc(x.label.toLowerCase())}`});
+  const oc=AN.outcomes[r],segs=[{label:'Fixed before the deadline',v:oc[0],color:'var(--s1)'},{label:'Fixed after the deadline',v:oc[1],color:'var(--s2)'},{label:'Handed to the carrier',v:oc[2],color:'var(--s3)'}];
+  TT.outcome={heads:['How it ended','Share'],rows:segs.map(x=>[x.label,x.v+'%'])};
+  if(state.tables.outcome)tableView($('#cOutcome'),['How it ended','Share'],segs.map(x=>[x.label,x.v+'%']));else stacked($('#cOutcome'),segs);
+  $('#tPats').innerHTML=AN.patterns.map(p=>patHTML(p,r)).join('');
+}
+
+/* driver app */
+function reportRow(c){
+  const t=TYPES[c.type],last=c.timeline.slice().reverse().find(e=>e.kind==='action');
+  const st=!isOpen(c)?'Fixed. Nothing more to do.':c.owner?`${first(c.owner)} is on it.`:'Dispatch has it. Waiting for someone to take it.';
+  return `<div class="prow"><span class="ico ${isOpen(c)?'blue':'done'}">${ic(isOpen(c)?t.icon:'check',18)}</span><div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)} · ${clock12(c.detected)}</div><div class="p-state ${c.owner||!isOpen(c)?'ok':''}">${esc(st)}</div>${last?`<div class="p-msg"><b>From dispatch:</b> ${esc(last.text)}</div>`:''}</div></div>`;
+}
+function renderDriver(){
+  const d=state.drv,el=$('#view-driver');
+  const mine=CASES.filter(c=>c.driver==='Ray Okafor').sort((a,b)=>b.detected-a.detected);
+  let body='';
+  if(d.screen==='home'){
+    body=`<div class="p-hello">Hi Ray</div><div class="p-route">Route R-09 Lehigh · 28 stops · next is stop 12</div>
+      <button class="btn primary lg block" type="button" id="drvReport">${ic('alert',20)}Report a problem</button>
+      <p class="p-note">One tap. No forms. No phone calls.</p>
+      <div class="p-sec">My reports</div>
+      <div class="list">${mine.map(reportRow).join('')||'<div class="p-empty">No reports today.</div>'}</div>`;
+  }else if(d.screen==='pick'){
+    body=`<div class="p-nav"><button class="btn text" type="button" id="drvBack">${ic('back',20)}Back</button></div>
+      <div class="p-hello" style="font-size:28px;margin-bottom:16px">What happened?</div>
+      <div class="ptiles">${DRIVER_TYPES.map((t,i)=>`<button class="ptile" type="button" data-pt="${i}">${ic(TYPES[t.type].icon,28)}<span>${t.label}</span></button>`).join('')}
+      <button class="ptile" type="button" id="drvCall">${ic('call',28)}<span>Call dispatch</span></button></div>`;
+  }else if(d.screen==='details'){
+    const t=DRIVER_TYPES[d.type];
+    body=`<div class="p-nav"><button class="btn text" type="button" id="drvBack">${ic('back',20)}Back</button></div>
+      <div class="p-hello" style="font-size:28px">${t.label}</div><div class="p-route">Which stop is it?</div>
+      <div class="list">${RAY_STOPS.map((s,i)=>`<button class="pick" type="button" data-stop="${i}"><div><div class="r-title">Stop ${s.n} · ${esc(s.customer)}</div><div class="r-sub">${esc(s.city)} · due ${clock12(s.due)}</div></div><span class="ck">${d.stop===i?ic('check',20):''}</span></button>`).join('')}</div>
+      <div class="p-sec" style="font-size:15px;margin:18px 2px 8px">Anything dispatch should know? You can skip this.</div>
+      <textarea class="field" id="drvNote" rows="3" placeholder="For example: gate code does not work">${esc(d.note)}</textarea>
+      <div class="rowb"><button class="btn" type="button" id="drvPhoto">${ic(d.photo?'check':'camera',18)}${d.photo?'Photo added':'Add a photo'}</button></div>
+      <button class="btn primary lg block" type="button" id="drvSend" style="margin-top:18px">Send to dispatch</button>`;
+  }else{
+    body=`<div class="p-done"><div class="big">${ic('check',44)}</div><h3>Sent. Dispatch has it.</h3><p>You do not need to call. When someone takes it, you will see their name under My reports.</p><button class="btn primary lg" type="button" id="drvDone">Done</button></div>`;
+  }
+  const lastCase=d.lastId?CASES.find(c=>c.id===d.lastId):null;
+  el.innerHTML=`<h1 class="lt">Driver app</h1><p class="sub">What Ray, a RouteWise driver, sees on his phone. Try it: report a problem, then look for it under Problems.</p>
+  <div class="drv">
+    <div class="drv-side card pad"><h3>Made for the road</h3><ul>
+      <li>${ic('check',18)}<span>One tap to say what happened.</span></li>
+      <li>${ic('check',18)}<span>No typing needed. A note or a photo is optional.</span></li>
+      <li>${ic('check',18)}<span>The driver sees who is handling it, so nobody has to call three times.</span></li>
+      <li>${ic('check',18)}<span>Every report keeps its time. That protects the driver when a delay was not their fault.</span></li></ul></div>
+    <div class="phone"><div class="screen"><div class="island"></div>
+      <div class="p-status-bar"><span class="num">9:42</span><span><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="7" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="4" rx="1" fill="currentColor" opacity=".45"/></svg></span></div>
+      <div class="p-body">${body}</div><div class="p-home"></div></div></div>
+    <div class="drv-side card pad"><h3>What dispatch sees</h3>${lastCase?`<p class="lead" style="margin-bottom:10px">Ray's report arrived as a new problem, already ranked.</p><div class="list" style="box-shadow:none;background:var(--fill-2)">${rowHTML(lastCase).replace(/<span class="chev">[\s\S]*?<\/span><\/div>$/,'</div>')}</div><div class="rowb"><button class="btn primary" type="button" id="drvSee">See it in Problems</button></div>`:'<p class="lead" style="margin:0">Send a report from the phone. It shows up under Problems right away, already sorted by how urgent it is.</p>'}</div>
+  </div>`;
+  const on=(id,fn)=>{const e=$(id);if(e)e.addEventListener('click',fn);};
+  on('#drvReport',()=>{d.screen='pick';renderDriver();});
+  on('#drvBack',()=>{d.screen=d.screen==='details'?'pick':'home';renderDriver();});
+  on('#drvCall',()=>toast('Calling is turned off in this prototype'));
+  el.querySelectorAll('[data-pt]').forEach(b=>b.addEventListener('click',()=>{d.type=+b.dataset.pt;d.stop=0;d.note='';d.photo=false;d.screen='details';renderDriver();}));
+  el.querySelectorAll('[data-stop]').forEach(b=>b.addEventListener('click',()=>{const n=$('#drvNote');if(n)d.note=n.value;d.stop=+b.dataset.stop;renderDriver();}));
+  const note=$('#drvNote');if(note)note.addEventListener('input',e=>{d.note=e.target.value;});
+  on('#drvPhoto',()=>{d.photo=!d.photo;renderDriver();});
+  on('#drvSend',sendReport);
+  on('#drvDone',()=>{d.screen='home';renderDriver();});
+  on('#drvSee',()=>{state.sel=d.lastId;state.f={status:'open',type:'all',q:''};showView('problems');});
+  const mini=el.querySelector('.drv-side .row');if(mini){mini.style.cursor='default';mini.removeAttribute('tabindex');mini.removeAttribute('role');const tk=mini.querySelector('[data-take]');if(tk)tk.remove();}
+}
+function sendReport(){
+  const d=state.drv,t=DRIVER_TYPES[d.type],s=RAY_STOPS[d.stop],id='RW-'+(91470+state.newCount++),note=d.note.trim();
+  CASES.push({id,customer:s.customer,key:s.key,contact:s.contact,city:s.city,route:'R-09 Lehigh',carrier:'RouteWise fleet',driver:'Ray Okafor',type:t.type,detected:NOW,due:s.due,status:'New',owner:null,source:'the driver app',contents:s.contents,critical:false,
+    plain:t.plain+(note?` Driver note: "${note}"`:''),custDetail:t.cust,newEta:null,
+    timeline:[{t:NOW,who:'Ray Okafor',kind:'event',text:`Report from the driver app: ${t.label}.${note?` Note: "${note}"`:''}${d.photo?' Photo attached.':''}`}]});
+  d.lastId=id;d.screen='sent';renderSide();renderDriver();
+}
+
+/* data */
+function renderData(){
+  $('#sources').innerHTML=SOURCES.map(s=>{const warn=s.st!=='ok';const txt=s.st==='ok'?'Working':s.st==='stale'?`${s.msg}, ${dur(NOW-s.last)} old`:s.msg;
+    return `<div class="src"><span class="ico ${warn?'next':'blue'}">${ic(s.icon,18)}</span><div><div class="r-title">${esc(s.name)}</div><div class="r-sub">${esc(s.how)}</div></div><div><div class="st ${warn?'warn':''}"><i></i>${esc(txt)}</div><div class="sm num">Last update ${clock12(s.last)} · ${s.n} today</div></div></div>`;}).join('');
+}
+function renderPreview(){
+  const rows=[['RW-91461','Lancaster General Surgical Center','Allegheny Express','11:00 AM','Still at the carrier terminal'],['RW-91455','Berks Community Health','Our own truck','1:00 PM','25 min behind, road work'],['RW-91433','Lebanon Family Practice','Our own truck','2:00 PM','Delivered, signed at front desk'],['RW-91429','Hershey Pediatrics','Our own truck','3:30 PM','Out for delivery'],['RW-91418','Lancaster Optical','Our own truck','12:00 PM','Delivered, left at reception']];
+  const p=$('#preview');p.hidden=false;
+  p.innerHTML=`<div class="r-sub" style="margin-bottom:6px">deliveries_sep14.csv · 412 rows · here are the first 5</div><table><thead><tr><th>Order</th><th>Customer</th><th>Carrier</th><th>Promised by</th><th>Latest update</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map((v,i)=>`<td class="${i===0||i===3?'num':''}">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>
+    <div class="rowb" style="margin-top:12px"><button class="btn primary" type="button" id="importBtn" ${state.imported?'disabled':''}>${state.imported?'Added':'Add these 412 updates'}</button><span class="note" style="margin:0">Updates for a known problem go into its history. New trouble becomes a new problem.</span></div>`;
+  $('#importBtn').addEventListener('click',()=>{if(state.imported)return;state.imported=true;IMPORT_CASES.forEach(c=>CASES.push(c));renderSide();state.sel='RW-91461';state.f={status:'open',type:'all',q:''};showView('problems');toast('412 updates added. 2 new problems found.');});
+}
+
+/* navigation */
+const TITLES={today:'Today',problems:'Problems',trends:'Trends',driver:'Driver app',data:'Data'};
+function showView(v){
+  state.view=v;$$('.view').forEach(s=>{s.hidden=s.id!=='view-'+v;});
+  $$('[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v));
+  $('#barTitle').textContent=TITLES[v];
+  if(v==='today')renderToday();
+  if(v==='problems'){$$('[data-status]').forEach(x=>x.classList.toggle('on',x.dataset.status===state.f.status));$('#fType').value=state.f.type;$('#fQ').value=state.f.q;if(!state.sel||!visible().some(c=>c.id===state.sel)){const f=visible()[0];state.sel=f?f.id:null;}renderGroups();renderDetail();}
+  if(v==='trends')renderTrends();
+  if(v==='driver')renderDriver();
+  if(v==='data')renderData();
+  window.scrollTo({top:0});
+}
+$$('[data-ic]').forEach(e=>e.insertAdjacentHTML('afterbegin',ic(e.dataset.ic,+e.dataset.size||18)));
+$$('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+$$('[data-status]').forEach(b=>b.addEventListener('click',()=>{state.f.status=b.dataset.status;$$('[data-status]').forEach(x=>x.classList.toggle('on',x===b));const l=visible();if(!l.some(c=>c.id===state.sel))state.sel=l[0]?l[0].id:null;renderGroups();renderDetail();}));
+Object.keys(TYPES).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=TYPES[k].plain;$('#fType').appendChild(o);});
+$('#fType').addEventListener('change',e=>{state.f.type=e.target.value;renderGroups();});
+$('#fQ').addEventListener('input',e=>{state.f.q=e.target.value.trim();const l=visible();if(state.f.q&&l.length===1&&state.sel!==l[0].id){state.sel=l[0].id;renderGroups();renderDetail();}else renderGroups();});
+$$('[data-range]').forEach(b=>b.addEventListener('click',()=>{state.range=+b.dataset.range;$$('[data-range]').forEach(x=>x.classList.toggle('on',x===b));renderTrends();}));
+$$('[data-table]').forEach(b=>b.addEventListener('click',()=>{state.tables[b.dataset.table]=!state.tables[b.dataset.table];renderTrends();}));
+$$('[data-copy]').forEach(b=>b.addEventListener('click',()=>copyTable(b.dataset.copy)));
+$('#chooseFile').addEventListener('click',()=>toast('Picking a file is turned off in this prototype. Use the sample file.'));
+$('#loadSample').addEventListener('click',()=>{renderPreview();toast('Sample file loaded');});
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(state.view==='trends')renderTrends();},150);});
+renderSide();showView('today');
+</script>
+
+</body>
+</html>

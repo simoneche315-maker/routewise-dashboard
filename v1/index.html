@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>RouteWise Exception Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F2F4F7;--surface:#FFFFFF;--surface-2:#F7F9FB;--ink:#141A21;--muted:#5B6774;--faint:#8A97A5;
+  --border:#D8DEE6;--border-strong:#B9C2CE;
+  --accent:#1E4FA3;--accent-ink:#173E80;--accent-soft:#E3EBF8;--accent-track:#CBD9F1;--on-accent:#FFFFFF;
+  --crit:#C8372D;--crit-soft:#FBE9E7;--crit-ink:#8E2119;
+  --warn:#B9700E;--warn-soft:#FBF0DC;--warn-ink:#7A4A06;
+  --good:#2A7A4B;--good-soft:#E3F3E9;--good-ink:#1C5A36;
+  --neutral-soft:#E9EDF2;--neutral-ink:#3D4854;
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--grid:#E6EAEF;--axis:#C5CDD6;
+  --shadow:0 1px 2px rgba(20,26,33,.06),0 6px 16px rgba(20,26,33,.07);
+  --sans:"Barlow","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1318;--surface:#171E26;--surface-2:#1E2731;--ink:#E6EBF0;--muted:#97A3B0;--faint:#6F7C8A;
+    --border:#2B3542;--border-strong:#3C4856;
+    --accent:#7EA6EE;--accent-ink:#A9C4F5;--accent-soft:#1C2A45;--accent-track:#27395C;--on-accent:#0E1318;
+    --crit:#F27D74;--crit-soft:#3A1E1C;--crit-ink:#F7A9A3;
+    --warn:#E3A43C;--warn-soft:#3A2C14;--warn-ink:#F0C57A;
+    --good:#5DBB85;--good-soft:#16301F;--good-ink:#8FD6AC;
+    --neutral-soft:#242E39;--neutral-ink:#C3CDD7;
+    --s1:#3987e5;--s2:#d95926;--s3:#199e70;--grid:#242E39;--axis:#3C4856;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 16px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1318;--surface:#171E26;--surface-2:#1E2731;--ink:#E6EBF0;--muted:#97A3B0;--faint:#6F7C8A;
+  --border:#2B3542;--border-strong:#3C4856;
+  --accent:#7EA6EE;--accent-ink:#A9C4F5;--accent-soft:#1C2A45;--accent-track:#27395C;--on-accent:#0E1318;
+  --crit:#F27D74;--crit-soft:#3A1E1C;--crit-ink:#F7A9A3;
+  --warn:#E3A43C;--warn-soft:#3A2C14;--warn-ink:#F0C57A;
+  --good:#5DBB85;--good-soft:#16301F;--good-ink:#8FD6AC;
+  --neutral-soft:#242E39;--neutral-ink:#C3CDD7;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--grid:#242E39;--axis:#3C4856;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 16px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
+.muted{color:var(--muted)}
+.app{display:grid;grid-template-columns:212px minmax(0,1fr);grid-template-rows:auto 1fr;min-height:100vh}
+.topbar{grid-column:1/-1;display:flex;align-items:center;gap:20px;padding:10px 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:8px;background:var(--accent);color:var(--on-accent);font-weight:600;letter-spacing:.5px;font-size:13px}
+.brand-name{font-weight:600;font-size:16px;line-height:1.1}
+.brand-sub{font-size:12px;color:var(--muted)}
+.clock{display:flex;align-items:center;gap:8px;margin-left:auto;color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:14px}
+.user{display:flex;align-items:center;gap:8px}
+.avatar{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);font-weight:600;font-size:12px;flex:none}
+.user-name{font-weight:500;line-height:1.1}.user-role{font-size:12px;color:var(--muted)}
+.rail{background:var(--surface);border-right:1px solid var(--border);padding:14px 12px;display:flex;flex-direction:column;gap:4px}
+.nav{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:8px 10px;border:0;border-radius:8px;background:transparent;cursor:pointer;font-weight:500;color:var(--muted);white-space:nowrap}
+.nav:hover{background:var(--surface-2);color:var(--ink)}
+.nav.on{background:var(--accent-soft);color:var(--accent-ink)}
+.badge{margin-left:auto;font-family:var(--mono);font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:0 7px;color:var(--ink)}
+.rail-sec{margin-top:18px;border-top:1px solid var(--border);padding-top:12px}
+.rail-h,.sec h3,.fig-h h3,.tile .label,th{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.load{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.load li{display:flex;justify-content:space-between;font-size:13px;gap:8px}
+.load li.warn{color:var(--crit);font-weight:500}
+.content{padding:18px 22px 40px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.banner{display:flex;gap:12px;align-items:center;padding:10px 14px;border-radius:8px;background:var(--accent-soft);color:var(--accent-ink);margin-bottom:14px;font-size:13px;flex-wrap:wrap}
+.banner button{margin-left:auto}
+.tiles{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:12px;margin-bottom:14px}
+.tile{padding:14px 16px}
+.tile .value{font-size:30px;font-weight:600;line-height:1.1;margin-top:6px}
+.tile.hero .value{font-size:48px}
+.tile .sub{font-size:12.5px;color:var(--muted);margin-top:4px}
+.tile .sub.bad{color:var(--crit)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar .grow{flex:1}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer;color:var(--muted);font-weight:500}
+.seg button.on{background:var(--accent);color:var(--on-accent)}
+.seg button+button{border-left:1px solid var(--border)}
+select,input[type=search],input[type=text],textarea{height:34px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink)}
+textarea{height:auto;padding:10px;line-height:1.5;width:100%;resize:vertical;display:block}
+input[type=search]{min-width:180px}
+.btn{height:34px;padding:0 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);cursor:pointer;font-weight:500;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--border-strong);background:var(--surface-2)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.btn-sm{height:28px;padding:0 10px;font-size:13px}
+.btn:disabled{opacity:.55;cursor:default}
+.work{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:14px;align-items:start}
+.queue{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody.rows tr{cursor:pointer}
+tbody.rows tr:hover{background:var(--surface-2)}
+tbody.rows tr.sel{background:var(--accent-soft)}
+tbody.rows tr td:first-child{border-left:3px solid var(--tier,transparent);border-radius:0}
+.tier-Critical{--tier:var(--crit)}.tier-High{--tier:var(--warn)}.tier-Medium{--tier:var(--border-strong)}.tier-Low{--tier:transparent}
+.score{font-family:var(--mono);font-weight:500;font-size:15px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap;line-height:18px}
+.chip-crit{background:var(--crit-soft);color:var(--crit-ink)}.chip-warn{background:var(--warn-soft);color:var(--warn-ink)}.chip-good{background:var(--good-soft);color:var(--good-ink)}.chip-neutral{background:var(--neutral-soft);color:var(--neutral-ink)}.chip-accent{background:var(--accent-soft);color:var(--accent-ink)}
+.chip i{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+.cust{font-weight:500}.sub2{font-size:12.5px;color:var(--muted)}
+.due-late{color:var(--crit);font-weight:500}.due-soon{color:var(--warn);font-weight:500}
+.own{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.own .avatar{width:22px;height:22px;font-size:10px}
+.unowned{color:var(--crit);font-weight:500;white-space:nowrap}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+.case{padding:18px}
+.case-h{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.case-h .id{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.case-title{font-size:18px;font-weight:600;margin:6px 0 2px;text-wrap:balance}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:12px;font-size:13px}
+.facts div span.l{display:block;font-size:11.5px;color:var(--muted)}
+.sec{border-top:1px solid var(--border);margin-top:16px;padding-top:14px}
+.sec h3{margin:0 0 10px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-big{font-size:32px;font-weight:600;line-height:1}
+.factors{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.factor{display:grid;grid-template-columns:118px 1fr 52px;gap:4px 8px;align-items:center;font-size:13px}
+.factor .why{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+.meter{height:6px;border-radius:3px;background:var(--accent-track);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.pts{font-family:var(--mono);font-size:12px;text-align:right;color:var(--muted)}
+.rec{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.rec p{margin:0;flex:1;min-width:200px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+.form-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.form-row select{width:100%}
+.action-row{display:flex;gap:8px;margin-top:10px}
+.action-row input{flex:1;min-width:0}
+.tl{list-style:none;margin:12px 0 0;padding:0}
+.tl li{display:grid;grid-template-columns:76px 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--border);font-size:13px}
+.tl .t{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.tl .who{font-weight:500;display:flex;align-items:center;gap:6px}
+.tl .who i{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--faint);flex:none}
+.tl .k-action .who i{background:var(--accent)}.tl .k-status .who i{background:var(--warn)}.tl .k-message .who i{background:var(--good)}
+.draft-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.note{font-size:12px;color:var(--muted);margin:6px 0 0}
+.err{color:var(--crit)}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fig{padding:14px 16px}
+.fig.wide{grid-column:1/-1}
+.fig-h{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.fig-h h3{margin:0}
+.fig-h .sub{font-size:12px;color:var(--muted)}
+.fig-h .btn{margin-left:auto}
+.fig-body{position:relative}
+.chart{display:block;overflow:visible}
+.chart text{fill:var(--muted);font-family:var(--sans);font-size:12px}
+.chart text.val{fill:var(--ink);font-variant-numeric:tabular-nums}
+.chart .bar{fill:var(--s1);transition:opacity .12s}
+.chart .bar.lift,.chart .seg.lift{opacity:.7}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lk{display:inline-block;width:18px;height:2px;background:var(--c)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;background:var(--c)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);padding:6px 9px;border-radius:6px;font-size:12px;white-space:nowrap;z-index:2;color:var(--ink)}
+.tip b{font-weight:600;font-size:13px}
+.tip .row{display:flex;align-items:center;gap:6px}
+.tip .lk{width:12px}
+.dt{font-size:13px}.dt th,.dt td{padding:6px 8px}.dt td.n,.dt th.n{text-align:right;font-family:var(--mono);font-size:12.5px}
+.patterns{list-style:none;margin:0;padding:0}
+.patterns li{display:grid;grid-template-columns:72px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--border)}
+.patterns li:first-child{border-top:0;padding-top:0}
+.patterns .n{font-size:24px;font-weight:600;line-height:1}
+.patterns .n small{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:3px;line-height:1.2}
+.patterns .ttl{font-weight:500}
+.patterns .try{font-size:12.5px;color:var(--muted);margin-top:3px}
+.sources td:first-child{font-weight:500}
+.drop{border:1.5px dashed var(--border-strong);border-radius:10px;padding:26px;text-align:center;color:var(--muted)}
+.preview{margin-top:12px;overflow-x:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:500;box-shadow:var(--shadow);z-index:9;max-width:calc(100% - 32px)}
+h2.view-title{font-size:20px;font-weight:600;margin:0 0 4px}
+.view-sub{color:var(--muted);margin:0 0 14px;max-width:70ch}
+@media (max-width:1100px){.work{grid-template-columns:1fr}.charts{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+@media (max-width:900px){.app{grid-template-columns:1fr}.rail{flex-direction:row;border-right:0;border-bottom:1px solid var(--border);overflow-x:auto;padding:8px 12px}.rail-sec{display:none}.content{padding:14px 16px 40px}.clock{margin-left:0}.topbar{gap:12px}}
+@media (max-width:700px){.tiles{grid-template-columns:1fr 1fr}.tile.hero .value{font-size:36px}.facts{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.factor{grid-template-columns:100px 1fr 44px}.action-row{flex-direction:column}}
+@media (min-width:1101px){.case{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:auto}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="mark">RW</span><div><div class="brand-name">RouteWise</div><div class="brand-sub">Exception desk · Harrisburg hub</div></div></div>
+    <div class="clock"><span class="mono">Mon Sep 14, 2026 · 09:42</span><span class="chip chip-neutral">Sample data</span></div>
+    <div class="top-actions">
+      <button class="btn" id="btnImportTop" type="button">Import events</button>
+      <div class="user"><span class="avatar">JT</span><div><div class="user-name">Jamal Turner</div><div class="user-role">Dispatch manager</div></div></div>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Sections">
+    <button class="nav on" type="button" data-view="queue">Exception queue <span class="badge" id="navQueueCount">0</span></button>
+    <button class="nav" type="button" data-view="analytics">Analytics</button>
+    <button class="nav" type="button" data-view="import">Data import</button>
+    <div class="rail-sec"><div class="rail-h">Open cases by owner</div><ul id="ownerLoad" class="load"></ul></div>
+  </nav>
+
+  <main class="content">
+    <section id="view-queue" class="view">
+      <div class="banner" id="banner">
+        <span>Prototype on sample data for Monday, Sept 14, 2026 at 09:42. Try it: open the top case, assign it, log an action, draft the customer update, then check Analytics.</span>
+        <button class="btn btn-sm" type="button" id="bannerClose">Got it</button>
+      </div>
+      <div class="tiles" id="tiles"></div>
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Status filter">
+          <button type="button" data-status="open" class="on">Open</button>
+          <button type="button" data-status="unowned">Unowned</button>
+          <button type="button" data-status="all">All</button>
+        </div>
+        <select id="fType" aria-label="Exception type"><option value="all">All exception types</option></select>
+        <select id="fCarrier" aria-label="Carrier"><option value="all">All carriers</option></select>
+        <input type="search" id="fQ" placeholder="Search shipment, customer, route" aria-label="Search">
+        <span class="grow"></span>
+        <select id="sortSel" aria-label="Sort order"><option value="priority">Sort: priority</option><option value="due">Sort: due soonest</option><option value="new">Sort: newest</option></select>
+      </div>
+      <div class="work">
+        <div class="queue card">
+          <table>
+            <thead><tr><th>Priority</th><th>Shipment</th><th>Exception</th><th>Due</th><th>Owner</th><th>Status</th></tr></thead>
+            <tbody class="rows" id="queueBody"></tbody>
+          </table>
+          <p class="empty" id="queueEmpty" hidden>No cases match these filters.</p>
+        </div>
+        <aside class="case card" id="casePanel" aria-live="polite"></aside>
+      </div>
+    </section>
+
+    <section id="view-analytics" class="view" hidden>
+      <h2 class="view-title">Exception analytics</h2>
+      <p class="view-sub">Where exceptions come from and how they get resolved. Every number below follows the same date range.</p>
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Date range">
+          <button type="button" data-range="7">Last 7 days</button>
+          <button type="button" data-range="14" class="on">Last 14 days</button>
+          <button type="button" data-range="30">Last 30 days</button>
+        </div>
+        <span class="grow"></span>
+        <button class="btn" type="button" id="exportBtn">Export table</button>
+      </div>
+      <div class="tiles" id="aTiles"></div>
+      <div class="charts">
+        <div class="card fig"><div class="fig-h"><h3>Exceptions by cause</h3><span class="sub" id="causeSub"></span><button class="btn btn-sm" type="button" data-table="cause">Table</button></div><div class="fig-body" id="chartCause"></div></div>
+        <div class="card fig"><div class="fig-h"><h3>Exceptions per 100 shipments, by carrier</h3><button class="btn btn-sm" type="button" data-table="carrier">Table</button></div><div class="fig-body" id="chartCarrier"></div></div>
+        <div class="card fig wide"><div class="fig-h"><h3>Opened vs resolved per day</h3><span class="sub">Resolved counts cases closed that day, whichever day they opened</span><button class="btn btn-sm" type="button" data-table="trend">Table</button></div><div class="fig-body" id="chartTrend"></div></div>
+        <div class="card fig"><div class="fig-h"><h3>Open cases by time open</h3><span class="sub">Right now, not date-range dependent</span><button class="btn btn-sm" type="button" data-table="aging">Table</button></div><div class="fig-body" id="chartAging"></div></div>
+        <div class="card fig"><div class="fig-h"><h3>Resolution outcomes</h3><span class="sub">Share of cases closed in the range</span><button class="btn btn-sm" type="button" data-table="outcome">Table</button></div><div class="fig-body" id="chartOutcome"></div></div>
+        <div class="card fig wide"><div class="fig-h"><h3>Recurring patterns</h3><span class="sub">Same route, carrier, or time of day showing the same cause three or more times</span></div><ul class="patterns" id="patterns"></ul></div>
+      </div>
+    </section>
+
+    <section id="view-import" class="view" hidden>
+      <h2 class="view-title">Data import</h2>
+      <p class="view-sub">Where shipment events come from. Live carrier feeds and telematics are out of scope, so the desk reads exports, portal digests, and simulated driver messages.</p>
+      <div class="two">
+        <div class="card fig">
+          <div class="fig-h"><h3>Connected sources</h3></div>
+          <div style="overflow-x:auto">
+          <table class="sources">
+            <thead><tr><th>Source</th><th>How it arrives</th><th>Last received</th><th>Events today</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Driver texts</td><td>Simulated SMS inbox</td><td class="mono">09:38</td><td class="mono">27</td><td><span class="chip chip-good"><i></i>Receiving</span></td></tr>
+              <tr><td>Keystone Freight portal</td><td>Hourly CSV export</td><td class="mono">09:00</td><td class="mono">14</td><td><span class="chip chip-good"><i></i>Receiving</span></td></tr>
+              <tr><td>Allegheny Express portal</td><td>Email status digest</td><td class="mono">08:15</td><td class="mono">6</td><td><span class="chip chip-warn"><i></i>Stale 1 h 27 min</span></td></tr>
+              <tr><td>Penn Line Carriers</td><td>Manual check by coordinator</td><td class="mono">07:30</td><td class="mono">2</td><td><span class="chip chip-warn"><i></i>Manual</span></td></tr>
+              <tr><td>GPS export</td><td>TMS vehicle positions, every 15 min</td><td class="mono">09:30</td><td class="mono">41</td><td><span class="chip chip-good"><i></i>Receiving</span></td></tr>
+              <tr><td>Customer-service tickets</td><td>Ticket system export</td><td class="mono">09:35</td><td class="mono">9</td><td><span class="chip chip-good"><i></i>Receiving</span></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <div class="card fig">
+          <div class="fig-h"><h3>Import a file</h3></div>
+          <div class="drop">
+            <div>Drop a CSV of shipments or status events here</div>
+            <div class="sub2" style="margin-top:4px">Columns: shipment_id, customer, route, carrier, promised_by, event_time, event_type, source, note</div>
+            <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn" type="button" id="chooseFile">Choose file</button><button class="btn btn-primary" type="button" id="loadSample">Load sample file</button></div>
+          </div>
+          <div id="preview" class="preview" hidden></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+const NOW=582, ME='Jamal Turner';
+const OWNERS=['Maria Delgado','Andre Gibson','Sam Whitaker','Jamal Turner','Priya Nair'];
+const TYPES=['Traffic delay','Failed attempt','Damaged package','Address issue','Missed pickup','Carrier delay'];
+const CARRIERS=['RouteWise fleet','Keystone Freight','Allegheny Express','Penn Line Carriers'];
+const STATUSES=['New','Open','In progress','Waiting on carrier','Resolved'];
+const TYPE_SEV={'Missed pickup':[15,'shipment is not moving until the pickup is rebooked'],'Damaged package':[13,'contents may need replacement'],'Failed attempt':[11,'driver has left the stop, needs a second attempt'],'Address issue':[10,'driver cannot complete the stop without a correction'],'Carrier delay':[9,'shipment is outside our direct control'],'Traffic delay':[6,'driver is still moving toward the stop']};
+const NEXT_ACTION={
+  'Address issue':"Call the customer to confirm the exact address and suite, then send the correction to the driver or carrier before they leave the area.",
+  'Carrier delay':"Get a firm revised ETA from the carrier coordinator, then tell the customer the new time before the promised window passes.",
+  'Failed attempt':"Call the recipient to confirm someone will be available, then schedule the second attempt on the driver's return leg.",
+  'Missed pickup':"Rebook the pickup with the carrier for the next slot. If that misses the deadline, move it to a RouteWise vehicle.",
+  'Damaged package':"Ask the driver for a photo, check hub stock for a replacement, and file the carrier claim today.",
+  'Traffic delay':"Confirm the driver's new ETA and notify any customer whose promised window will be missed."};
+
+const CASES=[
+{id:'RW-91427',customer:'Keystone Dental Partners',key:true,contact:'Renee',city:'Scranton, PA',route:'R-17 Scranton',carrier:'Keystone Freight',driver:'Keystone unit 22',type:'Address issue',detected:475,due:630,status:'New',owner:null,source:'Driver text',contents:'Dental supplies, 3 cartons',critical:false,
+ detail:'No suite number on the label; building has three entrances and no directory',custDetail:'the delivery address on the order is missing a suite number',newEta:null,
+ timeline:[{t:475,who:'Keystone unit 22',kind:'event',text:'Driver text: "No suite # on label. Building has 3 entrances, no directory. Holding package on truck."'},{t:481,who:'Carrier portal',kind:'event',text:'Stop marked "exception – address" by Keystone Freight.'}]},
+{id:'RW-91290',customer:'Mid-Atlantic Office Supply Co',key:false,contact:'Greg',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'Allegheny Express',driver:'Allegheny linehaul 7',type:'Carrier delay',detected:400,due:570,status:'Waiting on carrier',owner:'Maria Delgado',source:'Carrier portal',contents:'Office paper and toner, 6 cartons',critical:false,
+ detail:'Linehaul left the Allegheny terminal 2 h late; package still in transit',custDetail:"the shipment left our carrier partner's terminal later than scheduled",newEta:675,
+ timeline:[{t:400,who:'Carrier portal',kind:'event',text:'Allegheny Express: linehaul departed 2 h behind schedule.'},{t:430,who:'Maria Delgado',kind:'action',text:'Emailed the Allegheny coordinator for a revised ETA.'},{t:495,who:'Allegheny Express',kind:'event',text:'Coordinator reply: on the truck, ETA 11:15.'},{t:497,who:'Maria Delgado',kind:'status',text:'Status changed to Waiting on carrier.'}]},
+{id:'RW-91402',customer:'Lehigh Valley Orthopedics',key:true,contact:'Dana',city:'Allentown, PA',route:'R-09 Lehigh',carrier:'RouteWise fleet',driver:'Ray Okafor',type:'Failed attempt',detected:500,due:720,status:'Open',owner:'Maria Delgado',source:'Driver text',contents:'Surgical kits for 1 pm procedures',critical:true,
+ detail:'No one at the front desk at 08:20; office opens at 09:00',custDetail:'our driver arrived at 8:20 AM, before the office opened',newEta:645,
+ timeline:[{t:500,who:'Ray Okafor',kind:'event',text:'Driver text: "Nobody at front desk, sign says opens at 9. Moving on, can swing back after Bethlehem."'},{t:511,who:'Maria Delgado',kind:'action',text:'Called the office, reached voicemail. Left a message asking them to confirm someone is at the desk from 9.'}]},
+{id:'RW-91250',customer:'Chester County Pharmacy',key:true,contact:'Alan',city:'West Chester, PA',route:'R-21 Chester',carrier:'Penn Line Carriers',driver:'Penn Line unit 4',type:'Missed pickup',detected:450,due:960,status:'Open',owner:null,source:'Carrier portal',contents:'Refrigerated vaccines, 2 coolers',critical:true,
+ detail:'Penn Line skipped the 07:00 hub pickup; coolers still in the cold room',custDetail:'the order was not collected at its scheduled pickup this morning',newEta:null,
+ timeline:[{t:450,who:'Carrier portal',kind:'event',text:'Penn Line Carriers: 07:00 pickup marked "not attempted – capacity".'},{t:452,who:'TMS',kind:'event',text:'Cold-chain timer started: coolers hold 8 h.'}]},
+{id:'RW-91355',customer:'Penn State Health Hershey',key:true,contact:'Marcus',city:'Hershey, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:660,status:'In progress',owner:'Andre Gibson',source:'GPS export',contents:'Clinic supplies, 4 cartons',critical:false,
+ detail:'I-83 closed at exit 41 after a crash; driver rerouting via US-322',custDetail:'a road closure on I-83',newEta:680,
+ timeline:[{t:545,who:'GPS export',kind:'event',text:'Vehicle 14 stationary 18 min at I-83 exit 41. PennDOT: crash, all lanes closed.'},{t:552,who:'Andre Gibson',kind:'action',text:'Called Luis. Rerouting via US-322, new ETA 11:20.'},{t:553,who:'Andre Gibson',kind:'status',text:'Status changed to In progress.'}]},
+{id:'RW-91180',customer:'Pocono Medical Associates',key:true,contact:'Sylvia',city:'Stroudsburg, PA',route:'R-19 Pocono',carrier:'Keystone Freight',driver:'Keystone unit 31',type:'Carrier delay',detected:490,due:870,status:'In progress',owner:'Maria Delgado',source:'Carrier portal',contents:'Exam room supplies, 5 cartons',critical:false,
+ detail:'Keystone truck held at their Wilkes-Barre yard for a brake inspection',custDetail:"our carrier partner's truck was held for a safety inspection",newEta:840,
+ timeline:[{t:490,who:'Carrier portal',kind:'event',text:'Keystone Freight: unit 31 out of service pending brake inspection.'},{t:535,who:'Maria Delgado',kind:'action',text:'Keystone coordinator says the unit is cleared, departing 09:30. Asked for a new ETA.'}]},
+{id:'RW-91276',customer:'Wilkes-Barre Pediatrics',key:false,contact:'Joanne',city:'Wilkes-Barre, PA',route:'R-17 Scranton',carrier:'Keystone Freight',driver:'Keystone unit 22',type:'Address issue',detected:482,due:780,status:'New',owner:null,source:'CS ticket',contents:'Vaccine fridge thermometers, 1 carton',critical:false,
+ detail:'Customer moved to a new suite in June; order still shows the old address',custDetail:'the address on the order appears to be your previous suite',newEta:null,
+ timeline:[{t:482,who:'Priya Nair',kind:'event',text:'CS ticket #4471: customer called, says they moved to Suite 210 in June and the label still shows Suite 105.'}]},
+{id:'RW-91440',customer:'Lancaster Pediatric Dentistry',key:false,contact:'Beth',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Failed attempt',detected:578,due:810,status:'New',owner:null,source:'Driver text',contents:'Dental supplies, 2 cartons',critical:false,
+ detail:'Rear entrance locked; signature required so the driver could not leave the package',custDetail:'our driver could not get a signature at the rear entrance',newEta:null,
+ timeline:[{t:578,who:'Dana Whitfield',kind:'event',text:'Driver text: "Back door locked, nobody answering, signature required. Taking it with me for now."'}]},
+{id:'RW-91388',customer:'Bright Smiles Family Dentistry',key:false,contact:'Linda',city:'Reading, PA',route:'R-12 Berks',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Damaged package',detected:527,due:840,status:'New',owner:null,source:'Driver text',contents:'Sterilization pouches and gloves, 2 cartons',critical:true,
+ detail:'One carton crushed on the truck; sterilization pouches exposed',custDetail:'one of the two cartons was damaged in transit',newEta:null,
+ timeline:[{t:527,who:'Dana Whitfield',kind:'event',text:'Driver text with photo: "Carton 2 of 2 crushed under a pallet. Pouches torn open."'}]},
+{id:'RW-91312',customer:'Susquehanna Veterinary Clinic',key:false,contact:'Pat',city:'Harrisburg, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:750,status:'Open',owner:'Andre Gibson',source:'GPS export',contents:'Veterinary supplies, 3 cartons',critical:false,
+ detail:'Same I-83 closure as RW-91355; stop is later on the route',custDetail:'a road closure on I-83',newEta:765,
+ timeline:[{t:545,who:'GPS export',kind:'event',text:'Vehicle 14 stationary at I-83 exit 41. Stop 9 of 14 on the route.'}]},
+{id:'RW-91103',customer:'Blue Mountain Physical Therapy',key:false,contact:'Chris',city:'Hamburg, PA',route:'R-11 Schuylkill',carrier:'Allegheny Express',driver:'Allegheny unit 12',type:'Missed pickup',detected:-470,due:1020,status:'Open',owner:'Sam Whitaker',source:'Carrier portal',contents:'Therapy bands and supports, 2 cartons',critical:false,
+ detail:"Allegheny missed yesterday's 16:00 pickup; rebooked for this morning, not yet confirmed",custDetail:'the order was not collected at its scheduled pickup yesterday',newEta:null,
+ timeline:[{t:-470,who:'Carrier portal',kind:'event',text:'Allegheny Express: 16:00 pickup not attempted.'},{t:-455,who:'Sam Whitaker',kind:'action',text:'Rebooked the pickup for today 08:00 with Allegheny dispatch.'},{t:-450,who:'Sam Whitaker',kind:'status',text:'Status changed to Open.'}]},
+{id:'RW-91231',customer:'Delaware Valley Labs',key:false,contact:'Nadia',city:'Philadelphia, PA',route:'R-25 Philadelphia',carrier:'RouteWise fleet',driver:'Marcus Hale',type:'Failed attempt',detected:530,due:1020,status:'Open',owner:'Andre Gibson',source:'Driver text',contents:'Lab consumables, 4 cartons',critical:false,
+ detail:'Loading dock closed until 13:00; security would not accept the delivery',custDetail:'the loading dock was closed when our driver arrived',newEta:810,
+ timeline:[{t:530,who:'Marcus Hale',kind:'event',text:'Driver text: "Dock closed, security says deliveries after 1 pm only."'},{t:541,who:'Andre Gibson',kind:'action',text:'Told Marcus to return after his Center City stops. Customer notified by email.'}]},
+{id:'RW-91210',customer:'York Family Medicine',key:false,contact:'Kim',city:'York, PA',route:'R-05 York',carrier:'RouteWise fleet',driver:'Tom Reyes',type:'Traffic delay',detected:560,due:900,status:'New',owner:null,source:'GPS export',contents:'Exam supplies, 2 cartons',critical:false,
+ detail:'Slow traffic on US-30, running about 20 min behind plan',custDetail:'heavy traffic on US-30',newEta:null,
+ timeline:[{t:560,who:'GPS export',kind:'event',text:'Vehicle 9 is 20 min behind planned stop times.'}]},
+{id:'RW-91198',customer:'Cumberland Valley Dental',key:false,contact:'Ellen',city:'Carlisle, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:2040,status:'New',owner:null,source:'GPS export',contents:'Dental supplies, 1 carton',critical:false,
+ detail:'Same I-83 closure; delivery window is tomorrow morning',custDetail:'a road closure on I-83',newEta:null,
+ timeline:[{t:545,who:'GPS export',kind:'event',text:'Vehicle 14 stationary at I-83 exit 41. Stop 14 of 14, promised tomorrow.'}]},
+{id:'RW-91166',customer:'Harrisburg Orthodontics',key:false,contact:'Rita',city:'Harrisburg, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Damaged package',detected:435,due:690,status:'Resolved',owner:'Andre Gibson',source:'Driver text',contents:'Orthodontic wire and brackets, 1 carton',critical:false,
+ detail:'Carton wet from a leaking cooler; replacement sent from hub stock',custDetail:'the original carton was damaged in transit',newEta:null,
+ timeline:[{t:435,who:'Luis Ortega',kind:'event',text:'Driver text with photo: "Carton soaked, cooler above it leaked."'},{t:460,who:'Andre Gibson',kind:'action',text:'Pulled a replacement from hub stock, sent with the 08:00 shuttle.'},{t:463,who:'Andre Gibson',kind:'message',text:'Customer update sent: replacement arriving before 11:30.'},{t:520,who:'Andre Gibson',kind:'status',text:'Status changed to Resolved. Replacement delivered 08:38, claim filed.'}]},
+{id:'RW-91150',customer:'Schuylkill Valley Eye Care',key:false,contact:'Omar',city:'Pottsville, PA',route:'R-11 Schuylkill',carrier:'Allegheny Express',driver:'Allegheny unit 12',type:'Address issue',detected:510,due:930,status:'Resolved',owner:'Maria Delgado',source:'CS ticket',contents:'Optical supplies, 1 carton',critical:false,
+ detail:'Order listed the billing address instead of the clinic',custDetail:'the order listed your billing address',newEta:null,
+ timeline:[{t:510,who:'Priya Nair',kind:'event',text:'CS ticket #4468: customer says the order shows their billing address, not the clinic.'},{t:530,who:'Maria Delgado',kind:'action',text:'Confirmed the clinic address with the customer, sent the correction to Allegheny dispatch.'},{t:550,who:'Maria Delgado',kind:'status',text:'Status changed to Resolved. Carrier confirmed the corrected stop.'}]}
+];
+
+const IMPORT_CASES=[
+{id:'RW-91461',customer:'Lancaster General Surgical Center',key:true,contact:'Hannah',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'Allegheny Express',driver:'Allegheny linehaul 7',type:'Carrier delay',detected:580,due:660,status:'New',owner:null,source:'Carrier portal',contents:'Surgical instrument trays for afternoon cases',critical:true,
+ detail:"Last scan shows the trays still at Allegheny's Harrisburg terminal",custDetail:"the shipment is still at our carrier partner's terminal",newEta:null,
+ timeline:[{t:580,who:'Carrier portal',kind:'event',text:'Allegheny Express: package scanned at Harrisburg terminal 09:40, not loaded.'}]},
+{id:'RW-91455',customer:'Berks Community Health',key:false,contact:'Sam',city:'Reading, PA',route:'R-12 Berks',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Traffic delay',detected:581,due:780,status:'New',owner:null,source:'GPS export',contents:'Clinic supplies, 3 cartons',critical:false,
+ detail:'Construction on US-422 near Wernersville; about 25 min behind plan',custDetail:'construction traffic on US-422',newEta:null,
+ timeline:[{t:581,who:'GPS export',kind:'event',text:'Vehicle 11 is 25 min behind planned stop times near Wernersville.'}]}
+];
+
+const AN={
+  causeLabels:['Traffic delay','Address issue','Failed attempt','Carrier delay','Damaged package','Missed pickup'],
+  causes:{30:[88,63,58,51,23,18],14:[44,34,28,25,12,10],7:[23,18,15,13,6,5]},
+  carriers:{30:[135,82,53,31],14:[68,42,27,16],7:[36,22,14,8]},
+  rates:{30:[3.0,7.6,5.1,4.2],14:[3.1,7.9,5.3,4.4],7:[3.2,8.1,5.4,4.3]},
+  opened:[8,11,7,9,12,6,5,10,13,9,8,14,7,6,11,12,9,15,8,7,13,10,11,16,9,8,12,14,10,11],
+  resolved:[7,10,8,8,11,7,6,9,12,10,9,12,8,7,10,11,10,13,9,8,12,11,10,14,10,9,11,12,11,10],
+  median:{30:'2 h 15 min',14:'2 h 05 min',7:'1 h 50 min'},
+  before:{30:61,14:58,7:63},
+  recurring:{30:34,14:38,7:41},
+  delta:{30:'+4%',14:'+9%',7:'+12%'},
+  outcomes:{30:[61,27,12],14:[58,29,13],7:[63,25,12]},
+  patterns:[
+    {title:'R-17 Scranton · Address issue',n:{30:'21',14:'11',7:'6'},unit:'cases',ev:'8 of every 10 are at two medical office parks where orders arrive without a suite number.',tr:'Require a suite number at order entry for accounts in those two buildings.'},
+    {title:'Keystone Freight · Carrier delay',n:{30:'7.6',14:'7.9',7:'8.1'},unit:'per 100 shipments',ev:'Highest exception rate of any carrier. Linehaul leaves late on Mondays and Tuesdays.',tr:'Raise it in the weekly Keystone call and move Monday key-account loads to the RouteWise fleet.'},
+    {title:'R-03 Capital · Traffic delay',n:{30:'34',14:'19',7:'10'},unit:'cases',ev:'I-83 construction between exits 39 and 43, weekdays 7 to 10 am.',tr:'Re-sequence R-03 so Hershey and Carlisle stops run after 10 am until PennDOT finishes.'},
+    {title:'Failed attempts before 9 am',n:{30:'58%',14:'61%',7:'64%'},unit:'of failed attempts',ev:'Offices that open at 9 are visited first because they are closest to the hub.',tr:'Add opening hours to stop data and start those routes at the far end.'}
+  ]
+};
+
+const state={view:'queue',sel:null,f:{status:'open',type:'all',carrier:'all',q:''},sort:'priority',range:14,tables:{},imported:false};
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function fmtTime(m){let day='',x=m;if(x<0){day='Yesterday ';x+=1440}else if(x>=1440){day='Tomorrow ';x-=1440}return day+String(Math.floor(x/60)).padStart(2,'0')+':'+String(x%60).padStart(2,'0');}
+function fmt12(m){let day='',x=m;if(x<0){day='yesterday at ';x+=1440}else if(x>=1440){day='tomorrow at ';x-=1440}let h=Math.floor(x/60),mm=x%60;const ap=h>=12?'PM':'AM';h=h%12||12;return day+h+':'+String(mm).padStart(2,'0')+' '+ap;}
+function fmtDur(m){m=Math.max(0,Math.round(m));if(m<60)return m+' min';const h=Math.floor(m/60),r=m%60;return r?`${h} h ${String(r).padStart(2,'0')} min`:`${h} h`;}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+function shortName(n){const p=n.split(' ');return p[0]+' '+p[1][0]+'.';}
+
+function priority(c){
+  const toDue=c.due-NOW, age=NOW-c.detected;
+  let d,dw;
+  if(toDue<0){d=40;dw=`Past the promised time by ${fmtDur(-toDue)}`}
+  else if(toDue<=60){d=36;dw=`Due in ${fmtDur(toDue)}`}
+  else if(toDue<=120){d=30;dw=`Due in ${fmtDur(toDue)}`}
+  else if(toDue<=240){d=20;dw=`Due in ${fmtDur(toDue)}`}
+  else if(toDue<=480){d=10;dw=`Due in ${fmtDur(toDue)}`}
+  else{d=4;dw=`Due ${fmtTime(c.due)}, plenty of runway`}
+  let ci=c.key?22:8, cw=c.key?`Key account`:`Standard account`;
+  if(c.critical){ci+=3;cw+=`, time-critical contents (${c.contents})`}
+  const a=age>=180?20:age>=120?15:age>=60?10:5, aw=`Detected ${fmtDur(age)} ago via ${c.source}`;
+  const [s,sw]=TYPE_SEV[c.type];
+  const score=d+ci+a+s;
+  const tier=score>=70?'Critical':score>=55?'High':score>=35?'Medium':'Low';
+  return {score,tier,factors:[{name:'Deadline',pts:d,max:40,why:dw},{name:'Customer impact',pts:ci,max:25,why:cw},{name:'Time open',pts:a,max:20,why:aw},{name:'Shipment status',pts:s,max:15,why:`${c.type}: ${sw}`}]};
+}
+const tierChip=t=>({Critical:'chip-crit',High:'chip-warn',Medium:'chip-neutral',Low:'chip-neutral'}[t]);
+function statusChip(s){const cls={'New':'chip-accent','Open':'chip-neutral','In progress':'chip-neutral','Waiting on carrier':'chip-warn','Resolved':'chip-good'}[s];return `<span class="chip ${cls}"><i></i>${s}</span>`;}
+function dueCell(c){const d=c.due-NOW;if(c.status==='Resolved')return `<span class="mono muted">${fmtTime(c.due)}</span>`;if(d<0)return `<span class="mono due-late">${fmtDur(-d)} late</span>`;if(d<=120)return `<span class="mono due-soon">in ${fmtDur(d)}</span>`;return `<span class="mono">${fmtTime(c.due)}</span>`;}
+function ownerCell(c){if(c.status==='Resolved'&&!c.owner)return '<span class="muted">—</span>';return c.owner?`<span class="own"><span class="avatar">${initials(c.owner)}</span>${esc(shortName(c.owner))}</span>`:'<span class="unowned">Unassigned</span>';}
+function log(c,kind,text){c.timeline.push({t:NOW,who:ME,kind,text});}
+let toastT;function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},2800);}
+
+function draftFor(c){
+  const owner=c.owner||'the RouteWise dispatch desk';
+  const first={
+    'Traffic delay':`Your delivery is running behind because of ${c.custDetail}.`,
+    'Failed attempt':`Our driver attempted delivery at ${fmt12(c.detected)} but could not complete it because ${c.custDetail}.`,
+    'Damaged package':`Our driver found that ${c.custDetail}, so we are holding the damaged carton rather than delivering it.`,
+    'Address issue':`Before our driver can complete your delivery we need to confirm the address: ${c.custDetail}.`,
+    'Missed pickup':`We are sorry: ${c.custDetail}.`,
+    'Carrier delay':`Your shipment is delayed because ${c.custDetail}.`}[c.type];
+  const next={
+    'Traffic delay':'Your driver is still on the way.',
+    'Failed attempt':'We will make a second attempt today. Please let us know if someone will be available to sign.',
+    'Damaged package':'We are sending a replacement from our Harrisburg hub and will confirm once it is on a truck.',
+    'Address issue':'Please reply with the correct address and suite number, or call us, and we will pass it to the driver right away.',
+    'Missed pickup':'We have rebooked the pickup and will confirm the new delivery time as soon as it is on a truck.',
+    'Carrier delay':'We are working with our carrier partner to get it moving.'}[c.type];
+  const eta=c.newEta?`We now expect delivery by ${fmt12(c.newEta)}.`:'We will confirm a new delivery time within the hour.';
+  return `Hi ${c.contact}, this is RouteWise Distribution with an update on order ${c.id} for ${c.customer}.\n\n${first} ${next} ${eta}\n\nReply to this message or call ${owner} at (717) 555-0142 with any questions. We are sorry for the disruption.`;
+}
+
+function openCases(){return CASES.filter(c=>c.status!=='Resolved');}
+function visibleCases(){
+  let list=CASES.slice();const f=state.f;
+  if(f.status==='open')list=list.filter(c=>c.status!=='Resolved');
+  else if(f.status==='unowned')list=list.filter(c=>c.status!=='Resolved'&&!c.owner);
+  if(f.type!=='all')list=list.filter(c=>c.type===f.type);
+  if(f.carrier!=='all')list=list.filter(c=>c.carrier===f.carrier);
+  if(f.q){const q=f.q.toLowerCase();list=list.filter(c=>[c.id,c.customer,c.city,c.route,c.owner||'',c.type].join(' ').toLowerCase().includes(q));}
+  const pr=c=>priority(c).score;
+  if(state.sort==='priority')list.sort((a,b)=>pr(b)-pr(a)||a.due-b.due);
+  else if(state.sort==='due')list.sort((a,b)=>a.due-b.due);
+  else list.sort((a,b)=>b.detected-a.detected);
+  return list;
+}
+
+function renderTiles(){
+  const open=openCases();
+  const late=open.filter(c=>c.due<NOW).length, soon=open.filter(c=>c.due-NOW>=0&&c.due-NOW<=120).length;
+  const unowned=open.filter(c=>!c.owner).length, keys=open.filter(c=>c.key).length;
+  const delta=open.length-11;
+  $('#tiles').innerHTML=`
+    <div class="card tile hero"><div class="label">Open exceptions</div><div class="value">${open.length}</div><div class="sub ${delta>0?'bad':''}">${delta>=0?'+':''}${delta} since the 07:00 shift start</div></div>
+    <div class="card tile"><div class="label">Past or due within 2 h</div><div class="value">${late+soon}</div><div class="sub ${late?'bad':''}">${late?`${late} already past the promised time`:'None past the promised time'}</div></div>
+    <div class="card tile"><div class="label">Unowned</div><div class="value">${unowned}</div><div class="sub">Assign to stop two people working one case</div></div>
+    <div class="card tile"><div class="label">Key accounts affected</div><div class="value">${keys}</div><div class="sub">Accounts with escalation contacts</div></div>`;
+  $('#navQueueCount').textContent=open.length;
+}
+function renderOwnerLoad(){
+  const open=openCases();const counts=OWNERS.map(o=>[o,open.filter(c=>c.owner===o).length]);
+  const un=open.filter(c=>!c.owner).length;
+  $('#ownerLoad').innerHTML=counts.map(([o,n])=>`<li><span>${esc(shortName(o))}</span><span class="mono">${n}</span></li>`).join('')+`<li class="${un?'warn':''}"><span>Unassigned</span><span class="mono">${un}</span></li>`;
+}
+function renderQueue(){
+  const list=visibleCases();const tb=$('#queueBody');
+  $('#queueEmpty').hidden=list.length>0;
+  tb.innerHTML=list.map(c=>{const p=priority(c),sel=c.id===state.sel;return `<tr class="tier-${p.tier}${sel?' sel':''}" data-id="${c.id}" tabindex="0" aria-selected="${sel}">
+    <td><div class="score">${p.score}</div><div class="sub2">${p.tier}</div></td>
+    <td><div class="cust">${esc(c.customer)}${c.key?' <span class="chip chip-accent">Key account</span>':''}</div><div class="sub2 mono">${c.id} · ${esc(c.city)}</div></td>
+    <td><span class="chip chip-neutral">${c.type}</span><div class="sub2">${esc(c.detail)}</div></td>
+    <td>${dueCell(c)}<div class="sub2">${c.status==='Resolved'?'closed':'promised '+fmtTime(c.due)}</div></td>
+    <td>${ownerCell(c)}</td>
+    <td>${statusChip(c.status)}</td></tr>`;}).join('');
+  tb.querySelectorAll('tr').forEach(tr=>{
+    const pick=()=>{state.sel=tr.dataset.id;renderQueue();renderCase();if(window.innerWidth<=1100)$('#casePanel').scrollIntoView({behavior:'smooth',block:'start'});};
+    tr.addEventListener('click',pick);
+    tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();}});
+  });
+}
+
+function renderCase(){
+  const c=CASES.find(x=>x.id===state.sel);const el=$('#casePanel');
+  if(!c){el.innerHTML='<p class="empty">Pick a case to see why it ranks where it does and work it here.</p>';return;}
+  const p=priority(c);
+  el.innerHTML=`
+  <div class="case-h"><span class="id">${c.id}</span>${statusChip(c.status)}<span class="chip ${tierChip(p.tier)}">${p.tier} priority</span>${c.key?'<span class="chip chip-accent">Key account</span>':''}</div>
+  <div class="case-title">${esc(c.customer)}</div>
+  <div class="sub2">${c.type} · ${esc(c.detail)}</div>
+  <div class="facts">
+    <div><span class="l">Deliver to</span>${esc(c.city)}</div>
+    <div><span class="l">Promised by</span>${dueCell(c)} <span class="sub2">(${fmtTime(c.due)})</span></div>
+    <div><span class="l">Route · carrier</span>${c.route} · ${c.carrier}</div>
+    <div><span class="l">Driver</span>${c.driver}</div>
+    <div><span class="l">Detected</span>${fmtTime(c.detected)} via ${c.source}</div>
+    <div><span class="l">Contents</span>${esc(c.contents)}</div>
+  </div>
+  <section class="sec"><h3>Why this priority</h3>
+    <div class="score-row"><span class="score-big">${p.score}</span><span class="muted">of 100</span><span class="chip ${tierChip(p.tier)}">${p.tier}</span></div>
+    <ul class="factors">${p.factors.map(f=>`<li class="factor"><span>${f.name}</span><span class="meter"><i style="width:${Math.round(f.pts/f.max*100)}%"></i></span><span class="pts">${f.pts} / ${f.max}</span><span class="why">${esc(f.why)}</span></li>`).join('')}</ul>
+    <p class="note">Score = deadline + customer impact + time open + shipment status. The same rules apply to every case, so two dispatchers see the same order.</p>
+  </section>
+  <section class="sec"><h3>Recommended next step</h3>
+    <div class="rec"><p>${NEXT_ACTION[c.type]}</p><button class="btn btn-sm" type="button" id="useRec">Use as action</button></div>
+    <p class="note">Suggested from the exception type. Nothing happens until someone on the team does it.</p>
+  </section>
+  <section class="sec"><h3>Resolution</h3>
+    <div class="form-row">
+      <label>Owner<select id="ownerSel"><option value="">Unassigned</option>${OWNERS.map(o=>`<option value="${o}" ${c.owner===o?'selected':''}>${o}</option>`).join('')}</select></label>
+      <label>Status<select id="statusSel">${STATUSES.map(s=>`<option ${c.status===s?'selected':''}>${s}</option>`).join('')}</select></label>
+    </div>
+    <div class="draft-actions"><button class="btn btn-sm" type="button" id="assignMe" ${c.owner===ME?'disabled':''}>Assign to me</button><button class="btn btn-sm" type="button" id="resolveBtn" ${c.status==='Resolved'?'disabled':''}>Mark resolved</button></div>
+    <form class="action-row" id="actionForm"><input type="text" id="actionInput" placeholder="Log what you did, e.g. Called customer, confirmed Suite 210" aria-label="Action taken"><button class="btn btn-primary" type="submit">Log action</button></form>
+    <p class="note err" id="actionErr" hidden>Type what you did before logging it.</p>
+    <ul class="tl">${c.timeline.slice().reverse().map(e=>`<li class="k-${e.kind}"><span class="t">${fmtTime(e.t)}</span><div><div class="who"><i></i>${esc(e.who)}</div><div>${esc(e.text)}</div></div></li>`).join('')}</ul>
+  </section>
+  <section class="sec"><h3>Customer update</h3>
+    <p class="note" style="margin:0 0 8px">Drafted from the case data above. Edit it, then mark it sent. Nothing is sent automatically.</p>
+    <textarea id="draft" rows="8" placeholder="Click Draft update to write a message from the current case status.">${esc(c.draft||'')}</textarea>
+    <div class="draft-actions"><button class="btn" type="button" id="draftBtn">${c.draft?'Redraft from current status':'Draft update'}</button><button class="btn" type="button" id="copyBtn" ${c.draft?'':'disabled'}>Copy</button><button class="btn btn-primary" type="button" id="sentBtn" ${c.draft?'':'disabled'}>Mark as sent</button></div>
+  </section>`;
+
+  const refresh=()=>{renderTiles();renderOwnerLoad();renderQueue();renderCase();};
+  $('#ownerSel').addEventListener('change',e=>{const v=e.target.value||null;c.owner=v;log(c,'status',v?`Assigned to ${v}.`:'Owner cleared.');if(v&&c.status==='New')c.status='Open';refresh();toast(v?`${c.id} assigned to ${v}`:`${c.id} is now unassigned`);});
+  $('#assignMe').addEventListener('click',()=>{c.owner=ME;log(c,'status',`Assigned to ${ME}.`);if(c.status==='New')c.status='Open';refresh();toast(`${c.id} assigned to you`);});
+  $('#statusSel').addEventListener('change',e=>{c.status=e.target.value;log(c,'status',`Status changed to ${c.status}.`);refresh();toast(`${c.id} marked ${c.status}`);});
+  $('#resolveBtn').addEventListener('click',()=>{c.status='Resolved';log(c,'status','Status changed to Resolved.');refresh();toast(`${c.id} resolved. It stays in the history under All.`);});
+  $('#useRec').addEventListener('click',()=>{const i=$('#actionInput');i.value=NEXT_ACTION[c.type];i.focus();});
+  $('#actionForm').addEventListener('submit',e=>{e.preventDefault();const i=$('#actionInput'),v=i.value.trim();if(!v){$('#actionErr').hidden=false;i.focus();return;}log(c,'action',v);if(c.status==='New')c.status='Open';if(!c.owner){c.owner=ME;log(c,'status',`Assigned to ${ME} (logged the first action).`);}refresh();toast('Action logged');});
+  $('#actionInput').addEventListener('input',()=>{$('#actionErr').hidden=true;});
+  $('#draftBtn').addEventListener('click',()=>{c.draft=draftFor(c);renderCase();$('#draft').focus();});
+  $('#draft').addEventListener('input',e=>{c.draft=e.target.value;const has=!!c.draft.trim();$('#copyBtn').disabled=!has;$('#sentBtn').disabled=!has;});
+  $('#copyBtn').addEventListener('click',()=>{const t=$('#draft').value;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>toast('Update copied'),()=>toast('Select the text and copy it manually'));}else toast('Select the text and copy it manually');});
+  $('#sentBtn').addEventListener('click',()=>{const t=$('#draft').value.trim();if(!t)return;const snip=t.replace(/\s+/g,' ').slice(0,110);log(c,'message',`Customer update sent to ${c.contact} (${c.customer}): "${snip}${t.length>110?'…':''}"`);if(c.status==='New')c.status='Open';refresh();toast(`Update to ${c.customer} marked as sent`);});
+}
+
+/* charts */
+function mkTip(el){let t=el.querySelector('.tip');if(!t){t=document.createElement('div');t.className='tip';t.hidden=true;el.appendChild(t);}return t;}
+function showTip(tip,el,x,y){tip.hidden=false;const tw=tip.offsetWidth,w=el.clientWidth;tip.style.left=(x+14+tw>w?Math.max(0,x-14-tw):x+14)+'px';tip.style.top=Math.max(0,y-10)+'px';}
+function rr(x,y,w,h,rl,rr_){w=Math.max(w,0.5);rl=Math.min(rl,w/2,h/2);rr_=Math.min(rr_,w/2,h/2);return `M${x+rl} ${y}H${x+w-rr_}${rr_?`a${rr_} ${rr_} 0 0 1 ${rr_} ${rr_}`:''}V${y+h-rr_}${rr_?`a${rr_} ${rr_} 0 0 1 -${rr_} ${rr_}`:''}H${x+rl}${rl?`a${rl} ${rl} 0 0 1 -${rl} -${rl}`:''}V${y+rl}${rl?`a${rl} ${rl} 0 0 1 ${rl} -${rl}`:''}Z`;}
+function tableView(el,heads,rows){const t=document.createElement('table');t.className='dt';const th=document.createElement('thead'),trh=document.createElement('tr');heads.forEach((h,i)=>{const c=document.createElement('th');c.textContent=h;if(i>0)c.className='n';trh.appendChild(c);});th.appendChild(trh);t.appendChild(th);const tb=document.createElement('tbody');rows.forEach(r=>{const tr=document.createElement('tr');r.forEach((v,i)=>{const c=document.createElement('td');c.textContent=v;if(i>0)c.className='n';tr.appendChild(c);});tb.appendChild(tr);});t.appendChild(tb);el.innerHTML='';el.appendChild(t);}
+
+function hbar(el,rows,opts={}){
+  const w=el.clientWidth||520,labelW=opts.labelW||128,rowH=30,barH=14,padR=54,x0=labelW,x1=w-padR,h=rows.length*rowH+8;
+  const max=Math.max(1,...rows.map(r=>r.value));const fmt=opts.fmt||(v=>String(v));
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="${esc(opts.aria||'Bar chart')}">`;
+  rows.forEach((r,i)=>{const y=4+i*rowH+(rowH-barH)/2,bw=Math.max(2,(x1-x0)*r.value/max);
+    s+=`<text x="${x0-10}" y="${y+barH/2+4}" text-anchor="end">${esc(r.label)}</text><path class="bar" data-i="${i}" d="${rr(x0,y,bw,barH,0,4)}"/><text class="val" x="${x0+bw+6}" y="${y+barH/2+4}">${esc(fmt(r.value))}</text>`;});
+  s+=`<line x1="${x0}" y1="4" x2="${x0}" y2="${h-4}" stroke="var(--axis)" stroke-width="1"/>`;
+  rows.forEach((r,i)=>{s+=`<rect class="hit" data-i="${i}" x="${x0}" y="${4+i*rowH}" width="${x1-x0+padR}" height="${rowH}" fill="transparent"/>`;});
+  s+='</svg>';el.innerHTML=s;const tip=mkTip(el),svg=el.querySelector('svg');
+  el.querySelectorAll('.hit').forEach(hit=>{const i=+hit.dataset.i,bar=svg.querySelector(`.bar[data-i="${i}"]`);
+    hit.addEventListener('pointermove',ev=>{const rc=svg.getBoundingClientRect();bar.classList.add('lift');tip.innerHTML=opts.tip?opts.tip(rows[i]):`<b>${esc(fmt(rows[i].value))}</b> ${esc(rows[i].label)}`;showTip(tip,el,ev.clientX-rc.left,ev.clientY-rc.top);});
+    hit.addEventListener('pointerleave',()=>{bar.classList.remove('lift');tip.hidden=true;});});
+}
+function columns(el,rows,opts={}){
+  const w=el.clientWidth||520,h=190,padT=20,padB=26,y0=h-padB,n=rows.length,slot=(w-16)/n,bw=Math.min(24,slot*.5);
+  const max=Math.max(1,...rows.map(r=>r.value));
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="${esc(opts.aria||'Column chart')}">`;
+  s+=`<line x1="8" x2="${w-8}" y1="${y0}" y2="${y0}" stroke="var(--axis)" stroke-width="1"/>`;
+  rows.forEach((r,i)=>{const cx=8+slot*i+slot/2,bh=(y0-padT)*r.value/max,x=cx-bw/2,y=y0-bh;
+    if(r.value>0)s+=`<path class="bar" data-i="${i}" d="${colPath(x,y,bw,bh)}"/>`;
+    s+=`<text class="val" x="${cx}" y="${y-6}" text-anchor="middle">${r.value}</text><text x="${cx}" y="${h-8}" text-anchor="middle">${esc(r.label)}</text>`;});
+  rows.forEach((r,i)=>{s+=`<rect class="hit" data-i="${i}" x="${8+slot*i}" y="${padT-14}" width="${slot}" height="${y0-padT+14}" fill="transparent"/>`;});
+  s+='</svg>';el.innerHTML=s;const tip=mkTip(el),svg=el.querySelector('svg');
+  el.querySelectorAll('.hit').forEach(hit=>{const i=+hit.dataset.i,bar=svg.querySelector(`.bar[data-i="${i}"]`);
+    hit.addEventListener('pointermove',ev=>{const rc=svg.getBoundingClientRect();if(bar)bar.classList.add('lift');tip.innerHTML=`<b>${rows[i].value}</b> open ${rows[i].value===1?'case':'cases'}, ${esc(rows[i].label.toLowerCase())}`;showTip(tip,el,ev.clientX-rc.left,ev.clientY-rc.top);});
+    hit.addEventListener('pointerleave',()=>{if(bar)bar.classList.remove('lift');tip.hidden=true;});});
+}
+function colPath(x,y,w,h){return `M${x} ${y+h}V${y+4}a4 4 0 0 1 4 -4H${x+w-4}a4 4 0 0 1 4 4V${y+h}Z`;}
+function lineChart(el,key,days,series){
+  const w=el.clientWidth||600,h=230,m={l:36,r:96,t:14,b:26},n=days.length,iw=w-m.l-m.r,ih=h-m.t-m.b;
+  const maxV=Math.max(...series.flatMap(s=>s.values)),yMax=Math.ceil(maxV/5)*5||5;
+  const X=i=>m.l+iw*i/(n-1),Y=v=>m.t+ih*(1-v/yMax);
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="Opened versus resolved per day">`;
+  for(let k=0;k<=4;k++){const v=yMax*k/4,y=Y(v);s+=`<line x1="${m.l}" x2="${m.l+iw}" y1="${y}" y2="${y}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l-8}" y="${y+4}" text-anchor="end">${v}</text>`;}
+  const step=n>20?5:n>10?2:1;
+  days.forEach((d,i)=>{if((n-1-i)%step===0)s+=`<text x="${X(i)}" y="${h-6}" text-anchor="middle">${esc(d)}</text>`;});
+  series.forEach(sr=>{s+=`<polyline points="${sr.values.map((v,i)=>`${X(i)},${Y(v)}`).join(' ')}" fill="none" stroke="${sr.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;});
+  const ends=series.map(sr=>({y:Y(sr.values[n-1]),v:sr.values[n-1],name:sr.name,color:sr.color,ly:null}));
+  if(ends.length===2&&Math.abs(ends[0].y-ends[1].y)<14){const mid=(ends[0].y+ends[1].y)/2;const top=ends[0].y<=ends[1].y?ends[0]:ends[1],bot=top===ends[0]?ends[1]:ends[0];top.ly=mid-7;bot.ly=mid+7;}
+  ends.forEach(e=>{const ly=e.ly==null?e.y:e.ly;s+=`<circle cx="${X(n-1)}" cy="${e.y}" r="4" fill="${e.color}" stroke="var(--surface)" stroke-width="2"/><text class="val" x="${X(n-1)+9}" y="${ly+4}">${e.v} ${esc(e.name.toLowerCase())}</text>`;});
+  s+=`<line class="xh" x1="0" x2="0" y1="${m.t}" y2="${m.t+ih}" stroke="var(--axis)" stroke-width="1" style="display:none"/>`;
+  series.forEach((sr,si)=>{s+=`<circle class="mk" data-s="${si}" r="4" fill="${sr.color}" stroke="var(--surface)" stroke-width="2" style="display:none"/>`;});
+  s+=`<rect class="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/></svg>`;
+  el.innerHTML=s+`<div class="legend">${series.map(sr=>`<span><i class="lk" style="--c:${sr.color}"></i>${esc(sr.name)}</span>`).join('')}</div>`;
+  const svg=el.querySelector('svg'),hit=el.querySelector('.hit'),tip=mkTip(el),xh=svg.querySelector('.xh'),mks=Array.from(svg.querySelectorAll('.mk'));
+  hit.addEventListener('pointermove',ev=>{const rc=svg.getBoundingClientRect();let i=Math.round((ev.clientX-rc.left-m.l)/iw*(n-1));i=Math.max(0,Math.min(n-1,i));const x=X(i);
+    xh.setAttribute('x1',x);xh.setAttribute('x2',x);xh.style.display='block';
+    mks.forEach((mk,si)=>{mk.setAttribute('cx',x);mk.setAttribute('cy',Y(series[si].values[i]));mk.style.display='block';});
+    tip.innerHTML=`<b>${esc(days[i])}</b>`+series.map(sr=>`<div class="row"><i class="lk" style="--c:${sr.color}"></i><b>${sr.values[i]}</b> ${esc(sr.name.toLowerCase())}</div>`).join('');
+    showTip(tip,el,x,m.t);});
+  hit.addEventListener('pointerleave',()=>{xh.style.display='none';mks.forEach(mk=>mk.style.display='none');tip.hidden=true;});
+}
+function stacked(el,segs){
+  const w=el.clientWidth||520,h=70,y=8,bh=20,gap=2,total=segs.reduce((a,s)=>a+s.v,0),avail=w-gap*(segs.length-1);
+  let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="Resolution outcomes">`,x=0;
+  const xs=[];
+  segs.forEach((sg,i)=>{const sw=avail*sg.v/total;xs.push([x,sw]);s+=`<path class="seg" data-i="${i}" d="${rr(x,y,sw,bh,i===0?4:0,i===segs.length-1?4:0)}" fill="${sg.color}"/>`;s+=`<text class="val" x="${x+sw/2}" y="${y+bh+18}" text-anchor="middle">${sg.v}%</text>`;x+=sw+gap;});
+  xs.forEach(([x0,sw],i)=>{s+=`<rect class="hit" data-i="${i}" x="${x0}" y="0" width="${sw}" height="${h}" fill="transparent"/>`;});
+  s+='</svg>';
+  el.innerHTML=s+`<div class="legend">${segs.map(sg=>`<span><i class="sw" style="--c:${sg.color}"></i>${esc(sg.label)}</span>`).join('')}</div>`;
+  const tip=mkTip(el),svg=el.querySelector('svg');
+  el.querySelectorAll('.hit').forEach(hit=>{const i=+hit.dataset.i,seg=svg.querySelector(`.seg[data-i="${i}"]`);
+    hit.addEventListener('pointermove',ev=>{const rc=svg.getBoundingClientRect();seg.classList.add('lift');tip.innerHTML=`<b>${segs[i].v}%</b> ${esc(segs[i].label)}`;showTip(tip,el,ev.clientX-rc.left,ev.clientY-rc.top);});
+    hit.addEventListener('pointerleave',()=>{seg.classList.remove('lift');tip.hidden=true;});});
+}
+function dayLabels(n){const end=new Date(2026,8,13);return Array.from({length:n},(_,i)=>{const d=new Date(end);d.setDate(end.getDate()-(n-1-i));return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});});}
+
+function renderAnalytics(){
+  const r=state.range,total=AN.causes[r].reduce((a,b)=>a+b,0);
+  $('#aTiles').innerHTML=`
+    <div class="card tile hero"><div class="label">Exceptions in the last ${r} days</div><div class="value">${total}</div><div class="sub bad">${AN.delta[r]} vs the ${r} days before</div></div>
+    <div class="card tile"><div class="label">Median time to resolve</div><div class="value">${AN.median[r]}</div><div class="sub">From detection to resolved</div></div>
+    <div class="card tile"><div class="label">Resolved before deadline</div><div class="value">${AN.before[r]}%</div><div class="sub">Of cases closed in the range</div></div>
+    <div class="card tile"><div class="label">Recurring-cause share</div><div class="value">${AN.recurring[r]}%</div><div class="sub">Cases on a route with the same cause 3+ times</div></div>`;
+  $('#causeSub').textContent=`${total} exceptions`;
+  $$('[data-table]').forEach(b=>{b.textContent=state.tables[b.dataset.table]?'Chart':'Table';});
+  const causeRows=AN.causeLabels.map((l,i)=>({label:l,value:AN.causes[r][i]}));
+  const cEl=$('#chartCause');if(state.tables.cause)tableView(cEl,['Cause','Exceptions','Share'],causeRows.map(x=>[x.label,String(x.value),Math.round(x.value/total*100)+'%']));else hbar(cEl,causeRows,{aria:'Exceptions by cause',tip:x=>`<b>${x.value}</b> ${esc(x.label)} · ${Math.round(x.value/total*100)}% of exceptions`});
+  const carRows=CARRIERS.map((l,i)=>({label:l,value:AN.rates[r][i],count:AN.carriers[r][i]}));
+  const kEl=$('#chartCarrier');if(state.tables.carrier)tableView(kEl,['Carrier','Per 100 shipments','Exceptions'],carRows.map(x=>[x.label,x.value.toFixed(1),String(x.count)]));else hbar(kEl,carRows,{aria:'Exceptions per 100 shipments by carrier',fmt:v=>v.toFixed(1),tip:x=>`<b>${x.value.toFixed(1)}</b> per 100 shipments · ${x.count} exceptions · ${esc(x.label)}`});
+  const days=dayLabels(r),op=AN.opened.slice(-r),rs=AN.resolved.slice(-r);
+  const tEl=$('#chartTrend');if(state.tables.trend)tableView(tEl,['Day','Opened','Resolved'],days.map((d,i)=>[d,String(op[i]),String(rs[i])]));else lineChart(tEl,'trend',days,[{name:'Opened',values:op,color:'var(--s1)'},{name:'Resolved',values:rs,color:'var(--s2)'}]);
+  const bands=[['Under 30 min',30],['30 min to 1 h',60],['1 to 2 h',120],['2 to 4 h',240],['Over 4 h',Infinity]];let prev=0;
+  const ageRows=bands.map(([l,max])=>{const v=openCases().filter(c=>{const a=NOW-c.detected;return a>=prev&&a<max;}).length;prev=max;return {label:l,value:v};});
+  const aEl=$('#chartAging');if(state.tables.aging)tableView(aEl,['Time open','Open cases'],ageRows.map(x=>[x.label,String(x.value)]));else columns(aEl,ageRows,{aria:'Open cases by time open'});
+  const oc=AN.outcomes[r],segs=[{label:'Resolved before deadline',v:oc[0],color:'var(--s1)'},{label:'Resolved after deadline',v:oc[1],color:'var(--s2)'},{label:'Escalated to carrier',v:oc[2],color:'var(--s3)'}];
+  const oEl=$('#chartOutcome');if(state.tables.outcome)tableView(oEl,['Outcome','Share'],segs.map(x=>[x.label,x.v+'%']));else stacked(oEl,segs);
+  $('#patterns').innerHTML=AN.patterns.map(p=>`<li><div class="n">${p.n[r]}<small>${p.unit}</small></div><div><div class="ttl">${esc(p.title)}</div><div>${esc(p.ev)}</div><div class="try">What to try: ${esc(p.tr)}</div></div></li>`).join('');
+}
+
+/* import */
+function renderPreview(){
+  const rows=[
+    ['RW-91461','Lancaster General Surgical Center','R-14 Lancaster','Allegheny Express','11:00','09:40','carrier_scan','Carrier portal','Scanned at Harrisburg terminal, not loaded'],
+    ['RW-91455','Berks Community Health','R-12 Berks','RouteWise fleet','13:00','09:41','gps_behind','GPS export','25 min behind plan near Wernersville'],
+    ['RW-91433','Lebanon Family Practice','R-03 Capital','RouteWise fleet','14:00','09:36','delivered','Driver text','Signed by front desk'],
+    ['RW-91429','Hershey Pediatrics','R-03 Capital','RouteWise fleet','15:30','09:35','out_for_delivery','TMS export',''],
+    ['RW-91418','Lancaster Optical','R-14 Lancaster','RouteWise fleet','12:00','09:33','delivered','Driver text','Left at reception']];
+  const p=$('#preview');p.hidden=false;
+  p.innerHTML=`<div class="sub2" style="margin-bottom:6px">shipments_2026-09-14_0942.csv · 412 rows · showing the first 5</div><table class="dt"><thead><tr>${['shipment_id','customer','route','carrier','promised_by','event_time','event_type','source','note'].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((v,i)=>`<td class="${i===0||i===4||i===5?'mono':''}">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>
+  <div class="draft-actions" style="margin-top:10px"><button class="btn btn-primary" type="button" id="importBtn" ${state.imported?'disabled':''}>${state.imported?'Imported':'Import 412 events'}</button><span class="note" style="margin:0;align-self:center">Events that match an open case attach to its history. New disruptions become new cases.</span></div>`;
+  $('#importBtn').addEventListener('click',()=>{if(state.imported)return;state.imported=true;IMPORT_CASES.forEach(c=>CASES.push(c));renderTiles();renderOwnerLoad();state.sel='RW-91461';showView('queue');renderQueue();renderCase();toast('412 events imported. 2 new exceptions added to the queue.');});
+}
+
+/* navigation */
+function showView(v){state.view=v;$$('.view').forEach(s=>{s.hidden=s.id!=='view-'+v;});$$('.nav').forEach(b=>b.classList.toggle('on',b.dataset.view===v));if(v==='analytics')renderAnalytics();window.scrollTo({top:0});}
+$$('.nav').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+$('#btnImportTop').addEventListener('click',()=>showView('import'));
+$('#bannerClose').addEventListener('click',()=>{$('#banner').hidden=true;});
+$$('[data-status]').forEach(b=>b.addEventListener('click',()=>{state.f.status=b.dataset.status;$$('[data-status]').forEach(x=>x.classList.toggle('on',x===b));renderQueue();}));
+TYPES.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;$('#fType').appendChild(o);});
+CARRIERS.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;$('#fCarrier').appendChild(o);});
+$('#fType').addEventListener('change',e=>{state.f.type=e.target.value;renderQueue();});
+$('#fCarrier').addEventListener('change',e=>{state.f.carrier=e.target.value;renderQueue();});
+$('#fQ').addEventListener('input',e=>{state.f.q=e.target.value.trim();renderQueue();});
+$('#sortSel').addEventListener('change',e=>{state.sort=e.target.value;renderQueue();});
+$$('[data-range]').forEach(b=>b.addEventListener('click',()=>{state.range=+b.dataset.range;$$('[data-range]').forEach(x=>x.classList.toggle('on',x===b));renderAnalytics();}));
+$$('[data-table]').forEach(b=>b.addEventListener('click',()=>{state.tables[b.dataset.table]=!state.tables[b.dataset.table];renderAnalytics();}));
+$('#exportBtn').addEventListener('click',()=>toast('Export is not part of this prototype yet'));
+$('#chooseFile').addEventListener('click',()=>toast('The file picker is turned off in this prototype. Use the sample file.'));
+$('#loadSample').addEventListener('click',()=>{renderPreview();toast('Sample file loaded');});
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(state.view==='analytics')renderAnalytics();},150);});
+
+state.sel=visibleCases()[0].id;
+renderTiles();renderOwnerLoad();renderQueue();renderCase();
+</script>
+
+</body>
+</html>
