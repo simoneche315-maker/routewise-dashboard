@@ -319,6 +319,62 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
   .clock{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* people switcher */
+.whobtn{display:inline-flex;align-items:center;gap:8px;border:0;background:var(--fill);border-radius:980px;padding:3px 12px 3px 3px;min-height:34px;font:inherit;font-size:13px;font-weight:500;color:var(--ink);cursor:pointer}
+.whobtn:hover{filter:brightness(.97)}
+.whobtn .wl{color:var(--ink-2)}
+.whobtn>svg{color:var(--ink-2);transform:rotate(90deg)}
+.whomenu{position:fixed;top:56px;right:16px;z-index:30;width:min(400px,calc(100vw - 32px));max-height:calc(100vh - 72px);overflow:auto;padding:8px;border-radius:18px;background:var(--surface);box-shadow:0 12px 40px rgba(0,0,0,.22),var(--edge)}
+.whomenu .wh{font-size:12px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em;padding:12px 10px 4px}
+.whomenu .wi{font-size:13.5px;color:var(--ink-2);padding:8px 10px 2px}
+.wp{display:flex;gap:12px;align-items:center;width:100%;border:0;background:transparent;text-align:left;padding:8px 10px;border-radius:12px;cursor:pointer;color:var(--ink);font:inherit}
+.wp:hover{background:var(--fill-2)}
+.wp.on{background:var(--blue-soft)}
+.wp .av{width:36px;height:36px;font-size:13px}
+.wp .wn{font-weight:600;font-size:14.5px}
+.wp .wr{font-size:13px;color:var(--ink-2);font-weight:400}
+.wp .ck{margin-left:auto;color:var(--blue-ink);flex:none}
+.app.solo{grid-template-columns:minmax(0,1fr)}
+.app.solo .side{display:none}
+.tabbar.hide{display:none!important}
+.drv.solo{grid-template-columns:minmax(0,1fr);justify-items:center}
+.drv.solo .drv-side{display:none}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+/* customer service */
+.bigsearch{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:14px;box-shadow:var(--edge);padding:0 16px;min-height:58px;margin-top:22px;max-width:760px}
+.bigsearch svg{color:var(--ink-2);flex:none}
+.bigsearch input{border:0;background:transparent;font:inherit;font-size:19px;color:var(--ink);flex:1;min-width:0;min-height:56px;outline:none}
+.lkgrid{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:18px;margin-top:6px;align-items:start}
+.pick.sel{background:var(--blue-soft)}
+.answer{padding:22px 24px}
+.answer h4{font-size:15px;font-weight:600;margin:18px 0 8px}
+.say{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.28;margin:6px 0 16px;text-wrap:pretty}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.fact{background:var(--fill-2);border-radius:12px;padding:12px 14px}
+.fact .fl{font-size:12.5px;color:var(--ink-2)}
+.fact .fv{font-size:17px;font-weight:600;margin-top:2px}
+.fact.warn .fv{color:var(--orange-ink)}
+.lktold{border-left:3px solid var(--blue);padding:10px 12px;background:var(--blue-soft);border-radius:0 10px 10px 0;font-size:14.5px}
+.lktold.none{border-color:var(--orange);background:var(--orange-soft)}
+.lktold .tt{font-size:12.5px;color:var(--ink-2);margin-bottom:2px}
+/* CEO */
+.brief .row{cursor:default}
+.brief .row:hover{background:transparent}
+/* customer */
+.track{max-width:580px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:4px 0 18px}
+.step{text-align:center;font-size:12.5px;color:var(--ink-2)}
+.step i{display:block;height:6px;border-radius:3px;background:var(--fill);margin-bottom:8px}
+.step.ok i{background:var(--green)}
+.step.bad i{background:var(--orange)}
+.step.bad{color:var(--orange-ink);font-weight:600}
+.state-big{font-size:24px;font-weight:700;letter-spacing:-.022em;line-height:1.2;margin-bottom:14px}
+.bubble{background:var(--fill-2);border-radius:18px 18px 18px 6px;padding:14px 16px;font-size:15px;line-height:1.45;white-space:pre-wrap}
+.bubble-t{font-size:12.5px;color:var(--ink-2);margin:14px 4px 6px}
+.lkans{margin-top:58px}
+@media (max-width:900px){.lkgrid{grid-template-columns:minmax(0,1fr)}.lkans{margin-top:14px}.facts{grid-template-columns:1fr 1fr}.whobtn .wl{display:none}}
+@media (max-width:640px){.bar .clock{display:none}.facts{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -327,17 +383,10 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 <div class="app">
   <aside class="side" aria-label="Sections">
     <div class="brand"><span class="brand-mark">RW</span><div><div class="brand-name">RouteWise</div><div class="brand-sub">Harrisburg hub</div></div></div>
-    <div class="side-h">Overview</div>
-    <button class="nav on" type="button" data-view="today" data-ic="today">Today</button>
-    <div class="side-h">Dispatch</div>
-    <button class="nav" type="button" data-view="problems" data-ic="alert">Problems <span class="badge num" data-count></span></button>
-    <button class="nav" type="button" data-view="trends" data-ic="chart">Trends</button>
-    <button class="nav" type="button" data-view="data" data-ic="tray">Data</button>
-    <div class="side-h">On the road</div>
-    <button class="nav" type="button" data-view="driver" data-ic="phone">Driver app</button>
-    <div class="side-h">Team today</div>
-    <ul class="team" id="team"></ul>
-    <div class="me"><span class="av">JT</span><div><div class="me-name">Jamal Turner</div><div class="me-role">Dispatch manager</div></div></div>
+    <nav id="sideNav" aria-label="Pages"></nav>
+    <div id="teamWrap"><div class="side-h">Team today</div>
+    <ul class="team" id="team"></ul></div>
+    <div class="me" id="meBox"></div>
   </aside>
 
   <div class="main">
@@ -346,7 +395,9 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
       <span class="grow"></span>
       <span class="clock num">Mon, Sep 14 · 9:42 AM</span>
       <span class="tag">Sample data</span>
+      <button class="whobtn" type="button" id="whoBtn" aria-haspopup="true" aria-expanded="false" title="See the app the way each person sees it"></button>
     </header>
+    <div class="whomenu" id="whoMenu" role="menu" hidden></div>
 
     <main class="content">
       <section id="view-today" class="view"></section>
@@ -356,6 +407,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
         <p class="sub">Every delivery that needs help, with the most urgent on top.</p>
         <div class="toolbar">
           <div class="seg" role="group" aria-label="Which problems to show">
+            <button type="button" data-status="mine" id="mineBtn" hidden>Mine</button>
             <button type="button" data-status="open" class="on">Open</button>
             <button type="button" data-status="noowner">No owner</button>
             <button type="button" data-status="done">Done</button>
@@ -392,6 +444,9 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
       </section>
 
       <section id="view-driver" class="view" hidden></section>
+      <section id="view-boss" class="view" hidden></section>
+      <section id="view-lookup" class="view" hidden></section>
+      <section id="view-track" class="view" hidden></section>
 
       <section id="view-data" class="view" hidden>
         <h1 class="lt">Data</h1>
@@ -418,16 +473,10 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
   </div>
 </div>
 
-<nav class="tabbar" aria-label="Sections">
-  <button type="button" class="on" data-view="today" data-ic="today" data-size="22">Today</button>
-  <button type="button" data-view="problems" data-ic="alert" data-size="22">Problems</button>
-  <button type="button" data-view="trends" data-ic="chart" data-size="22">Trends</button>
-  <button type="button" data-view="driver" data-ic="phone" data-size="22">Driver</button>
-  <button type="button" data-view="data" data-ic="tray" data-size="22">Data</button>
-</nav>
+<nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <script>
-const NOW=582, ME='Jamal Turner';
+const NOW=582; let ME='Jamal Turner';
 const OWNERS=['Maria Delgado','Andre Gibson','Sam Whitaker','Jamal Turner','Priya Nair'];
 const STATUSES=['New','Working','Waiting','Done'];
 const ICONS={
@@ -638,7 +687,7 @@ function draftFor(c){
 
 /* actions */
 function takeCase(c,name){c.owner=name;log(c,'status',name?`${name} took this problem.`:'Owner removed.');if(name&&c.status==='New')c.status='Working';}
-function refreshAll(){renderSide();if(state.view==='today')renderToday();if(state.view==='problems'){renderGroups();renderDetail();}}
+function refreshAll(){renderSide();if(state.view==='boss')renderBoss();if(state.view==='lookup')renderLookupBody();if(state.view==='track')renderTrack();if(state.view==='today')renderToday();if(state.view==='problems'){renderGroups();renderDetail();}}
 
 /* sidebar */
 function renderSide(){
@@ -663,7 +712,7 @@ function renderToday(){
   const ratio=(AN.rates[r][1]/AN.rates[r][0]).toFixed(1);
   const tp=top?priority(top):null;
   $('#view-today').innerHTML=`
-  ${state.tipHidden?'':`<div class="tip">${ic('info',20)}<div>This is a prototype with sample data. Try this: open the top problem, take it, add a note, and write the customer message. Then look at Trends and the Driver app.</div><button class="btn sm" type="button" id="tipHide">Hide</button></div>`}
+  ${state.tipHidden?'':`<div class="tip">${ic('info',20)}<div>This is a prototype with sample data. Try this: open the top problem, take it, add a note, and write the customer message. Then click Viewing as, at the top right, to see the app as a dispatcher, a driver, the CEO, or a customer.</div><button class="btn sm" type="button" id="tipHide">Hide</button></div>`}
   <p class="eyebrow">Monday, September 14</p>
   <h1 class="hero">${open.length} deliveries have a problem. <span class="hl">${nowN} ${nowN===1?'needs':'need'} action right now.</span></h1>
   <div class="stats3">
@@ -698,7 +747,7 @@ function patHTML(p,r){return `<div class="card pat"><div><div class="pn num">${p
 /* problems */
 function visible(){
   let list=CASES.slice();const f=state.f;
-  if(f.status==='open')list=list.filter(isOpen);else if(f.status==='noowner')list=list.filter(c=>isOpen(c)&&!c.owner);else list=list.filter(c=>!isOpen(c));
+  if(f.status==='open')list=list.filter(isOpen);else if(f.status==='mine')list=list.filter(c=>isOpen(c)&&c.owner===ME);else if(f.status==='noowner')list=list.filter(c=>isOpen(c)&&!c.owner);else list=list.filter(c=>!isOpen(c));
   if(f.type!=='all')list=list.filter(c=>c.type===f.type);
   if(f.q){const q=f.q.toLowerCase();list=list.filter(c=>[c.id,c.customer,c.city,c.route,c.owner||'',TYPES[c.type].plain,c.driver].join(' ').toLowerCase().includes(q));}
   return sorted(list);
@@ -769,7 +818,7 @@ function renderDetail(){
   $('#draftBtn').addEventListener('click',()=>{c.draft=draftFor(c);renderDetail();$('#draft').focus();});
   $('#draft').addEventListener('input',e=>{c.draft=e.target.value;const has=!!c.draft.trim();$('#copyBtn').disabled=!has;$('#sentBtn').disabled=!has;});
   $('#copyBtn').addEventListener('click',()=>{const tx=$('#draft').value;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(()=>toast('Copied'),()=>toast('Select the text and copy it yourself'));else toast('Select the text and copy it yourself');});
-  $('#sentBtn').addEventListener('click',()=>{const tx=$('#draft').value.trim();if(!tx)return;const snip=tx.replace(/\s+/g,' ').slice(0,100);log(c,'message',`Message sent to ${c.contact}: "${snip}${tx.length>100?'...':''}"`);c.timeline[c.timeline.length-1].summary=`Told ${c.contact} what happened and what comes next.`+(c.newEta?` New arrival about ${clock12(c.newEta)}.`:' No new time given yet.');if(c.status==='New')c.status='Working';refreshAll();toast(`Marked as sent to ${c.contact}`);});
+  $('#sentBtn').addEventListener('click',()=>{const tx=$('#draft').value.trim();if(!tx)return;c.draft=tx;c.msgs=(c.msgs||[]).concat([{t:NOW,text:tx,who:ME}]);const snip=tx.replace(/\s+/g,' ').slice(0,100);log(c,'message',`Message sent to ${c.contact}: "${snip}${tx.length>100?'...':''}"`);c.timeline[c.timeline.length-1].summary=`Told ${c.contact} what happened and what comes next.`+(c.newEta?` New arrival about ${clock12(c.newEta)}.`:' No new time given yet.');if(c.status==='New')c.status='Working';refreshAll();toast(`Marked as sent to ${c.contact}`);});
 }
 
 /* charts */
@@ -903,8 +952,9 @@ function renderDriver(){
     body=`<div class="p-done"><div class="big">${ic('check',44)}</div><h3>Sent. Dispatch has it.</h3><p>You do not need to call. When someone takes it, you will see their name under My reports.</p><button class="btn primary lg" type="button" id="drvDone">Done</button></div>`;
   }
   const lastCase=d.lastId?CASES.find(c=>c.id===d.lastId):null;
-  el.innerHTML=`<h1 class="lt">Driver app</h1><p class="sub">What Ray, a RouteWise driver, sees on his phone. Try it: report a problem, then look for it under Problems.</p>
-  <div class="drv">
+  const solo=P().solo;
+  el.innerHTML=`${solo?'<h1 class="lt center">Ray’s phone</h1><p class="sub center">This is all a driver sees. Send a report, then switch to Maria or Jamal to watch it arrive.</p>':'<h1 class="lt">Driver app</h1><p class="sub">What Ray, a RouteWise driver, sees on his phone. Try it: report a problem, then look for it under Problems.</p>'}
+  <div class="drv${solo?' solo':''}">
     <div class="drv-side card pad"><h3>Made for the road</h3><ul>
       <li>${ic('check',18)}<span>One tap to say what happened.</span></li>
       <li>${ic('check',18)}<span>No typing needed. A note or a photo is optional.</span></li>
@@ -946,12 +996,190 @@ function renderPreview(){
   const p=$('#preview');p.hidden=false;
   p.innerHTML=`<div class="r-sub" style="margin-bottom:6px">deliveries_sep14.csv · 412 rows · here are the first 5</div><table><thead><tr><th>Order</th><th>Customer</th><th>Carrier</th><th>Promised by</th><th>Latest update</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map((v,i)=>`<td class="${i===0||i===3?'num':''}">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>
     <div class="rowb" style="margin-top:12px"><button class="btn primary" type="button" id="importBtn" ${state.imported?'disabled':''}>${state.imported?'Added':'Add these 412 updates'}</button><span class="note" style="margin:0">Updates for a known problem go into its history. New trouble becomes a new problem.</span></div>`;
-  $('#importBtn').addEventListener('click',()=>{if(state.imported)return;state.imported=true;IMPORT_CASES.forEach(c=>CASES.push(c));renderSide();state.sel='RW-91461';state.f={status:'open',type:'all',q:''};showView('problems');toast('412 updates added. 2 new problems found.');});
+  $('#importBtn').addEventListener('click',()=>{if(state.imported)return;state.imported=true;IMPORT_CASES.forEach(c=>CASES.push(c));renderSide();if(canSee('problems')){state.sel='RW-91461';state.f={status:'open',type:'all',q:''};showView('problems');}else renderPreview();toast('412 updates added. 2 new problems found.');});
+}
+
+
+/* people: who is looking at the app */
+const PEOPLE=[
+  {id:'jamal',name:'Jamal Turner',role:'Dispatch manager',grp:'Our team',hue:211,views:['today','problems','trends','data','driver'],start:'today',take:true,team:true,does:'Sees everything and runs the desk'},
+  {id:'maria',name:'Maria Delgado',role:'Dispatcher',grp:'Our team',hue:330,views:['problems'],start:'problems',take:true,team:true,does:'Works the problem list all day'},
+  {id:'priya',name:'Priya Nair',role:'Customer service',grp:'Our team',hue:268,views:['lookup'],start:'lookup',does:'Answers customers on the phone'},
+  {id:'ray',name:'Ray Okafor',role:'Driver',grp:'Our team',hue:28,views:['driver'],start:'driver',solo:true,does:'Reports problems from his phone'},
+  {id:'helen',name:'Helen Marsh',role:'CEO',grp:'Leaders',hue:150,views:['boss','trends'],start:'boss',does:'Checks how the day is going'},
+  {id:'kevin',name:'Kevin Tran',role:'Operations analyst',grp:'Leaders',hue:190,views:['trends','data'],start:'trends',does:'Loads files and checks the numbers'},
+  {id:'linda',name:'Linda Cho',role:'Customer',grp:'Customers',hue:350,views:['track'],start:'track',solo:true,does:'Office manager at Bright Smiles Family Dentistry'}];
+const VIEWS={today:{label:'Today',ic:'today',sec:'Overview'},boss:{label:'Overview',ic:'today',sec:'Overview'},
+  problems:{label:'Problems',ic:'alert',sec:'Dispatch',count:true},lookup:{label:'Find a customer',short:'Customers',ic:'search',sec:'Customers'},
+  trends:{label:'Trends',ic:'chart',sec:'Numbers'},data:{label:'Data',ic:'tray',sec:'Numbers'},
+  driver:{label:'Driver app',short:'Driver',ic:'phone',sec:'On the road'},track:{label:'My order',ic:'box',sec:'My order'}};
+let PID='jamal';
+const P=()=>PEOPLE.find(p=>p.id===PID);
+const canSee=v=>P().views.includes(v);
+const avHTML=(p,cls)=>`<span class="av ${cls||''}" style="background:hsl(${p.hue} 62% 44%);color:#fff">${initials(p.name)}</span>`;
+function renderNav(){
+  const p=P();let html='',sec='';
+  p.views.forEach(v=>{const m=VIEWS[v];if(m.sec!==sec){sec=m.sec;html+=`<div class="side-h">${sec}</div>`;}
+    html+=`<button class="nav" type="button" data-view="${v}">${ic(m.ic,18)}${m.label}${m.count?' <span class="badge num" data-count></span>':''}</button>`;});
+  $('#sideNav').innerHTML=html;
+  const tb=$('#tabbar');
+  tb.innerHTML=p.views.map(v=>`<button type="button" data-view="${v}">${ic(VIEWS[v].ic,22)}${VIEWS[v].short||VIEWS[v].label}</button>`).join('');
+  tb.style.gridTemplateColumns=`repeat(${p.views.length},1fr)`;
+  tb.classList.toggle('hide',p.views.length<2);
+  $('.app').classList.toggle('solo',!!p.solo);
+  $('#teamWrap').hidden=!p.team;
+  $('#meBox').innerHTML=`${avHTML(p)}<div><div class="me-name">${esc(p.name)}</div><div class="me-role">${esc(p.role)}</div></div>`;
+  $('#whoBtn').innerHTML=`${avHTML(p,'sm')}<span class="wl">Viewing as</span> ${esc(first(p.name))}${ic('chevron',14)}`;
+  $('#mineBtn').hidden=!p.take;
+  renderSide();
+}
+function renderWho(){
+  $('#whoMenu').innerHTML=`<div class="wi">See the app the way each person sees it. Everyone shares the same live data, so a change made by one person shows up for the others.</div>`+
+    ['Our team','Leaders','Customers'].map(g=>`<div class="wh">${g}</div>`+PEOPLE.filter(p=>p.grp===g).map(p=>
+      `<button class="wp${p.id===PID?' on':''}" type="button" role="menuitem" data-who="${p.id}">${avHTML(p)}<div><div class="wn">${esc(p.name)} <span class="wr">· ${esc(p.role)}</span></div><div class="wr">${esc(p.does)}</div></div>${p.id===PID?`<span class="ck">${ic('check',18)}</span>`:''}</button>`).join('')).join('');
+}
+function openWho(){renderWho();$('#whoMenu').hidden=false;$('#whoBtn').setAttribute('aria-expanded','true');const on=$('#whoMenu .wp.on');if(on)on.focus();}
+function closeWho(){$('#whoMenu').hidden=true;$('#whoBtn').setAttribute('aria-expanded','false');}
+function setPerson(id,quiet){
+  if(!PEOPLE.some(p=>p.id===id))id='jamal';
+  PID=id;ME=P().name;
+  try{localStorage.setItem('rw-person',id);}catch(e){}
+  try{history.replaceState(null,'','#as='+id);}catch(e){}
+  if(!P().take&&state.f.status==='mine')state.f.status='open';
+  if(P().take&&state.f.status==='mine'&&!openCases().some(c=>c.owner===ME))state.f.status='open';
+  closeWho();renderNav();showView(P().start);
+  if(!quiet)toast(`Now viewing as ${P().name}, ${P().role.toLowerCase()}`);
+}
+$('#whoBtn').addEventListener('click',e=>{e.stopPropagation();$('#whoMenu').hidden?openWho():closeWho();});
+$('#whoMenu').addEventListener('click',e=>{const b=e.target.closest('[data-who]');if(b)setPerson(b.dataset.who);});
+document.addEventListener('click',e=>{if(!$('#whoMenu').hidden&&!e.target.closest('#whoMenu'))closeWho();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#whoMenu').hidden){closeWho();$('#whoBtn').focus();}});
+window.addEventListener('hashchange',()=>{const m=location.hash.match(/as=(\w+)/);if(m&&m[1]!==PID)setPerson(m[1]);});
+
+/* CEO overview */
+function renderBoss(){
+  const open=openCases(),nowN=open.filter(c=>priority(c).tier==='now').length,noOwner=open.filter(c=>!c.owner).length;
+  const keys=sorted(open.filter(c=>c.key));
+  const r=14,total=AN.causes[r].reduce((a,b)=>a+b,0),rn=rateNote(r);
+  const car=AN.carrierLabels.map((l,i)=>({l,v:AN.rates[r][i]})).sort((a,b)=>b.v-a.v),maxR=car[0].v;
+  const ratio=(AN.rates[r][1]/AN.rates[r][0]).toFixed(1);
+  const verdict=nowN>=4?'Today is harder than normal.':'Today looks like a normal day.';
+  const krow=c=>{const p=priority(c),d=dueInfo(c),t=TYPES[c.type];
+    return `<div class="row"><span class="ico ${p.tier}">${ic(t.icon,20)}</span><div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)}. ${esc(c.city)}.</div></div>
+    <div class="r-right"><span class="due ${d.cls} num">${esc(d.text)}</span>${c.owner?`<span class="owner"><span class="av sm">${initials(c.owner)}</span>${esc(first(c.owner))} is on it</span>`:'<span class="tag red">No owner yet</span>'}</div><span></span></div>`;};
+  $('#view-boss').innerHTML=`
+  <p class="eyebrow">Monday, September 14 · 9:42 AM</p>
+  <h1 class="hero">${verdict} <span class="hl">${keys.length} important ${keys.length===1?'customer has':'customers have'} a problem.</span></h1>
+  <p class="sub">${open.length} deliveries have a problem right now. ${nowN} need action now, and ${noOwner?`${noOwner} ${noOwner===1?'has':'have'} no owner yet`:'every one has an owner'}. Jamal’s team is working on them.</p>
+  <h2 class="sec-h">Important customers with a problem</h2>
+  <div class="list brief">${keys.map(krow).join('')||'<div class="card empty">None right now.</div>'}</div>
+  <h2 class="sec-h">The last 14 days</h2>
+  <div class="stats3" style="margin-top:0">
+    <div class="card stat"><div class="n num">${total}</div><div class="l">problems</div><div class="h ${rn.cls}">${esc(rn.text)}</div></div>
+    <div class="card stat"><div class="n num">${AN.before[r]}%</div><div class="l">fixed before the customer’s deadline</div><div class="h">The rest were fixed late</div></div>
+    <div class="card stat"><div class="n" style="font-size:34px;padding-top:6px">${AN.median[r]}</div><div class="l">typical time to fix one</div><div class="h">From first report to fixed</div></div>
+  </div>
+  <div class="card pad" style="margin-top:14px"><h3 style="font-size:17px;font-weight:600">Biggest risk: one carrier</h3><p class="lead">Keystone Freight has about ${ratio} times more problems than our own trucks. Numbers are problems per 100 deliveries.</p>
+    ${car.map(x=>`<div class="brow"><span>${x.l}</span><span class="bt"><i style="width:${Math.round(x.v/maxR*100)}%"></i></span><span class="bv num">${x.v.toFixed(1)}</span></div>`).join('')}</div>
+  <h2 class="sec-h">What to fix first</h2>
+  <div class="pats">${AN.patterns.slice(0,2).map(p=>patHTML(p,r)).join('')}</div>
+  <div class="rowb"><button class="btn" type="button" id="bossTrends">See all trends</button></div>
+  <p class="note">Helen sees the same numbers as Jamal, without the buttons to change anything.</p>`;
+  $('#bossTrends').addEventListener('click',()=>showView('trends'));
+}
+
+/* customer service lookup */
+state.lk={q:'',sel:null};
+function lastTold(c){
+  if(c.msgs&&c.msgs.length){const m=c.msgs[c.msgs.length-1];return{t:m.t,who:m.who,text:m.text};}
+  const e=c.timeline.slice().reverse().find(x=>x.kind==='message');
+  return e?{t:e.t,who:e.who,text:e.summary||e.text}:null;
+}
+function sayFor(c){
+  if(!isOpen(c)){const a=c.timeline.slice().reverse().find(x=>x.kind==='status'||x.kind==='action');return 'This one is fixed. '+(a?a.text:'');}
+  const t=TYPES[c.type].plain;
+  return `${t}: ${c.custDetail}. `+(c.newEta?`The new arrival time is about ${clock12(c.newEta)}.`:'There is no new time yet. Promise an update within the hour.');
+}
+function renderLookup(){
+  const el=$('#view-lookup');
+  if(!el.dataset.ready){
+    el.innerHTML=`<h1 class="lt">Find a customer</h1><p class="sub">A customer is on the phone? Type their name. You see what happened, who has it, and what we already told them.</p>
+    <label class="bigsearch">${ic('search',22)}<input type="search" id="lkQ" placeholder="Customer, contact name, city, or order number" aria-label="Find a customer" autocomplete="off"></label>
+    <div class="lkgrid"><div id="lkList"></div><div id="lkAns"></div></div>`;
+    el.dataset.ready='1';
+    $('#lkQ').addEventListener('input',e=>{state.lk.q=e.target.value.trim();renderLookupBody();});
+    $('#lkList').addEventListener('click',e=>{const b=e.target.closest('[data-lk]');if(b){state.lk.sel=b.dataset.lk;renderLookupBody();}});
+  }
+  $('#lkQ').value=state.lk.q;renderLookupBody();
+  setTimeout(()=>{const q=$('#lkQ');if(q&&state.view==='lookup')q.focus();},50);
+}
+function renderLookupBody(){
+  const L=state.lk,q=L.q.toLowerCase();
+  const pool=q?CASES.filter(c=>[c.customer,c.contact,c.city,c.id].join(' ').toLowerCase().includes(q)):CASES.filter(isOpen);
+  const hits=pool.slice().sort((a,b)=>a.customer.localeCompare(b.customer));
+  if(hits.length===1)L.sel=hits[0].id;
+  $('#lkList').innerHTML=`<div class="group-h"><h3>${q?(hits.length?`${hits.length} ${hits.length===1?'match':'matches'}`:'No match'):'Customers with a problem today'}</h3></div>`+
+    (hits.length?`<div class="list">${hits.map(c=>`<button class="pick${c.id===L.sel?' sel':''}" type="button" data-lk="${c.id}"><div style="min-width:0"><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(c.contact)} · ${esc(c.city)} · ${esc(TYPES[c.type].plain)}</div></div><span style="margin-left:auto;flex:none">${!isOpen(c)?'<span class="tag green">Fixed</span>':c.owner?`<span class="tag">${esc(first(c.owner))}</span>`:'<span class="tag red">No owner</span>'}</span></button>`).join('')}</div>`
+      :'<div class="card empty">Nobody by that name has a problem today. Their delivery is probably on time.</div>');
+  const c=CASES.find(x=>x.id===L.sel);
+  if(!c){$('#lkAns').innerHTML=`<div class="card pad lkans"><p class="lead" style="margin:0">Pick a customer on the left, or type a name above.</p></div>`;return;}
+  const told=lastTold(c);
+  $('#lkAns').innerHTML=`<div class="card answer lkans">
+    <div class="r-sub">${esc(c.customer)} · ${esc(c.city)} · Order <span class="num">${c.id}</span></div>
+    <h4 style="margin-top:12px">What to tell ${esc(c.contact)}</h4>
+    <div class="say">${esc(sayFor(c))}</div>
+    <div class="facts">
+      <div class="fact${c.owner?'':' warn'}"><div class="fl">Who has it</div><div class="fv">${c.owner?esc(c.owner):'Nobody yet'}</div></div>
+      <div class="fact${c.newEta||!isOpen(c)?'':' warn'}"><div class="fl">New arrival time</div><div class="fv num">${!isOpen(c)?'Fixed':c.newEta?clock12(c.newEta):'Not known yet'}</div></div>
+      <div class="fact"><div class="fl">We promised it by</div><div class="fv num">${clock12(c.due)}</div></div>
+    </div>
+    <h4>Last thing we told them</h4>
+    ${told?`<div class="lktold"><div class="tt">${clock12(told.t)} · ${esc(told.who)}</div>${esc(told.text.length>260?told.text.slice(0,260)+'...':told.text)}</div>`:'<div class="lktold none"><div class="tt">Nothing yet</div>Nobody has told them anything. You are the first.</div>'}
+    ${isOpen(c)?`<h4>Message to send</h4>
+    <textarea class="field" id="lkDraft" rows="8">${esc(c.draft||draftFor(c))}</textarea>
+    <div class="rowb"><button class="btn" type="button" id="lkCopy">Copy</button><button class="btn primary" type="button" id="lkSent">Mark as sent</button>${c.owner?'':`<button class="btn tint" type="button" id="lkAsk" ${c.asked?'disabled':''}>${c.asked?'Dispatch was asked':'Ask dispatch to take it'}</button>`}</div>
+    <p class="note">You always read and edit it first. Nothing is sent by itself.</p>`:''}
+  </div>`;
+  const on=(id,fn)=>{const e=$(id);if(e)e.addEventListener('click',fn);};
+  on('#lkCopy',()=>{const tx=$('#lkDraft').value;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(()=>toast('Copied'),()=>toast('Select the text and copy it yourself'));else toast('Select the text and copy it yourself');});
+  on('#lkSent',()=>{const tx=$('#lkDraft').value.trim();if(!tx)return;c.draft=tx;c.msgs=(c.msgs||[]).concat([{t:NOW,text:tx,who:ME}]);
+    const snip=tx.replace(/\s+/g,' ').slice(0,100);log(c,'message',`Message sent to ${c.contact}: "${snip}${tx.length>100?'...':''}"`);
+    c.timeline[c.timeline.length-1].summary=`Told ${c.contact} what happened and what comes next.`;
+    refreshAll();toast(`Marked as sent to ${c.contact}`);});
+  on('#lkAsk',()=>{c.asked=true;log(c,'action',`Priya asked dispatch to take this. ${c.contact} is waiting for an answer.`);refreshAll();toast('Dispatch will see your note on this problem');});
+}
+
+/* the customer's own page */
+const LINDA_ORDER='RW-91388';
+function renderTrack(){
+  const c=CASES.find(x=>x.id===LINDA_ORDER),el=$('#view-track');if(!c){el.innerHTML='';return;}
+  const fixed=!isOpen(c);
+  const head=fixed?'Your delivery problem is fixed.':c.owner?`${first(c.owner)} at RouteWise is fixing a problem with your delivery.`:'There is a problem with your delivery. RouteWise is looking at it.';
+  const steps=[['Ordered','ok'],['On the truck','ok'],[fixed?'Problem fixed':'Problem found',fixed?'ok':'bad'],['Delivered',fixed?'ok':'']];
+  const msgs=c.msgs||[];
+  el.innerHTML=`<div class="track">
+    <div class="tip">${ic('info',20)}<div>This is what Linda, the customer, sees from a link in a text or an email. Try it: switch to Priya or Jamal, open Bright Smiles Family Dentistry, write the message, and mark it as sent. Then come back here.</div></div>
+    <h1 class="lt">Hi Linda</h1>
+    <p class="sub">Order <span class="num">${c.id}</span> · ${esc(c.contents)} · Bright Smiles Family Dentistry, Reading</p>
+    <div class="card pad" style="margin-top:20px">
+      <div class="steps">${steps.map(x=>`<div class="step ${x[1]}"><i></i>${x[0]}</div>`).join('')}</div>
+      <div class="state-big">${esc(head)}</div>
+      <div class="facts" style="grid-template-columns:1fr 1fr">
+        <div class="fact${c.newEta||fixed?'':' warn'}"><div class="fl">Expected by</div><div class="fv num">${fixed?'Done':c.newEta?clock12(c.newEta):'New time coming soon'}</div></div>
+        <div class="fact"><div class="fl">First promised by</div><div class="fv num">${clock12(c.due)}</div></div>
+      </div>
+    </div>
+    <h2 class="sec-h">Messages from RouteWise</h2>
+    ${msgs.length?msgs.map(m=>`<div class="bubble-t">${clock12(m.t)} · from ${esc(first(m.who))} at RouteWise</div><div class="bubble">${esc(m.text)}</div>`).join(''):'<div class="card pad"><p class="lead" style="margin:0">No message yet. When someone at RouteWise sends an update, it shows up here.</p></div>'}
+    <div class="rowb" style="margin-top:18px"><button class="btn" type="button" id="trackCall">${ic('call',18)}Call RouteWise</button></div>
+  </div>`;
+  $('#trackCall').addEventListener('click',()=>toast('Calling is turned off in this prototype'));
 }
 
 /* navigation */
-const TITLES={today:'Today',problems:'Problems',trends:'Trends',driver:'Driver app',data:'Data'};
+const TITLES={today:'Today',problems:'Problems',trends:'Trends',driver:'Driver app',data:'Data',boss:'Overview',lookup:'Find a customer',track:'My order'};
 function showView(v){
+  if(!canSee(v))v=P().start;
   state.view=v;$$('.view').forEach(s=>{s.hidden=s.id!=='view-'+v;});
   $$('[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v));
   $('#barTitle').textContent=TITLES[v];
@@ -960,10 +1188,13 @@ function showView(v){
   if(v==='trends')renderTrends();
   if(v==='driver')renderDriver();
   if(v==='data')renderData();
+  if(v==='boss')renderBoss();
+  if(v==='lookup')renderLookup();
+  if(v==='track')renderTrack();
   window.scrollTo({top:0});
 }
 $$('[data-ic]').forEach(e=>e.insertAdjacentHTML('afterbegin',ic(e.dataset.ic,+e.dataset.size||18)));
-$$('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+document.addEventListener('click',e=>{const b=e.target.closest('[data-view]');if(b&&!b.closest('.view'))showView(b.dataset.view);});
 $$('[data-status]').forEach(b=>b.addEventListener('click',()=>{state.f.status=b.dataset.status;$$('[data-status]').forEach(x=>x.classList.toggle('on',x===b));const l=visible();if(!l.some(c=>c.id===state.sel))state.sel=l[0]?l[0].id:null;renderGroups();renderDetail();}));
 Object.keys(TYPES).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=TYPES[k].plain;$('#fType').appendChild(o);});
 $('#fType').addEventListener('change',e=>{state.f.type=e.target.value;renderGroups();});
@@ -974,7 +1205,7 @@ $$('[data-copy]').forEach(b=>b.addEventListener('click',()=>copyTable(b.dataset.
 $('#chooseFile').addEventListener('click',()=>toast('Picking a file is turned off in this prototype. Use the sample file.'));
 $('#loadSample').addEventListener('click',()=>{renderPreview();toast('Sample file loaded');});
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(state.view==='trends')renderTrends();},150);});
-renderSide();showView('today');
+(function(){let id=null;const m=location.hash.match(/as=(\w+)/);if(m)id=m[1];if(!id){try{id=localStorage.getItem('rw-person');}catch(e){}}setPerson(id||'jamal',true);})();
 </script>
 
 </body>
