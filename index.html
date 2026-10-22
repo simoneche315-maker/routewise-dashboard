@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>[hidden]{display:none!important}img{max-width:100%}</style>
-<title>RouteWise Desk 2</title>
+<title>RouteWise Desk</title>
+<link rel="icon" href="routewise.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
@@ -375,11 +376,88 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 .lkans{margin-top:58px}
 @media (max-width:900px){.lkgrid{grid-template-columns:minmax(0,1fr)}.lkans{margin-top:14px}.facts{grid-template-columns:1fr 1fr}.whobtn .wl{display:none}}
 @media (max-width:640px){.bar .clock{display:none}.facts{grid-template-columns:1fr}}
+
+/* version 3: alerts, forms, real data */
+.headrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.headrow .btn{margin-left:auto}
+.bellbtn{position:relative;border:0;background:var(--fill);border-radius:980px;width:34px;height:34px;display:grid;place-items:center;color:var(--ink);cursor:pointer;flex:none}
+.bellbtn:hover{filter:brightness(.97)}
+.bellbtn .bdg{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 5px;line-height:1}
+.bellmenu{right:64px}
+.bm-h{display:flex;align-items:center;gap:8px;padding:8px 10px 6px}
+.bm-h b{font-size:17px;letter-spacing:-.015em}
+.bm-h .btn{margin-left:auto}
+.al{display:grid;grid-template-columns:10px minmax(0,1fr);gap:10px;padding:10px;border-radius:12px;cursor:pointer;border:0;background:transparent;text-align:left;width:100%;font:inherit;color:var(--ink)}
+.al:hover{background:var(--fill-2)}
+.al>i{width:8px;height:8px;border-radius:50%;margin-top:7px;background:transparent}
+.al.unread>i{background:var(--blue)}
+.al .al-t{font-weight:600}
+.al .al-b{font-size:13.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.al .al-w{font-size:12px;color:var(--ink-3);margin-top:2px}
+.pops{position:fixed;top:64px;right:16px;z-index:40;display:grid;gap:10px;width:min(380px,calc(100vw - 32px));pointer-events:none}
+.pop{pointer-events:auto;background:var(--surface);color:var(--ink);border-radius:16px;box-shadow:0 14px 44px rgba(0,0,0,.28),var(--edge);padding:14px 16px;border-left:4px solid var(--red);animation:popin .25s ease-out}
+.pop.soft{border-left-color:var(--blue)}
+@keyframes popin{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}
+.pop-k{font-size:12px;font-weight:600;color:var(--red-ink);text-transform:uppercase;letter-spacing:.04em}
+.pop.soft .pop-k{color:var(--blue-ink)}
+.pop-t{font-weight:700;font-size:16px;letter-spacing:-.015em;margin-top:2px}
+.pop-b{font-size:14px;color:var(--ink-2);margin-top:2px;overflow-wrap:anywhere}
+.pop img{display:block;max-width:100%;max-height:140px;border-radius:10px;margin-top:8px}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.38);display:grid;place-items:center;padding:16px}
+.sheet{width:min(600px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:22px 24px}
+.sheet h2{font-size:24px;font-weight:700;letter-spacing:-.022em}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;margin-top:16px}
+.form label{display:grid;gap:5px;font-size:13px;font-weight:600;color:var(--ink-2);min-width:0}
+.form .full{grid-column:1/-1}
+.form .field{width:100%;font-size:15px;font-weight:400}
+.form textarea.field{min-height:84px}
+.form .chk{display:flex;align-items:center;gap:8px;font-weight:500;color:var(--ink);font-size:14.5px}
+.form .chk input{width:18px;height:18px;accent-color:var(--blue)}
+.form .err{font-weight:500}
+.sheet-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.welcome{padding:26px 28px;margin-top:22px}
+.welcome h2{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.welcome ol{margin:10px 0 0;padding-left:20px;color:var(--ink-2);display:grid;gap:4px}
+.photo{display:block;max-width:100%;max-height:260px;border-radius:12px;margin-top:8px}
+.btn.danger{background:var(--red-soft);color:var(--red-ink)}
+.nextbig{font-size:15px;font-weight:700;color:var(--blue-ink);margin-top:6px}
+.dlrow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;position:relative;min-height:68px}
+.dlrow+.dlrow::before{content:"";position:absolute;left:66px;right:0;top:0;height:1px;background:var(--sep)}
+.dlrow .dl-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.dl-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.stopacts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.datacard{margin-top:14px}
+.datacard h3{font-size:17px;font-weight:600;letter-spacing:-.015em}
+.counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.mode-ok{background:var(--green-soft)!important;color:var(--green-ink)!important}
+.mode-bad{background:var(--red-soft)!important;color:var(--red-ink)!important}
+.statusline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+@media (max-width:900px){.bellmenu{right:16px}.counts{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){
+  .form{grid-template-columns:1fr}
+  .dlrow{grid-template-columns:40px minmax(0,1fr)}
+  .dl-right{grid-column:2;align-items:flex-start}
+  .dlrow .dl-act{justify-content:flex-start}
+  .phone{width:100%;height:auto;min-height:0;border-radius:0;background:transparent;padding:0;box-shadow:none}
+  .phone .screen{border-radius:0;background:transparent;overflow:visible}
+  .phone .island,.phone .p-status-bar,.phone .p-home{display:none}
+  .phone .p-body{padding:4px 0 20px;overflow:visible}
+}
+
+.aibox{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tag.ai{background:rgba(124,58,237,.12);color:#6D28D9}
+.tag.ai.wait{background:var(--fill);color:var(--ink-3)}
+.factors li.aif>span:first-child{color:#6D28D9;font-weight:600}
+.factors li.aif .ft i{background:#7C3AED}
+.airead{line-height:1.5}
+.airead mark{background:rgba(124,58,237,.18);color:inherit;border-radius:4px;padding:0 2px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tag.ai{color:#C4B5FD;background:rgba(167,139,250,.2)}:root:not([data-theme="light"]) .factors li.aif>span:first-child{color:#C4B5FD}}
+:root[data-theme="dark"] .tag.ai{color:#C4B5FD;background:rgba(167,139,250,.2)}:root[data-theme="dark"] .factors li.aif>span:first-child{color:#C4B5FD}
 </style>
 </head>
 <body>
-
-
 <div class="app">
   <aside class="side" aria-label="Sections">
     <div class="brand"><span class="brand-mark">RW</span><div><div class="brand-name">RouteWise</div><div class="brand-sub">Harrisburg hub</div></div></div>
@@ -393,17 +471,19 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
     <header class="bar">
       <div class="bar-title" id="barTitle">Today</div>
       <span class="grow"></span>
-      <span class="clock num">Mon, Sep 14 · 9:42 AM</span>
-      <span class="tag">Sample data</span>
+      <span class="clock num" id="clock"></span>
+      <span class="tag" id="modeTag"></span>
+      <button class="bellbtn" type="button" id="bellBtn" hidden aria-haspopup="true" aria-expanded="false" aria-label="Alerts"></button>
       <button class="whobtn" type="button" id="whoBtn" aria-haspopup="true" aria-expanded="false" title="See the app the way each person sees it"></button>
     </header>
     <div class="whomenu" id="whoMenu" role="menu" hidden></div>
+    <div class="whomenu bellmenu" id="bellMenu" hidden></div>
 
     <main class="content">
       <section id="view-today" class="view"></section>
 
       <section id="view-problems" class="view" hidden>
-        <h1 class="lt">Problems</h1>
+        <div class="headrow"><h1 class="lt">Problems</h1><button class="btn primary" type="button" data-act="newProblem" id="newProblemBtn">New problem</button></div>
         <p class="sub">Every delivery that needs help, with the most urgent on top.</p>
         <div class="toolbar">
           <div class="seg" role="group" aria-label="Which problems to show">
@@ -421,9 +501,11 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
         </div>
       </section>
 
+      <section id="view-deliveries" class="view" hidden></section>
+
       <section id="view-trends" class="view" hidden>
         <h1 class="lt">Trends</h1>
-        <p class="sub">What keeps going wrong, and what to change so it stops.</p>
+        <p class="sub">What keeps going wrong, and what to change so it stops. Built from the problems saved in the database.</p>
         <div class="toolbar">
           <div class="seg" role="group" aria-label="Time range">
             <button type="button" data-range="7">7 days</button>
@@ -434,7 +516,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
         <div class="stats3 stats4" id="tStats"></div>
         <div class="charts">
           <div class="card fig"><div class="fig-h"><h3>What goes wrong most</h3><span class="fig-act"><button class="btn text sm" type="button" data-copy="cause">Copy for Excel</button><button class="btn text sm" type="button" data-table="cause">Show numbers</button></span></div><div class="fig-body" id="cCause"></div></div>
-          <div class="card fig"><div class="fig-h"><h3>Problems per 100 deliveries</h3><span class="fs">by carrier</span><span class="fig-act"><button class="btn text sm" type="button" data-copy="carrier">Copy for Excel</button><button class="btn text sm" type="button" data-table="carrier">Show numbers</button></span></div><div class="fig-body" id="cCarrier"></div></div>
+          <div class="card fig"><div class="fig-h"><h3 id="carrierTitle">Problems per 100 deliveries</h3><span class="fs">by carrier</span><span class="fig-act"><button class="btn text sm" type="button" data-copy="carrier">Copy for Excel</button><button class="btn text sm" type="button" data-table="carrier">Show numbers</button></span></div><div class="fig-body" id="cCarrier"></div></div>
           <div class="card fig wide"><div class="fig-h"><h3>New problems and fixed problems</h3><span class="fs">per day</span><span class="fig-act"><button class="btn text sm" type="button" data-copy="trend">Copy for Excel</button><button class="btn text sm" type="button" data-table="trend">Show numbers</button></span></div><div class="fig-body" id="cTrend"></div></div>
           <div class="card fig"><div class="fig-h"><h3>How long open problems have waited</h3><span class="fs">right now</span><span class="fig-act"><button class="btn text sm" type="button" data-copy="aging">Copy for Excel</button><button class="btn text sm" type="button" data-table="aging">Show numbers</button></span></div><div class="fig-body" id="cAging"></div></div>
           <div class="card fig"><div class="fig-h"><h3>How problems ended</h3><span class="fig-act"><button class="btn text sm" type="button" data-copy="outcome">Copy for Excel</button><button class="btn text sm" type="button" data-table="outcome">Show numbers</button></span></div><div class="fig-body" id="cOutcome"></div></div>
@@ -444,41 +526,25 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
       </section>
 
       <section id="view-driver" class="view" hidden></section>
+      <section id="view-data" class="view" hidden></section>
       <section id="view-boss" class="view" hidden></section>
       <section id="view-lookup" class="view" hidden></section>
       <section id="view-track" class="view" hidden></section>
-
-      <section id="view-data" class="view" hidden>
-        <h1 class="lt">Data</h1>
-        <p class="sub">Where the information comes from. There is no live link to carriers or trucks yet, so RouteWise reads files, emails, and driver messages.</p>
-        <div class="two" style="margin-top:22px;align-items:start">
-          <div>
-            <div class="group-h"><h3>Sources</h3></div>
-            <div class="list" id="sources"></div>
-          </div>
-          <div>
-            <div class="group-h"><h3>Add a file</h3></div>
-            <div class="card pad">
-              <div class="drop">
-                <div class="dt">Drop a delivery file here</div>
-                <div style="font-size:13px;margin-top:4px">A CSV with one row per delivery update</div>
-                <div class="rowb" style="justify-content:center;margin-top:14px"><button class="btn" type="button" id="chooseFile">Choose a file</button><button class="btn primary" type="button" id="loadSample">Use the sample file</button></div>
-              </div>
-              <div id="preview" class="preview" hidden></div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   </div>
 </div>
 
 <nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+<div class="pops" id="pops" aria-live="assertive"></div>
+<div class="modal" id="modal" hidden><div class="card sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" id="sheet"></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
 <script>
-const NOW=582; let ME='Jamal Turner';
-const OWNERS=['Maria Delgado','Andre Gibson','Sam Whitaker','Jamal Turner','Priya Nair'];
-const STATUSES=['New','Working','Waiting','Done'];
+/* RouteWise Desk 3.
+   Everything is saved in a SQLite database through server.py.
+   If server.py is not running (for example on a static host), the app saves in this browser instead. */
+const DISPATCH_PHONE='(717) 555-0142';
+const MIN=60000, DAY=86400000;
 const ICONS={
   today:'<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
   alert:'<path d="M12 4l9 15.5H3z"/><path d="M12 10v4.5M12 17.2h.01"/>',
@@ -504,7 +570,12 @@ const ICONS={
   up:'<path d="M5 16l5-5 3 3 6-7M15 7h4v4"/>',
   info:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/>',
   mail:'<rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4 7.5l8 6 8-6"/>',
-  file:'<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/>'
+  file:'<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/>',
+  bell:'<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  trash:'<path d="M5 7h14M10 7V4.5h4V7M7 7l1 13h8l1-13"/>',
+  download:'<path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/>',
+  upload:'<path d="M12 15V4M7.5 8.5L12 4l4.5 4.5M5 19.5h14"/>'
 };
 const TYPES={
   'Traffic delay':{plain:'Stuck in traffic',icon:'car',sev:6,why:'The driver is still moving toward the stop'},
@@ -514,314 +585,276 @@ const TYPES={
   'Missed pickup':{plain:'Pickup missed',icon:'pickup',sev:15,why:'The delivery does not move until a new pickup is booked'},
   'Carrier delay':{plain:'Carrier is late',icon:'truck',sev:9,why:"The delivery is in another company's hands"}
 };
+const TYPE_KEYS=Object.keys(TYPES);
+const CUST={
+  'Traffic delay':'heavy traffic on the route','Failed attempt':'nobody was there to receive the delivery',
+  'Damaged package':'part of the shipment was damaged on the way','Address issue':'the address on the order does not match the building',
+  'Missed pickup':'the order was not picked up at its scheduled time','Carrier delay':'our carrier partner is running late'};
 const NEXT={
   'Address issue':"Call the customer and get the exact address and suite. Then send it to the driver before they leave the area.",
   'Carrier delay':"Ask the carrier for a firm new arrival time. Then tell the customer before the promised time passes.",
   'Failed attempt':"Call the customer to make sure someone will be there. Then plan a second try on the driver's way back.",
   'Missed pickup':"Book a new pickup with the carrier. If that is too late, send one of our own trucks.",
   'Damaged package':"Ask the driver for a photo. Check our stock for a replacement. File the claim today.",
-  'Traffic delay':"Ask the driver for a new arrival time. Tell any customer whose delivery will be late."
-};
-const CASES=[
-{id:'RW-91427',customer:'Keystone Dental Partners',key:true,contact:'Renee',city:'Scranton, PA',route:'R-17 Scranton',carrier:'Keystone Freight',driver:'Keystone truck 22',type:'Address issue',detected:475,due:630,status:'New',owner:null,source:'a driver text',contents:'Dental supplies, 3 cartons',critical:false,
- plain:'The label has no suite number. The driver is holding the package.',custDetail:'the delivery address on the order is missing a suite number',newEta:null,
- timeline:[{t:475,who:'Keystone truck 22',kind:'event',text:'Text from the driver: "No suite number on the label. The building has 3 entrances and no directory. Holding the package on the truck."'},{t:481,who:'Carrier website',kind:'event',text:'Keystone Freight marked this stop as a problem: address.'}]},
-{id:'RW-91290',customer:'Mid-Atlantic Office Supply Co',key:false,contact:'Greg',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'Allegheny Express',driver:'Allegheny truck 7',type:'Carrier delay',detected:400,due:570,status:'Waiting',owner:'Maria Delgado',source:'the carrier website',contents:'Office paper and toner, 6 cartons',critical:false,
- plain:"The carrier's truck left 2 hours late. The package is still on the road.",custDetail:"the shipment left our carrier partner's terminal later than planned",newEta:675,
- timeline:[{t:400,who:'Carrier website',kind:'event',text:'Allegheny Express: the truck left 2 hours behind schedule.'},{t:430,who:'Maria Delgado',kind:'action',text:'Emailed the Allegheny contact and asked for a new arrival time.'},{t:495,who:'Allegheny Express',kind:'event',text:'Reply from the carrier: it is on the truck, arriving about 11:15 AM.'},{t:497,who:'Maria Delgado',kind:'status',text:'Status changed to Waiting.'}]},
-{id:'RW-91402',customer:'Lehigh Valley Orthopedics',key:true,contact:'Dana',city:'Allentown, PA',route:'R-09 Lehigh',carrier:'RouteWise fleet',driver:'Ray Okafor',type:'Failed attempt',detected:500,due:720,status:'Working',owner:'Maria Delgado',source:'a driver text',contents:'Surgical kits for 1:00 PM procedures',critical:true,
- plain:'Nobody was at the front desk at 8:20. The office opens at 9:00.',custDetail:'our driver arrived at 8:20 AM, before the office opened',newEta:645,
- timeline:[{t:500,who:'Ray Okafor',kind:'event',text:'Text from the driver: "Nobody at the front desk. The sign says they open at 9. I can come back after Bethlehem."'},{t:511,who:'Maria Delgado',kind:'action',text:'Called the office and left a message. Ray, please go back after your Bethlehem stop. Someone will be at the desk from 9:00.'}]},
-{id:'RW-91250',customer:'Chester County Pharmacy',key:true,contact:'Alan',city:'West Chester, PA',route:'R-21 Chester',carrier:'Penn Line Carriers',driver:'Penn Line truck 4',type:'Missed pickup',detected:450,due:960,status:'New',owner:null,source:'the carrier website',contents:'Refrigerated vaccines, 2 coolers',critical:true,
- plain:'The carrier skipped the 7:00 pickup. The vaccine coolers are still in our cold room.',custDetail:'the order was not picked up at its scheduled time this morning',newEta:null,
- timeline:[{t:450,who:'Carrier website',kind:'event',text:'Penn Line Carriers: the 7:00 AM pickup was not attempted. Reason given: truck was full.'},{t:452,who:'RouteWise system',kind:'event',text:'Cold timer started. The coolers stay cold for 8 hours.'}]},
-{id:'RW-91355',customer:'Penn State Health Hershey',key:true,contact:'Marcus',city:'Hershey, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:660,status:'Working',owner:'Andre Gibson',source:'truck GPS',contents:'Clinic supplies, 4 cartons',critical:false,
- plain:'I-83 is closed after a crash. The driver is taking another road.',custDetail:'a road closure on I-83',newEta:680,
- timeline:[{t:545,who:'Truck GPS',kind:'event',text:'Truck 14 has not moved for 18 minutes at I-83 exit 41. The state reports a crash with all lanes closed.'},{t:552,who:'Andre Gibson',kind:'action',text:'Called Luis. He is going around on US-322. New arrival time is 11:20 AM.'},{t:553,who:'Andre Gibson',kind:'status',text:'Status changed to Working.'},{t:556,who:'Andre Gibson',kind:'message',text:'Message sent to Marcus: I-83 is closed, so the driver is going around. New arrival about 11:20 AM.',summary:'Told Marcus about the I-83 closure. New arrival about 11:20 AM.'}]},
-{id:'RW-91180',customer:'Pocono Medical Associates',key:true,contact:'Sylvia',city:'Stroudsburg, PA',route:'R-19 Pocono',carrier:'Keystone Freight',driver:'Keystone truck 31',type:'Carrier delay',detected:490,due:870,status:'Working',owner:'Maria Delgado',source:'the carrier website',contents:'Exam room supplies, 5 cartons',critical:false,
- plain:"The carrier's truck was held for a brake check. It is cleared and leaves at 9:30.",custDetail:"our carrier partner's truck was held for a safety check",newEta:840,
- timeline:[{t:490,who:'Carrier website',kind:'event',text:'Keystone Freight: truck 31 is out of service until a brake check is done.'},{t:535,who:'Maria Delgado',kind:'action',text:'Keystone says the truck is cleared and leaves at 9:30 AM. Asked them for a new arrival time.'},{t:543,who:'Keystone Freight',kind:'event',text:'Reply from the carrier: new arrival about 2:00 PM.'},{t:545,who:'Maria Delgado',kind:'message',text:'Message sent to Sylvia: the carrier truck was held for a safety check. New arrival about 2:00 PM.',summary:'Told Sylvia the truck was held for a safety check. New arrival about 2:00 PM.'}]},
-{id:'RW-91276',customer:'Wilkes-Barre Pediatrics',key:false,contact:'Joanne',city:'Wilkes-Barre, PA',route:'R-17 Scranton',carrier:'Keystone Freight',driver:'Keystone truck 22',type:'Address issue',detected:482,due:780,status:'New',owner:null,source:'customer service',contents:'Fridge thermometers, 1 carton',critical:false,
- plain:'The customer moved to a new suite in June. The order still has the old one.',custDetail:'the address on the order looks like your old suite',newEta:null,
- timeline:[{t:482,who:'Priya Nair',kind:'event',text:'Customer service ticket 4471: the customer called. They moved to Suite 210 in June and the label still says Suite 105.'}]},
-{id:'RW-91440',customer:'Lancaster Pediatric Dentistry',key:false,contact:'Beth',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Failed attempt',detected:578,due:810,status:'New',owner:null,source:'a driver text',contents:'Dental supplies, 2 cartons',critical:false,
- plain:'The back door was locked and a signature is needed. The driver kept the package.',custDetail:'our driver could not get a signature at the back entrance',newEta:null,
- timeline:[{t:578,who:'Dana Whitfield',kind:'event',text:'Text from the driver: "Back door locked, nobody answering, signature needed. Taking it with me for now."'}]},
-{id:'RW-91388',customer:'Bright Smiles Family Dentistry',key:false,contact:'Linda',city:'Reading, PA',route:'R-12 Berks',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Damaged package',detected:527,due:840,status:'New',owner:null,source:'a driver text',contents:'Sterile pouches and gloves, 2 cartons',critical:true,
- plain:'One carton was crushed on the truck. The sterile pouches are torn open.',custDetail:'one of the two cartons was damaged on the way',newEta:null,
- timeline:[{t:527,who:'Dana Whitfield',kind:'event',text:'Text from the driver with a photo: "Carton 2 of 2 got crushed under a pallet. The pouches are torn open."'}]},
-{id:'RW-91312',customer:'Susquehanna Veterinary Clinic',key:false,contact:'Pat',city:'Harrisburg, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:750,status:'Working',owner:'Andre Gibson',source:'truck GPS',contents:'Veterinary supplies, 3 cartons',critical:false,
- plain:'Same I-83 closure. This stop comes later on the route.',custDetail:'a road closure on I-83',newEta:765,
- timeline:[{t:545,who:'Truck GPS',kind:'event',text:'Truck 14 is stopped at I-83 exit 41. This is stop 9 of 14 on the route.'}]},
-{id:'RW-91103',customer:'Blue Mountain Physical Therapy',key:false,contact:'Chris',city:'Hamburg, PA',route:'R-11 Schuylkill',carrier:'Allegheny Express',driver:'Allegheny truck 12',type:'Missed pickup',detected:-470,due:1020,status:'Working',owner:'Sam Whitaker',source:'the carrier website',contents:'Therapy bands and supports, 2 cartons',critical:false,
- plain:"The carrier missed yesterday's 4:00 PM pickup. A new pickup is booked but not confirmed.",custDetail:'the order was not picked up at its scheduled time yesterday',newEta:null,
- timeline:[{t:-470,who:'Carrier website',kind:'event',text:'Allegheny Express: the 4:00 PM pickup was not attempted.'},{t:-455,who:'Sam Whitaker',kind:'action',text:'Booked a new pickup for today at 8:00 AM with Allegheny.'},{t:-450,who:'Sam Whitaker',kind:'status',text:'Status changed to Working.'}]},
-{id:'RW-91231',customer:'Delaware Valley Labs',key:false,contact:'Nadia',city:'Philadelphia, PA',route:'R-25 Philadelphia',carrier:'RouteWise fleet',driver:'Marcus Hale',type:'Failed attempt',detected:530,due:1020,status:'Working',owner:'Andre Gibson',source:'a driver text',contents:'Lab supplies, 4 cartons',critical:false,
- plain:'The loading dock is closed until 1:00 PM. Security would not take the boxes.',custDetail:'the loading dock was closed when our driver arrived',newEta:810,
- timeline:[{t:530,who:'Marcus Hale',kind:'event',text:'Text from the driver: "Dock is closed. Security says deliveries only after 1 PM."'},{t:541,who:'Andre Gibson',kind:'action',text:'Told Marcus to come back after his Center City stops. Emailed the customer.'}]},
-{id:'RW-91210',customer:'York Family Medicine',key:false,contact:'Kim',city:'York, PA',route:'R-05 York',carrier:'RouteWise fleet',driver:'Tom Reyes',type:'Traffic delay',detected:560,due:900,status:'New',owner:null,source:'truck GPS',contents:'Exam supplies, 2 cartons',critical:false,
- plain:'Slow traffic on US-30. About 20 minutes behind.',custDetail:'heavy traffic on US-30',newEta:null,
- timeline:[{t:560,who:'Truck GPS',kind:'event',text:'Truck 9 is 20 minutes behind its planned stop times.'}]},
-{id:'RW-91198',customer:'Cumberland Valley Dental',key:false,contact:'Ellen',city:'Carlisle, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Traffic delay',detected:545,due:2040,status:'New',owner:null,source:'truck GPS',contents:'Dental supplies, 1 carton',critical:false,
- plain:'Same I-83 closure. This delivery is not due until tomorrow morning.',custDetail:'a road closure on I-83',newEta:null,
- timeline:[{t:545,who:'Truck GPS',kind:'event',text:'Truck 14 is stopped at I-83 exit 41. This is the last stop and it is promised for tomorrow.'}]},
-{id:'RW-91166',customer:'Harrisburg Orthodontics',key:false,contact:'Rita',city:'Harrisburg, PA',route:'R-03 Capital',carrier:'RouteWise fleet',driver:'Luis Ortega',type:'Damaged package',detected:435,due:690,status:'Done',owner:'Andre Gibson',source:'a driver text',contents:'Wire and brackets, 1 carton',critical:false,
- plain:'A leaking cooler soaked the carton. A replacement was sent and delivered.',custDetail:'the first carton was damaged on the way',newEta:null,
- timeline:[{t:435,who:'Luis Ortega',kind:'event',text:'Text from the driver with a photo: "Carton is soaked. The cooler above it leaked."'},{t:460,who:'Andre Gibson',kind:'action',text:'Took a replacement from our stock and sent it on the 8:00 AM shuttle.'},{t:463,who:'Andre Gibson',kind:'message',text:'Told the customer a replacement arrives before 11:30 AM.'},{t:520,who:'Andre Gibson',kind:'status',text:'Done. Replacement delivered at 8:38 AM. Claim filed.'}]},
-{id:'RW-91150',customer:'Schuylkill Valley Eye Care',key:false,contact:'Omar',city:'Pottsville, PA',route:'R-11 Schuylkill',carrier:'Allegheny Express',driver:'Allegheny truck 12',type:'Address issue',detected:510,due:930,status:'Done',owner:'Maria Delgado',source:'customer service',contents:'Optical supplies, 1 carton',critical:false,
- plain:'The order had the billing address instead of the clinic. It is corrected.',custDetail:'the order listed your billing address',newEta:null,
- timeline:[{t:510,who:'Priya Nair',kind:'event',text:'Customer service ticket 4468: the order shows the billing address, not the clinic.'},{t:530,who:'Maria Delgado',kind:'action',text:'Confirmed the clinic address with the customer and sent it to Allegheny.'},{t:550,who:'Maria Delgado',kind:'status',text:'Done. The carrier confirmed the corrected stop.'}]}
-];
-const IMPORT_CASES=[
-{id:'RW-91461',customer:'Lancaster General Surgical Center',key:true,contact:'Hannah',city:'Lancaster, PA',route:'R-14 Lancaster',carrier:'Allegheny Express',driver:'Allegheny truck 7',type:'Carrier delay',detected:580,due:660,status:'New',owner:null,source:'the carrier website',contents:'Surgical instrument trays for this afternoon',critical:true,
- plain:"The surgical trays are still sitting at the carrier's terminal.",custDetail:"the shipment is still at our carrier partner's terminal",newEta:null,
- timeline:[{t:580,who:'Carrier website',kind:'event',text:'Allegheny Express: scanned at their Harrisburg terminal at 9:40 AM. Not loaded on a truck yet.'}]},
-{id:'RW-91455',customer:'Berks Community Health',key:false,contact:'Sam',city:'Reading, PA',route:'R-12 Berks',carrier:'RouteWise fleet',driver:'Dana Whitfield',type:'Traffic delay',detected:581,due:780,status:'New',owner:null,source:'truck GPS',contents:'Clinic supplies, 3 cartons',critical:false,
- plain:'Road work on US-422. About 25 minutes behind.',custDetail:'road work on US-422',newEta:null,
- timeline:[{t:581,who:'Truck GPS',kind:'event',text:'Truck 11 is 25 minutes behind its planned stop times near Wernersville.'}]}
-];
-const RAY_STOPS=[
- {n:12,customer:'Bethlehem Family Dental',city:'Bethlehem, PA',due:690,key:false,contact:'Marta',contents:'Dental supplies, 2 cartons'},
- {n:13,customer:"St. Luke's Outpatient Clinic",city:'Bethlehem, PA',due:750,key:true,contact:'Irene',contents:'Clinic supplies, 5 cartons'},
- {n:14,customer:'Easton Eye Associates',city:'Easton, PA',due:810,key:false,contact:'Paul',contents:'Optical supplies, 1 carton'}
-];
-const DRIVER_TYPES=[
- {type:'Traffic delay',label:'Stuck in traffic',plain:'The driver is stuck in traffic and will be late to this stop.',cust:'heavy traffic on the route'},
- {type:'Failed attempt',label:'Nobody there',plain:'Nobody was there to take the delivery.',cust:'nobody was there to receive the delivery'},
- {type:'Damaged package',label:'Damaged box',plain:'The driver reports a damaged box.',cust:'part of the shipment was damaged on the way'},
- {type:'Address issue',label:'Wrong address',plain:'The driver cannot find the right address.',cust:'the address on the order does not match the building'},
- {type:'Missed pickup',label:'Pickup missed',plain:'A pickup on this route was missed.',cust:'the order was not picked up at its scheduled time'}
-];
-const SOURCES=[
- {name:'Driver texts',how:'Messages from drivers, simulated for this prototype',icon:'phone',last:578,n:27,st:'ok'},
- {name:'Keystone Freight',how:'A file from their website, every hour',icon:'file',last:540,n:14,st:'ok'},
- {name:'Allegheny Express',how:'A status email from the carrier',icon:'mail',last:495,n:6,st:'stale',msg:'Out of date'},
- {name:'Penn Line Carriers',how:'Someone on our team checks their website',icon:'user',last:450,n:2,st:'manual',msg:'Checked by hand'},
- {name:'Truck GPS',how:'Where our own trucks are, every 15 minutes',icon:'pin',last:570,n:41,st:'ok'},
- {name:'Customer service',how:'Tickets from customers who called or wrote in',icon:'call',last:575,n:9,st:'ok'}
-];
-const AN={
-  causeLabels:['Stuck in traffic','Wrong address','Nobody there','Carrier is late','Damaged box','Pickup missed'],
-  causes:{30:[88,63,58,51,23,18],14:[44,34,28,25,12,10],7:[23,18,15,13,6,5]},
-  carrierLabels:['Our own trucks','Keystone Freight','Allegheny Express','Penn Line Carriers'],
-  carriers:{30:[135,82,53,31],14:[68,42,27,16],7:[36,22,14,8]},
-  rates:{30:[3.0,7.6,5.1,4.2],14:[3.1,7.9,5.3,4.4],7:[3.2,8.1,5.4,4.3]},
-  opened:[8,11,7,9,12,6,5,10,13,9,8,14,7,6,11,12,9,15,8,7,13,10,11,16,9,8,12,14,10,11],
-  resolved:[7,10,8,8,11,7,6,9,12,10,9,12,8,7,10,11,10,13,9,8,12,11,10,14,10,9,11,12,11,10],
-  median:{30:'2 h 15 min',14:'2 h 05 min',7:'1 h 50 min'},
-  before:{30:61,14:58,7:63},
-  recurring:{30:34,14:38,7:41},
-  delta:{30:4,14:9,7:12},
-  shipDelta:{30:6,14:12,7:10},
-  outcomes:{30:[61,27,12],14:[58,29,13],7:[63,25,12]},
-  patterns:[
-    {title:'Scranton route: orders arrive without a suite number',n:{30:'21',14:'11',7:'6'},unit:'times',ev:'Most of them are at two medical office parks.',tr:'Make the suite number a must-fill box when these customers order.'},
-    {title:'Keystone Freight: their trucks leave late',n:{30:'7.6',14:'7.9',7:'8.1'},unit:'problems per 100 deliveries',ev:'This is the highest of any carrier. It happens mostly on Mondays and Tuesdays.',tr:'Bring it up in the weekly call with Keystone. Move Monday loads for important customers to our own trucks.'},
-    {title:'Capital route: traffic on I-83',n:{30:'34',14:'19',7:'10'},unit:'times',ev:'Road work between exits 39 and 43, on weekdays from 7 to 10 AM.',tr:'Do the Hershey and Carlisle stops after 10 AM until the road work ends.'},
-    {title:'Offices that are still closed when we arrive',n:{30:'58%',14:'61%',7:'64%'},unit:'of "nobody there" problems',ev:'Offices that open at 9 get visited first because they are closest to the hub.',tr:'Add opening hours to each stop and start those routes from the far end.'}
-  ]
-};
+  'Traffic delay':"Ask the driver for a new arrival time. Tell any customer whose delivery will be late."};
+const TRY={
+  'Address issue':'Make the suite number a must-fill box when these customers order.',
+  'Carrier delay':'Bring it up in the weekly call with the carrier. Move loads for important customers to our own trucks.',
+  'Traffic delay':'Move these stops outside rush hour while the traffic lasts.',
+  'Failed attempt':'Add opening hours to each stop, and visit offices after they open.',
+  'Damaged package':'Check how cartons are loaded on this route. Keep heavy pallets below light cartons.',
+  'Missed pickup':'Confirm pickups with the carrier the day before.'};
+const DRIVER_TYPES=[{type:'Traffic delay',label:'Stuck in traffic'},{type:'Failed attempt',label:'Nobody there'},{type:'Damaged package',label:'Damaged box'},{type:'Address issue',label:'Wrong address'},{type:'Missed pickup',label:'Pickup missed'}];
+const STATUSES=['New','Working','Waiting','Done'];
+const SOURCES=['A customer called','A driver called','Carrier website or email','Truck GPS','Something we noticed'];
+const NEXT_STEPS=['Wait there','Leave it and keep going','Come back later'];
+const LOUD=['driver_report','call_request','ask_dispatch'];
+const OWNERS=['Jamal Turner','Maria Delgado','Priya Nair'];
 
-const state={view:'today',sel:null,f:{status:'open',type:'all',q:''},range:14,tables:{},imported:false,tipHidden:false,newCount:0,drv:{screen:'home',type:null,stop:0,note:'',photo:false,lastId:null}};
+const PEOPLE=[
+  {id:'jamal',name:'Jamal Turner',role:'Dispatch manager',grp:'Our team',hue:211,views:['today','problems','deliveries','trends','data'],start:'today',take:true,team:true,alerts:true,create:true,does:'Sees everything and gets every alert'},
+  {id:'maria',name:'Maria Delgado',role:'Dispatcher',grp:'Our team',hue:330,views:['problems','deliveries'],start:'problems',take:true,team:true,alerts:true,create:true,does:'Works the problem list and gets alerts'},
+  {id:'priya',name:'Priya Nair',role:'Customer service',grp:'Our team',hue:268,views:['lookup'],start:'lookup',create:true,does:'Answers customers on the phone'},
+  {id:'ray',name:'Ray Okafor',role:'Driver',grp:'Our team',hue:28,views:['driver'],start:'driver',solo:true,does:'Sees his stops and reports problems'},
+  {id:'helen',name:'Helen Marsh',role:'CEO',grp:'Leaders',hue:150,views:['boss','trends'],start:'boss',does:'Checks how the day is going'},
+  {id:'kevin',name:'Kevin Tran',role:'Operations analyst',grp:'Leaders',hue:190,views:['trends','data'],start:'trends',does:'Loads files and checks the numbers'},
+  {id:'linda',name:'Linda Cho',role:'Customer',grp:'Customers',hue:350,views:['track'],start:'track',solo:true,does:'Tracks her order with its order number'}];
+const VIEWS={today:{label:'Today',ic:'today',sec:'Overview'},boss:{label:'Overview',ic:'today',sec:'Overview'},
+  problems:{label:'Problems',ic:'alert',sec:'Dispatch',count:true},deliveries:{label:'Deliveries',ic:'truck',sec:'Dispatch'},
+  lookup:{label:'Find a customer',short:'Customers',ic:'search',sec:'Customers'},
+  trends:{label:'Trends',ic:'chart',sec:'Numbers'},data:{label:'Data',ic:'tray',sec:'Numbers'},
+  driver:{label:'My route',short:'Route',ic:'phone',sec:'On the road'},track:{label:'My order',ic:'box',sec:'My order'}};
+const TITLES={today:'Today',problems:'Problems',deliveries:'Deliveries',trends:'Trends',driver:'My route',data:'Data',boss:'Overview',lookup:'Find a customer',track:'My order'};
+
+const state={view:'today',sel:null,f:{status:'open',type:'all',q:''},range:14,tables:{},tipHidden:false,
+  drv:{screen:'home',type:null,stop:null,where:'',note:'',photo:null,lastId:null},
+  lk:{q:'',sel:null},drafts:{},dl:{f:'open'},imp:null,resetAsk:false,delAsk:null,trackId:'',trackAsked:null,seen:{},ai:{},aiForm:null,aiTest:null,aiBusy:false};
+
+/* ---------- small helpers ---------- */
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function ic(name,size){size=size||20;return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;}
-function clock12(m,inSentence){let day='',x=m;if(x<0){day=inSentence?'yesterday at ':'Yesterday ';x+=1440}else if(x>=1440){day=inSentence?'tomorrow at ':'Tomorrow ';x-=1440}let h=Math.floor(x/60);const mm=x%60,ap=h>=12?'PM':'AM';h=h%12||12;return day+h+':'+String(mm).padStart(2,'0')+' '+ap;}
-function dur(m){m=Math.max(0,Math.round(m));if(m<60)return m+' min';const h=Math.floor(m/60),r=m%60;return r?`${h} h ${r} min`:`${h} h`;}
-const first=n=>n.split(' ')[0];
-const initials=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-const isOpen=c=>c.status!=='Done';
-const openCases=()=>CASES.filter(isOpen);
-let toastT;function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},2800);}
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function ic(name,size){size=size||20;return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||''}</svg>`;}
+function dur(m){m=Math.max(0,Math.round(m));if(m<60)return m+' min';if(m<2880){const h=Math.floor(m/60),r=m%60;return r?`${h} h ${r} min`:`${h} h`;}return Math.round(m/1440)+' days';}
+const sameDay=(a,b)=>a.toDateString()===b.toDateString();
+function fmtTime(ts){if(ts==null||ts==='')return '';const d=new Date(+ts),t=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}),n=new Date();
+  if(sameDay(d,n))return t;const y=new Date(n);y.setDate(n.getDate()-1);if(sameDay(d,y))return 'Yesterday '+t;
+  const tm=new Date(n);tm.setDate(n.getDate()+1);if(sameDay(d,tm))return 'Tomorrow '+t;
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+', '+t;}
+const todayLabel=()=>new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+function toInput(ts){if(!ts)return '';const d=new Date(+ts),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;}
+function fromInput(v){if(!v)return null;const t=new Date(v).getTime();return isNaN(t)?null:t;}
+function inHours(h){const d=new Date(Date.now()+h*3600000);d.setMinutes(Math.ceil(d.getMinutes()/15)*15,0,0);return d.getTime();}
+const first=n=>String(n||'').split(' ')[0];
+const initials=n=>String(n||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+const yes=v=>v===1||v===true||v==='1';
+let toastT;function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},3200);}
 
+/* ---------- the data store ---------- */
+const LKEY='rw3-db';
+const COLS={
+  deliveries:['id','customer','contact','phone','city','address','route','driver','carrier','contents','important','cannot_wait','due','status','created','delivered_at'],
+  problems:['id','delivery_id','customer','contact','phone','city','route','driver','carrier','contents','important','cannot_wait','type','detail','source','reported_by','due','new_eta','status','owner','created','closed_at','manual_tier','manual_reason','next_step'],
+  events:['id','problem_id','delivery_id','t','who','kind','text','summary','photo'],
+  alerts:['id','t','kind','title','body','problem_id','delivery_id','from_who','for_role','read']};
+const emptyData=()=>({deliveries:[],problems:[],events:[],alerts:[]});
+const Store={
+  mode:'local',d:emptyData(),ver:-1,online:true,meta:{},dbFile:'',
+  async init(){
+    if(location.protocol.startsWith('http')){
+      try{const r=await fetch('api/health',{cache:'no-store'});
+        if(r.ok){const j=await r.json();if(j&&j.ok){this.mode='server';this.dbFile=j.db;await this.pull(true);setInterval(()=>this.poll(),2000);return;}}}catch(e){}
+    }
+    this.mode='local';this.loadLocal();
+    window.addEventListener('storage',e=>{if(e.key===LKEY){this.loadLocal();onData();}});
+  },
+  async poll(){try{const r=await fetch('api/version',{cache:'no-store'});const j=await r.json();this.setOnline(true);if(j.version!==this.ver)await this.pull();}catch(e){this.setOnline(false);}},
+  setOnline(v){if(this.online!==v){this.online=v;renderMode();}},
+  async pull(quiet){const r=await fetch('api/state',{cache:'no-store'});const j=await r.json();this.d=j.data;this.ver=j.version;if(!quiet)onData();},
+  async post(path,body){
+    let r,j;
+    try{r=await fetch('api/'+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});j=await r.json();}
+    catch(e){this.setOnline(false);toast('Could not save. The dashboard server stopped. Start it again with the Start dashboard file.');throw e;}
+    if(!r.ok){toast(j.error||'Could not save');throw new Error(j.error||'save failed');}
+    this.setOnline(true);this.d=j.data;this.ver=j.version;onData();return j.row;
+  },
+  loadLocal(){try{const s=JSON.parse(localStorage.getItem(LKEY)||'null');if(s&&s.d){this.d=Object.assign(emptyData(),s.d);this.meta=s.meta||{};}}catch(e){}},
+  saveLocal(){try{localStorage.setItem(LKEY,JSON.stringify({d:this.d,meta:this.meta}));}catch(e){toast('This browser could not save. It may be full, or in private mode.');}},
+  nextId(t){const start={deliveries:10001,problems:1001,events:1,alerts:1}[t],k='next_'+t;if(!this.meta[k])this.meta[k]=start;const n=this.meta[k]++;
+    return t==='deliveries'?'RW-'+n:t==='problems'?'P-'+n:n;},
+  lInsert(t,row,quiet){
+    const r={};COLS[t].forEach(c=>{if(c!=='id'&&row[c]!==undefined)r[c]=typeof row[c]==='boolean'?+row[c]:row[c];});
+    if(t==='deliveries'&&!String(r.customer||'').trim())throw new Error('customer is required');
+    r.id=this.nextId(t);
+    if(t==='deliveries'){r.status=r.status||'Scheduled';r.created=r.created||Date.now();r.important=r.important||0;r.cannot_wait=r.cannot_wait||0;}
+    if(t==='problems'){r.status=r.status||'New';r.created=r.created||Date.now();r.important=r.important||0;r.cannot_wait=r.cannot_wait||0;}
+    if(t==='events'||t==='alerts'){r.t=r.t||Date.now();}
+    if(t==='alerts'){r.read=r.read||0;r.for_role=r.for_role||'dispatch';}
+    this.d[t].push(r);this.triggers(t,r,null);
+    if(!quiet){this.saveLocal();onData();}
+    return r;
+  },
+  /* the same four triggers that server.py creates in SQLite */
+  triggers(t,r,old){
+    if(t==='problems'&&!old){
+      if(r.source==='driver app')this.lInsert('alerts',{t:r.created,kind:'driver_report',title:(r.reported_by||'A driver')+' reported a problem',body:r.customer+': '+(r.detail||''),problem_id:r.id,delivery_id:r.delivery_id,from_who:r.reported_by,read:0},true);
+      if(r.delivery_id){const d=this.d.deliveries.find(x=>x.id===r.delivery_id);if(d&&d.status!=='Delivered')d.status='Problem';}
+    }
+    if(t==='events'&&!old&&(r.kind==='call_request'||r.kind==='ask_dispatch'))
+      this.lInsert('alerts',{t:r.t,kind:r.kind,title:(r.who||'Someone')+(r.kind==='call_request'?' asks for a call':' needs dispatch'),body:r.text,problem_id:r.problem_id,delivery_id:r.delivery_id,from_who:r.who,read:0},true);
+    if(t==='deliveries'&&old&&r.status==='Delivered'&&old.status!=='Delivered')
+      this.lInsert('alerts',{t:r.delivered_at||Date.now(),kind:'delivered',title:(r.driver||'The driver')+' delivered '+r.id,body:r.customer,delivery_id:r.id,from_who:r.driver,read:1},true);
+  },
+  lUpdate(t,id,patch){const r=this.d[t].find(x=>String(x.id)===String(id));if(!r)throw new Error('Not found');const old=Object.assign({},r);
+    COLS[t].forEach(c=>{if(c!=='id'&&patch[c]!==undefined)r[c]=typeof patch[c]==='boolean'?+patch[c]:patch[c];});
+    this.triggers(t,r,old);this.saveLocal();onData();return r;},
+  lRemove(t,id){this.d[t]=this.d[t].filter(x=>String(x.id)!==String(id));
+    if(t==='problems'){this.d.events=this.d.events.filter(e=>e.problem_id!==id);this.d.alerts=this.d.alerts.filter(a=>a.problem_id!==id);}
+    if(t==='deliveries')this.d.problems.forEach(p=>{if(p.delivery_id===id)p.delivery_id=null;});
+    this.saveLocal();onData();},
+  async insert(t,row){if(this.mode==='server')return this.post(t,row);try{return this.lInsert(t,row);}catch(e){toast(e.message);throw e;}},
+  async update(t,id,patch){if(this.mode==='server')return this.post(`${t}/${encodeURIComponent(id)}`,patch);return this.lUpdate(t,id,patch);},
+  async remove(t,id){if(this.mode==='server')return this.post(`${t}/${encodeURIComponent(id)}/delete`,{});return this.lRemove(t,id);},
+  async importDeliveries(rows){if(this.mode==='server')return this.post('import',{rows});rows.forEach(r=>this.lInsert('deliveries',r,true));this.saveLocal();onData();return{added:rows.length};},
+  async readAll(){if(this.mode==='server')return this.post('alerts/read-all',{});this.d.alerts.forEach(a=>{a.read=1;});this.saveLocal();onData();},
+  async reset(){if(this.mode==='server')return this.post('reset',{confirm:'DELETE'});this.d=emptyData();this.meta={};this.saveLocal();onData();}
+};
+const D=()=>Store.d;
+const isOpen=c=>c.status!=='Done';
+const openCases=()=>D().problems.filter(isOpen);
+const findP=id=>D().problems.find(p=>p.id===id);
+const findD=id=>D().deliveries.find(d=>d.id===id);
+const eventsOf=c=>D().events.filter(e=>e.problem_id===c.id).sort((a,b)=>a.t-b.t||a.id-b.id);
+const messagesOf=c=>eventsOf(c).filter(e=>e.kind==='message');
+const photosOf=c=>eventsOf(c).filter(e=>e.photo);
+function ev(c,kind,text,extra){return Store.insert('events',Object.assign({problem_id:c?c.id:null,delivery_id:c?c.delivery_id||null:null,t:Date.now(),who:ME,kind,text},extra||{}));}
+
+
+/* ---------- Hugging Face model: LiquidAI/LFM2.5-2.6B reads the driver's note ----------
+   Drivers still tap a button to say what happened. The model only reads the optional note,
+   picks a reason from a fixed list and copies the words it used. server.py turns the reason
+   into points (at most 20 of 100) and gives 0 if the quoted words are not really in the note.
+   The model runs on the team laptop. Each note is read once and saved. */
+const AI_MODEL='LiquidAI/LFM2.5-2.6B',AI_MAX=20;
+const NOTE_AI={};          // note text -> result from the server
+const aiPending=new Set(),aiFailed={};
+const AI={status:null,busy:false,
+  async check(){if(Store.mode!=='server'){this.status={connected:false,noServer:true};return this.status;}
+    try{const r=await fetch('api/ai/status',{cache:'no-store'});this.status=await r.json();}catch(e){this.status={connected:false};}return this.status;},
+  async loadSaved(){try{const url=Store.mode==='server'?'api/ai/notes':'notes-cache.json';const r=await fetch(url,{cache:'no-store'});if(r.ok)Object.assign(NOTE_AI,await r.json());}catch(e){}},
+  async score(text){const r=await fetch('api/ai/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
+    let j={};try{j=await r.json();}catch(e){}if(!r.ok)throw new Error(j.error||'The AI could not read this note.');return j;}};
+const pct=s=>Math.round((s||0)*100)+'%';
+function noteOf(c){const d=String(c.detail||''),m=d.match(/Driver note: "([\s\S]*)"\s*$/);
+  if(m)return m[1].trim();if(c.source==='driver app')return '';return d.trim();}
+function aiFor(c){const n=noteOf(c);if(!n)return{state:'empty'};if(NOTE_AI[n])return NOTE_AI[n];
+  if(aiFailed[n])return{state:'error',error:aiFailed[n]};if(Store.mode!=='server')return{state:'offline'};return{state:'pending'};}
+async function aiQueue(){
+  if(Store.mode!=='server'||AI.busy)return;
+  const next=sorted(openCases()).map(noteOf).find(n=>n&&!NOTE_AI[n]&&!aiFailed[n]&&!aiPending.has(n));
+  if(!next)return;AI.busy=true;aiPending.add(next);
+  try{NOTE_AI[next]=await AI.score(next);}catch(e){aiFailed[next]=e.message;setTimeout(()=>{delete aiFailed[next];},60000);}
+  finally{aiPending.delete(next);AI.busy=false;}
+  onData();setTimeout(aiQueue,50);}
+const qmark=s=>`\u201c${esc(s)}\u201d`;
+function hiNote(n,a){const e=esc(n);if(a.state!=='checked'||!a.quote)return e;const q=esc(a.quote),i=e.toLowerCase().indexOf(q.toLowerCase());
+  return i<0?e:e.slice(0,i)+'<mark>'+e.slice(i,i+q.length)+'</mark>'+e.slice(i+q.length);}
+function aiWhy(a){return a.state==='empty'?'No note from the driver':a.state==='pending'?'Reading the note\u2026 rule points are shown meanwhile':a.state==='offline'?'The AI runs on the team laptop. Rule points only here':a.state==='error'?'The AI could not read the note. Rule points only':a.state==='instruction'?'The note gives orders instead of facts, so 0 points':a.state==='quote not found'?'The AI\u2019s quote was not in the note, so 0 points':a.state==='nothing'?'Nothing in the note adds urgency':`${a.plain}: ${qmark(a.quote)}`;}
+
+/* ---------- urgency ---------- */
 function priority(c){
-  const toDue=c.due-NOW,age=NOW-c.detected;let d,dw;
-  if(toDue<0){d=40;dw=`Already ${dur(-toDue)} late`}
-  else if(toDue<=60){d=36;dw=`Due in ${dur(toDue)}`}
-  else if(toDue<=120){d=30;dw=`Due in ${dur(toDue)}`}
-  else if(toDue<=240){d=20;dw=`Due in ${dur(toDue)}`}
-  else if(toDue<=480){d=10;dw=`Due in ${dur(toDue)}`}
-  else{d=4;dw=`Not due until ${clock12(c.due,true)}`}
-  let ci=c.key?22:8,cw=c.key?'One of our important customers':'A regular customer';
-  if(c.critical){ci+=3;cw+=`. The contents cannot wait: ${c.contents.toLowerCase()}`}
-  const a=age>=180?20:age>=120?15:age>=60?10:5,aw=`First reported ${dur(age)} ago, from ${c.source}`;
-  const t=TYPES[c.type],score=d+ci+a+t.sev;
-  const tier=score>=70?'now':score>=55?'next':'later';
-  return {score,tier,label:{now:'Do now',next:'Do next',later:'Can wait'}[tier],factors:[
-    {name:'How close the deadline is',pts:d,max:40,why:dw},
-    {name:'How important the customer is',pts:ci,max:25,why:cw},
-    {name:'How long it has waited',pts:a,max:20,why:aw},
-    {name:'How stuck the delivery is',pts:t.sev,max:15,why:t.why}]};
+  const t=Date.now(),toDue=c.due?(c.due-t)/MIN:null,age=Math.max(0,(t-c.created)/MIN);let d,dw;
+  // Rule points come from hard facts. Only the last factor uses AI.
+  if(toDue==null){d=3;dw='No promised time was set'}
+  else if(toDue<0){d=30;dw=`Already ${dur(-toDue)} late`}
+  else if(toDue<=60){d=27;dw=`Due in ${dur(toDue)}`}
+  else if(toDue<=120){d=22;dw=`Due in ${dur(toDue)}`}
+  else if(toDue<=240){d=15;dw=`Due in ${dur(toDue)}`}
+  else if(toDue<=480){d=8;dw=`Due in ${dur(toDue)}`}
+  else{d=3;dw=`Not due until ${fmtTime(c.due)}`}
+  let g=0,gw='No new arrival time from GPS yet';
+  if(c.new_eta&&c.due){const late=(c.new_eta-c.due)/MIN;
+    if(late>60){g=15;gw=`GPS says ${dur(late)} after the promised time`}else if(late>30){g=12;gw=`GPS says ${dur(late)} after the promised time`}
+    else if(late>0){g=8;gw=`GPS says ${dur(late)} after the promised time`}else{g=0;gw='GPS says it still arrives on time'}}
+  else if(c.new_eta){gw=`GPS says it arrives ${fmtTime(c.new_eta)}`}
+  const ci=yes(c.important)?15:3,cw=yes(c.important)?'One of our important customers':'A regular customer';
+  const ty=TYPES[c.type]||TYPES['Traffic delay'],tp=Math.round(ty.sev*10/15);
+  const a=age>=180?10:age>=120?8:age>=60?5:2,aw=`First reported ${dur(age)} ago${c.source?`, from ${String(c.source).toLowerCase()}`:''}`;
+  const ai=aiFor(c),ap=Math.min(AI_MAX,Math.max(0,+ai.points||0));
+  const rules=d+g+ci+tp+a,score=rules+ap;
+  let tier=score>=60?'now':score>=45?'next':'later';
+  const manual=['now','next','later'].includes(c.manual_tier);if(manual)tier=c.manual_tier;
+  return {score,rules,ai:ai,aiPts:ap,tier,manual,label:{now:'Do now',next:'Do next',later:'Can wait'}[tier],factors:[
+    {name:'How close the deadline is',pts:d,max:30,why:dw},
+    {name:'How late the GPS says it will be',pts:g,max:15,why:gw},
+    {name:'How important the customer is',pts:ci,max:15,why:cw},
+    {name:'What the driver tapped',pts:tp,max:10,why:ty.why},
+    {name:'How long it has waited',pts:a,max:10,why:aw},
+    {name:'What the driver’s note says (AI)',pts:ap,max:AI_MAX,why:aiWhy(ai),ai:true}]};
 }
-function dueInfo(c){const d=c.due-NOW;if(c.status==='Done')return{text:'Done',cls:'gray'};if(d<0)return{text:`Late by ${dur(-d)}`,cls:'red'};if(d<=120)return{text:`Due in ${dur(d)}`,cls:'orange'};return{text:`Due ${clock12(c.due)}`,cls:'gray'};}
-function reasons(c){const out=[];if(c.status==='Done')return out;const toDue=c.due-NOW,age=NOW-c.detected;
-  if(toDue<0)out.push(['Late','red']);else if(toDue<=120)out.push(['Due soon','orange']);
-  if(c.key)out.push(['Important customer','star']);
-  if(c.critical)out.push(['Cannot wait','']);
+function dueInfo(c){if(c.status==='Done')return{text:'Done',cls:'gray'};if(!c.due)return{text:'No time set',cls:'gray'};const d=(c.due-Date.now())/MIN;
+  if(d<0)return{text:`Late by ${dur(-d)}`,cls:'red'};if(d<=120)return{text:`Due in ${dur(d)}`,cls:'orange'};return{text:`Due ${fmtTime(c.due)}`,cls:'gray'};}
+function reasons(c){const out=[];if(c.status==='Done')return out;const t=Date.now(),age=(t-c.created)/MIN;
+  if(c.due){const toDue=(c.due-t)/MIN;if(toDue<0)out.push(['Late','red']);else if(toDue<=120)out.push(['Due soon','orange']);}
+  if(yes(c.important))out.push(['Important customer','star']);
+  const ai=aiFor(c);if(ai.points>0)out.push([`Note +${ai.points}: ${ai.plain}`,'ai']);else if(ai.state==='pending')out.push(['Reading note…','ai wait']);
+  if(yes(c.cannot_wait))out.push(['Cannot wait','']);
+  if(c.manual_tier)out.push(['Moved by hand','blue']);
   if(age>=120)out.push(['Waiting '+dur(age),'']);
   return out.slice(0,3);}
 const tagHTML=r=>`<span class="tag ${r[1]==='star'?'':r[1]}">${r[1]==='star'?ic('star',12):''}${esc(r[0])}</span>`;
-const statusTag=s=>`<span class="tag ${{New:'blue',Working:'',Waiting:'orange',Done:'green'}[s]}">${s}</span>`;
-function log(c,kind,text,who){c.timeline.push({t:NOW,who:who||ME,kind,text});}
-function sorted(list){const pr=c=>priority(c).score;return list.slice().sort((a,b)=>pr(b)-pr(a)||a.due-b.due);}
-
+const statusTag=s=>`<span class="tag ${{New:'blue',Working:'',Waiting:'orange',Done:'green'}[s]||''}">${esc(s)}</span>`;
+const dTag=s=>`<span class="tag ${{Scheduled:'',  'Out for delivery':'blue',Delivered:'green',Problem:'red'}[s]||''}">${esc(s)}</span>`;
+const RANK={now:0,next:1,later:2};
+function sorted(list){return list.slice().sort((a,b)=>{const pa=priority(a),pb=priority(b);return RANK[pa.tier]-RANK[pb.tier]||pb.score-pa.score||(a.due||9e15)-(b.due||9e15);});}
 function draftFor(c){
-  const owner=c.owner||'the RouteWise dispatch desk';
+  const owner=c.owner||'the RouteWise dispatch desk',why=CUST[c.type]||'there is a problem with the delivery';
   const firstLine={
-    'Traffic delay':`Your delivery is running late because of ${c.custDetail}.`,
-    'Failed attempt':`Our driver tried to deliver at ${clock12(c.detected)} but could not, because ${c.custDetail}.`,
-    'Damaged package':`Our driver found that ${c.custDetail}, so we are holding the damaged carton instead of delivering it.`,
-    'Address issue':`Before our driver can finish your delivery, we need to check the address: ${c.custDetail}.`,
-    'Missed pickup':`We are sorry: ${c.custDetail}.`,
-    'Carrier delay':`Your shipment is late because ${c.custDetail}.`}[c.type];
+    'Traffic delay':`Your delivery is running late because of ${why}.`,
+    'Failed attempt':`Our driver tried to deliver at ${fmtTime(c.created)} but could not, because ${why}.`,
+    'Damaged package':`Our driver found that ${why}, so we are holding the damaged carton instead of delivering it.`,
+    'Address issue':`Before our driver can finish your delivery, we need to check the address: ${why}.`,
+    'Missed pickup':`We are sorry: ${why}.`,
+    'Carrier delay':`Your shipment is late because ${why}.`}[c.type]||`There is a problem with your delivery: ${why}.`;
   const next={
     'Traffic delay':'Your driver is still on the way.',
-    'Failed attempt':'We will try again today. Please tell us if someone will be there to sign.',
-    'Damaged package':'We are sending a replacement from our Harrisburg hub. We will confirm once it is on a truck.',
+    'Failed attempt':'We will try again. Please tell us if someone will be there to sign.',
+    'Damaged package':'We are sending a replacement. We will confirm once it is on a truck.',
     'Address issue':'Please reply with the right address and suite number, or call us. We will pass it to the driver right away.',
     'Missed pickup':'We have booked a new pickup. We will confirm the new delivery time as soon as it is on a truck.',
-    'Carrier delay':'We are working with our carrier partner to get it moving.'}[c.type];
-  const eta=c.newEta?`We now expect it to arrive by ${clock12(c.newEta)}.`:'We will send you a new delivery time within the hour.';
-  return `Hi ${c.contact}, this is RouteWise with an update on order ${c.id} for ${c.customer}.\n\n${firstLine} ${next} ${eta}\n\nYou can reply to this message or call ${owner} at (717) 555-0142. We are sorry for the trouble.`;
+    'Carrier delay':'We are working with our carrier partner to get it moving.'}[c.type]||'We are working on it.';
+  const eta=c.new_eta?`We now expect it to arrive by ${fmtTime(c.new_eta)}.`:'We will send you a new delivery time within the hour.';
+  return `Hi ${c.contact||'there'}, this is RouteWise with an update on ${c.delivery_id?'order '+c.delivery_id:'your delivery'} for ${c.customer}.\n\n${firstLine} ${next} ${eta}\n\nYou can reply to this message or call ${owner} at ${DISPATCH_PHONE}. We are sorry for the trouble.`;
 }
 
-/* actions */
-function takeCase(c,name){c.owner=name;log(c,'status',name?`${name} took this problem.`:'Owner removed.');if(name&&c.status==='New')c.status='Working';}
-function refreshAll(){renderSide();if(state.view==='boss')renderBoss();if(state.view==='lookup')renderLookupBody();if(state.view==='track')renderTrack();if(state.view==='today')renderToday();if(state.view==='problems'){renderGroups();renderDetail();}}
+/* ---------- numbers for Today, Overview and Trends ---------- */
+const carrierName=x=>x.carrier&&String(x.carrier).trim()?String(x.carrier).trim():'Our own truck';
+function analytics(r){
+  const t=Date.now(),from=t-r*DAY,all=D().problems,P=all.filter(c=>c.created>=from),DL=D().deliveries.filter(d=>(d.due||d.created)>=from);
+  const closed=P.filter(c=>!isOpen(c)&&c.closed_at);
+  const fixT=closed.map(c=>(c.closed_at-c.created)/MIN).sort((a,b)=>a-b);
+  const median=fixT.length?fixT[Math.floor((fixT.length-1)/2)]:null;
+  const withDue=closed.filter(c=>c.due);
+  const before=withDue.length?Math.round(withDue.filter(c=>c.closed_at<=c.due).length/withDue.length*100):null;
+  const causes=TYPE_KEYS.map(k=>({label:TYPES[k].plain,key:k,value:P.filter(c=>c.type===k).length})).sort((a,b)=>b.value-a.value);
+  const names=[...new Set([...P.map(carrierName),...DL.map(carrierName)])];
+  const carriers=names.map(n=>{const dn=DL.filter(x=>carrierName(x)===n).length,pn=P.filter(x=>carrierName(x)===n).length;return{label:n,count:pn,deliveries:dn,value:dn?pn/dn*100:pn};});
+  const rate=carriers.length>0&&carriers.every(x=>x.deliveries>0);
+  if(!rate)carriers.forEach(x=>{x.value=x.count;});
+  carriers.sort((a,b)=>b.value-a.value);
+  const days=[],opened=[],fixed=[],start=new Date();start.setHours(0,0,0,0);
+  for(let i=r-1;i>=0;i--){const d0=start.getTime()-i*DAY,d1=d0+DAY;days.push(new Date(d0).toLocaleDateString('en-US',{month:'short',day:'numeric'}));
+    opened.push(all.filter(c=>c.created>=d0&&c.created<d1).length);fixed.push(all.filter(c=>c.closed_at&&c.closed_at>=d0&&c.closed_at<d1).length);}
+  const groups={};P.forEach(c=>{const where=c.route||c.city||c.customer;const k=where+'|'+c.type;
+    if(!groups[k])groups[k]={where,type:c.type,n:0,cust:new Set()};groups[k].n++;groups[k].cust.add(c.customer);});
+  const reps=Object.values(groups).filter(g=>g.n>=2).sort((a,b)=>b.n-a.n);
+  const patterns=reps.map(g=>({n:g.n,unit:'times',title:`${g.where}: ${(TYPES[g.type]||{plain:g.type}).plain.toLowerCase()}`,ev:`${g.n} times in the last ${r} days, at ${g.cust.size} ${g.cust.size===1?'customer':'customers'}.`,tr:TRY[g.type]||''}));
+  const repeat=P.length?Math.round(reps.reduce((a,g)=>a+g.n,0)/P.length*100):null;
+  const outcomes=[closed.filter(c=>c.due&&c.closed_at<=c.due).length,closed.filter(c=>!c.due||c.closed_at>c.due).length,P.filter(isOpen).length];
+  return {P,DL,total:P.length,closedN:closed.length,median,before,causes,carriers,rate,days,opened,fixed,patterns,repeat,outcomes};
+}
+function patHTML(p){return `<div class="card pat"><div><div class="pn num">${p.n}</div><div class="pu">${esc(p.unit)}</div></div><div><div class="pt">${esc(p.title)}</div><div class="pe">${esc(p.ev)}</div>${p.tr?`<div class="try">${ic('bulb',18)}<span><b>Try this.</b> ${esc(p.tr)}</span></div>`:''}</div></div>`;}
 
-/* sidebar */
-function renderSide(){
-  const open=openCases();$$('[data-count]').forEach(e=>e.textContent=open.length);
-  const rows=OWNERS.map(o=>[first(o)+' '+o.split(' ')[1][0]+'.',open.filter(c=>c.owner===o).length,false]);
-  rows.push(['No owner',open.filter(c=>!c.owner).length,true]);
-  const max=Math.max(1,...rows.map(r=>r[1]));
-  $('#team').innerHTML=rows.map(r=>`<li class="${r[2]&&r[1]?'warn':''}"><span>${esc(r[0])}</span><span class="num">${r[1]}</span><span class="tb"><i style="width:${Math.round(r[1]/max*100)}%"></i></span></li>`).join('');
-}
-
-/* today */
-function rateNote(r){const p=AN.delta[r],d=AN.shipDelta[r],ch=((1+p/100)/(1+d/100)-1)*100;
-  if(ch<=-2)return{cls:'ok',text:`Deliveries went up ${d}%, so the problem rate is a little lower.`};
-  if(ch<2)return{cls:'',text:`Deliveries went up ${d}%, so the problem rate is about the same.`};
-  return{cls:'warn',text:`Deliveries went up only ${d}%, so problems grew faster than deliveries.`};}
-function renderToday(){
-  const open=openCases(),top=sorted(open)[0];
-  const nowN=open.filter(c=>priority(c).tier==='now').length;
-  const soon=open.filter(c=>c.due-NOW<=120).length,noOwner=open.filter(c=>!c.owner).length,keys=open.filter(c=>c.key).length;
-  const r=14,total=AN.causes[r].reduce((a,b)=>a+b,0),maxC=AN.causes[r][0];
-  const car=AN.carrierLabels.map((l,i)=>({l,v:AN.rates[r][i]})).sort((a,b)=>b.v-a.v),maxR=car[0].v;
-  const ratio=(AN.rates[r][1]/AN.rates[r][0]).toFixed(1);
-  const tp=top?priority(top):null;
-  $('#view-today').innerHTML=`
-  ${state.tipHidden?'':`<div class="tip">${ic('info',20)}<div>This is a prototype with sample data. Try this: open the top problem, take it, add a note, and write the customer message. Then click Viewing as, at the top right, to see the app as a dispatcher, a driver, the CEO, or a customer.</div><button class="btn sm" type="button" id="tipHide">Hide</button></div>`}
-  <p class="eyebrow">Monday, September 14</p>
-  <h1 class="hero">${open.length} deliveries have a problem. <span class="hl">${nowN} ${nowN===1?'needs':'need'} action right now.</span></h1>
-  <div class="stats3">
-    <div class="card stat"><div class="n num ${soon?'red':''}">${soon}</div><div class="l">late or due within 2 hours</div><div class="h">These come first</div></div>
-    <div class="card stat"><div class="n num">${noOwner}</div><div class="l">have no owner yet</div><div class="h">Nobody is working on them</div></div>
-    <div class="card stat"><div class="n num">${keys}</div><div class="l">important customers affected</div><div class="h">They call leadership when it goes wrong</div></div>
-  </div>
-  ${top?`<div class="card start"><span class="ico ${tp.tier}" style="width:44px;height:44px;border-radius:12px">${ic(TYPES[top.type].icon,24)}</span>
-    <div><div class="r-sub" style="font-weight:600;color:var(--ink-2)">Start here</div><div class="r-title" style="font-size:17px">${esc(top.customer)}</div><div class="r-sub">${esc(TYPES[top.type].plain)}. ${esc(top.plain)}</div><div class="r-meta">${reasons(top).map(tagHTML).join('')}${top.owner?'':'<span class="tag red">No owner</span>'}</div></div>
-    <button class="btn primary" type="button" id="openTop">Open this problem</button></div>`:''}
-  <h2 class="sec-h">The last 14 days</h2>
-  <div class="stats3" style="margin-top:0">
-    <div class="card stat"><div class="n num">${total}</div><div class="l">problems</div><div class="h warn">${ic('up',14)} ${AN.delta[r]}% more than the two weeks before</div><div class="h ${rateNote(r).cls}">${rateNote(r).text}</div></div>
-    <div class="card stat"><div class="n num">${AN.before[r]}%</div><div class="l">fixed before the customer's deadline</div><div class="h">About 6 out of 10</div></div>
-    <div class="card stat"><div class="n" style="font-size:34px;padding-top:6px">${AN.median[r]}</div><div class="l">typical time to fix one</div><div class="h">From first report to fixed</div></div>
-  </div>
-  <div class="two" style="margin-top:14px">
-    <div class="card pad"><h3>What goes wrong most</h3><p class="lead">The top three causes make up ${Math.round((AN.causes[r][0]+AN.causes[r][1]+AN.causes[r][2])/total*100)}% of all problems.</p>
-      ${[0,1,2].map(i=>`<div class="brow"><span>${AN.causeLabels[i]}</span><span class="bt"><i style="width:${Math.round(AN.causes[r][i]/maxC*100)}%"></i></span><span class="bv num">${AN.causes[r][i]}</span></div>`).join('')}</div>
-    <div class="card pad"><h3>Our trucks compared with outside carriers</h3><p class="lead">Keystone Freight has about ${ratio} times more problems than our own trucks. Numbers are problems per 100 deliveries.</p>
-      ${car.map(x=>`<div class="brow"><span>${x.l}</span><span class="bt"><i style="width:${Math.round(x.v/maxR*100)}%"></i></span><span class="bv num">${x.v.toFixed(1)}</span></div>`).join('')}</div>
-  </div>
-  <h2 class="sec-h">What to fix first</h2>
-  <div class="pats">${AN.patterns.slice(0,2).map(p=>patHTML(p,r)).join('')}</div>
-  <div class="rowb"><button class="btn" type="button" id="seeTrends">See all trends</button></div>`;
-  const th=$('#tipHide');if(th)th.addEventListener('click',()=>{state.tipHidden=true;renderToday();});
-  const ot=$('#openTop');if(ot)ot.addEventListener('click',()=>{state.sel=top.id;state.f={status:'open',type:'all',q:''};showView('problems');});
-  $('#seeTrends').addEventListener('click',()=>showView('trends'));
-}
-function patHTML(p,r){return `<div class="card pat"><div><div class="pn num">${p.n[r]}</div><div class="pu">${esc(p.unit)}</div></div><div><div class="pt">${esc(p.title)}</div><div class="pe">${esc(p.ev)}</div><div class="try">${ic('bulb',18)}<span><b>Try this.</b> ${esc(p.tr)}</span></div></div></div>`;}
-
-/* problems */
-function visible(){
-  let list=CASES.slice();const f=state.f;
-  if(f.status==='open')list=list.filter(isOpen);else if(f.status==='mine')list=list.filter(c=>isOpen(c)&&c.owner===ME);else if(f.status==='noowner')list=list.filter(c=>isOpen(c)&&!c.owner);else list=list.filter(c=>!isOpen(c));
-  if(f.type!=='all')list=list.filter(c=>c.type===f.type);
-  if(f.q){const q=f.q.toLowerCase();list=list.filter(c=>[c.id,c.customer,c.city,c.route,c.owner||'',TYPES[c.type].plain,c.driver].join(' ').toLowerCase().includes(q));}
-  return sorted(list);
-}
-function rowHTML(c){
-  const p=priority(c),d=dueInfo(c),t=TYPES[c.type],tier=isOpen(c)?p.tier:'done';
-  return `<div class="row${c.id===state.sel?' sel':''}" role="button" tabindex="0" data-id="${c.id}" aria-label="${esc(c.customer)}, ${esc(t.plain)}">
-    <span class="ico ${tier}">${ic(isOpen(c)?t.icon:'check',20)}</span>
-    <div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)}. ${esc(c.plain)}</div><div class="r-meta">${reasons(c).map(tagHTML).join('')}<span class="r-id num">${c.id} · ${esc(c.city)}</span></div></div>
-    <div class="r-right"><span class="due ${d.cls} num">${esc(d.text)}</span>${c.owner?`<span class="owner"><span class="av sm">${initials(c.owner)}</span>${esc(first(c.owner))}</span>`:(isOpen(c)?`<button class="btn sm tint" type="button" data-take="${c.id}">Take it</button>`:'')}</div>
-    <span class="chev">${ic('chevron',16)}</span></div>`;
-}
-function renderGroups(){
-  const list=visible(),el=$('#groups');
-  if(!list.length){el.innerHTML='<div class="card empty" style="margin-top:22px">Nothing here. Try a different filter.</div>';return;}
-  let html='';
-  if(state.f.status==='done'){html=`<div class="group-h"><h3>Done today</h3><span>${list.length}</span></div><div class="list">${list.map(rowHTML).join('')}</div>`;}
-  else{const G=[['now','Do now','Late, or about to be late'],['next','Do next','Due later today, and important'],['later','Can wait','On track for now']];
-    G.forEach(g=>{const items=list.filter(c=>priority(c).tier===g[0]);if(items.length)html+=`<div class="group-h"><h3>${g[1]}</h3><span>${items.length} · ${g[2]}</span></div><div class="list">${items.map(rowHTML).join('')}</div>`;});}
-  el.innerHTML=html;
-  el.querySelectorAll('.row').forEach(r=>{
-    const pick=()=>{state.sel=r.dataset.id;renderGroups();renderDetail();if(window.innerWidth<=1180)$('#detail').scrollIntoView({behavior:'smooth',block:'start'});};
-    r.addEventListener('click',pick);
-    r.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target===r){e.preventDefault();pick();}});
-  });
-  el.querySelectorAll('[data-take]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const c=CASES.find(x=>x.id===b.dataset.take);takeCase(c,ME);state.sel=c.id;refreshAll();toast(`You own ${c.customer} now`);}));
-}
-function renderDetail(){
-  const c=CASES.find(x=>x.id===state.sel),el=$('#detail');
-  if(!c){el.innerHTML='<div class="empty">Pick a problem on the left to see what happened and what to do.</div>';return;}
-  const p=priority(c),t=TYPES[c.type],d=dueInfo(c),C=2*Math.PI*26,col={now:'var(--red)',next:'var(--orange)',later:'var(--ink-3)'}[p.tier];
-  const told=c.timeline.slice().reverse().find(e=>e.kind==='message');
-  const toldHTML=told?`<div class="told ok">${ic('check',16)}<span><b>Last told the customer at ${clock12(told.t)}.</b> ${esc(told.summary||told.text)}</span></div>`:(isOpen(c)?`<div class="told warn">${ic('info',16)}<span><b>Customer not told yet.</b> Write the message below before they call us.</span></div>`:'');
-  el.innerHTML=`
-  <div class="d-head"><div class="r-meta" style="margin:0">${statusTag(c.status)}${isOpen(c)?`<span class="tag ${p.tier==='now'?'red':p.tier==='next'?'orange':''}">${p.label}</span>`:''}${c.key?`<span class="tag">${ic('star',12)}Important customer</span>`:''}</div>
-    <h2 class="d-title">${esc(c.customer)}</h2><div class="r-sub" style="font-size:15px">${esc(t.plain)}. ${esc(c.plain)}</div>${toldHTML}</div>
-  <div class="d-sec"><dl class="kv">
-    <dt>Deliver to</dt><dd>${esc(c.city)}</dd>
-    <dt>Promised by</dt><dd><span class="due ${d.cls} num">${esc(d.text)}</span>${isOpen(c)&&d.cls!=='gray'?` <span class="r-id">(${clock12(c.due)})</span>`:''}</dd>
-    <dt>Driver</dt><dd>${esc(c.driver)}</dd>
-    <dt>Carrier</dt><dd>${esc(c.carrier==='RouteWise fleet'?'Our own truck':c.carrier)} · route ${esc(c.route)}</dd>
-    <dt>In the box</dt><dd>${esc(c.contents)}</dd>
-    <dt>Order</dt><dd class="num">${c.id}</dd></dl></div>
-  ${isOpen(c)?`<div class="d-sec"><h4>Why this is ${p.tier==='later'?'lower on the list':'urgent'}</h4>
-    <div class="gauge"><svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Urgency ${p.score} out of 100"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--fill)" stroke-width="6"/><circle cx="32" cy="32" r="26" fill="none" stroke="${col}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(p.score/100*C).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 32 32)"/><text x="32" y="38" text-anchor="middle" font-size="18" font-weight="700" fill="var(--ink)" font-family="inherit">${p.score}</text></svg>
-      <div><div class="gt">${p.label}</div><div class="gs">Urgency ${p.score} out of 100</div></div></div>
-    <ul class="factors">${p.factors.map(f=>`<li><span>${f.name}</span><span class="fp num">${f.pts} of ${f.max}</span><span class="ft"><i style="width:${Math.round(f.pts/f.max*100)}%"></i></span><span class="fw">${esc(f.why)}</span></li>`).join('')}</ul>
-    <p class="note">Every problem is scored the same way, so everyone on the team sees the same order.</p></div>
-  <div class="d-sec"><h4>Suggested next step</h4><div class="next">${esc(NEXT[c.type])}</div>
-    <div class="rowb"><button class="btn sm" type="button" id="useNext">Copy to my note</button><span class="note" style="margin:0">Only a suggestion. Nothing happens by itself.</span></div></div>`:''}
-  <div class="d-sec"><h4>Who is on it</h4>
-    <div class="rowb" style="margin-top:0"><select class="field" id="ownerSel" aria-label="Owner" style="flex:1;min-width:0"><option value="">No owner</option>${OWNERS.map(o=>`<option value="${o}" ${c.owner===o?'selected':''}>${o}</option>`).join('')}</select><button class="btn tint" type="button" id="takeBtn" ${c.owner===ME?'disabled':''}>Take it</button></div>
-    <div class="seg full" role="group" aria-label="Status" style="margin-top:10px">${STATUSES.map(s=>`<button type="button" data-st="${s}" class="${c.status===s?'on':''}">${s}</button>`).join('')}</div></div>
-  <div class="d-sec"><h4>Notes and history</h4>
-    <form class="inline" id="noteForm" style="margin-top:0"><input class="field" type="text" id="noteInput" placeholder="What did you do?" aria-label="What did you do?"><button class="btn primary" type="submit">Add</button></form>
-    <p class="note err" id="noteErr" hidden>Write what you did first.</p>
-    <ul class="tl">${c.timeline.slice().reverse().map(e=>`<li class="k-${e.kind}"><span class="t num">${clock12(e.t)}</span><div><div class="who"><i></i>${esc(e.who)}</div><div>${esc(e.text)}</div></div></li>`).join('')}</ul></div>
-  <div class="d-sec"><h4>Message to the customer</h4>
-    <textarea class="field" id="draft" rows="9" placeholder="Click Write it for me to start from the facts above.">${esc(c.draft||'')}</textarea>
-    <div class="rowb"><button class="btn" type="button" id="draftBtn">${c.draft?'Write it again':'Write it for me'}</button><button class="btn" type="button" id="copyBtn" ${c.draft?'':'disabled'}>Copy</button><button class="btn primary" type="button" id="sentBtn" ${c.draft?'':'disabled'}>Mark as sent</button></div>
-    <p class="note">You always read and edit it first. Nothing is sent by itself.</p></div>`;
-  const un=$('#useNext');if(un)un.addEventListener('click',()=>{const i=$('#noteInput');i.value=NEXT[c.type];i.focus();});
-  $('#ownerSel').addEventListener('change',e=>{const v=e.target.value||null;takeCase(c,v);refreshAll();toast(v?`${first(v)} owns this now`:'This problem has no owner now');});
-  $('#takeBtn').addEventListener('click',()=>{takeCase(c,ME);refreshAll();toast('You own this problem now');});
-  el.querySelectorAll('[data-st]').forEach(b=>b.addEventListener('click',()=>{if(c.status===b.dataset.st)return;c.status=b.dataset.st;log(c,'status',`Status changed to ${c.status}.`);refreshAll();toast(c.status==='Done'?'Marked as done. You can find it under Done.':`Status is now ${c.status}`);}));
-  $('#noteForm').addEventListener('submit',e=>{e.preventDefault();const i=$('#noteInput'),v=i.value.trim();if(!v){$('#noteErr').hidden=false;i.focus();return;}log(c,'action',v);if(!c.owner)takeCase(c,ME);else if(c.status==='New')c.status='Working';refreshAll();toast('Note added');});
-  $('#noteInput').addEventListener('input',()=>{$('#noteErr').hidden=true;});
-  $('#draftBtn').addEventListener('click',()=>{c.draft=draftFor(c);renderDetail();$('#draft').focus();});
-  $('#draft').addEventListener('input',e=>{c.draft=e.target.value;const has=!!c.draft.trim();$('#copyBtn').disabled=!has;$('#sentBtn').disabled=!has;});
-  $('#copyBtn').addEventListener('click',()=>{const tx=$('#draft').value;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(()=>toast('Copied'),()=>toast('Select the text and copy it yourself'));else toast('Select the text and copy it yourself');});
-  $('#sentBtn').addEventListener('click',()=>{const tx=$('#draft').value.trim();if(!tx)return;c.draft=tx;c.msgs=(c.msgs||[]).concat([{t:NOW,text:tx,who:ME}]);const snip=tx.replace(/\s+/g,' ').slice(0,100);log(c,'message',`Message sent to ${c.contact}: "${snip}${tx.length>100?'...':''}"`);c.timeline[c.timeline.length-1].summary=`Told ${c.contact} what happened and what comes next.`+(c.newEta?` New arrival about ${clock12(c.newEta)}.`:' No new time given yet.');if(c.status==='New')c.status='Working';refreshAll();toast(`Marked as sent to ${c.contact}`);});
-}
-
-/* charts */
+/* ---------- charts ---------- */
 function mkTip(el){let t=el.querySelector('.tipbox');if(!t){t=document.createElement('div');t.className='tipbox';t.hidden=true;el.appendChild(t);}return t;}
 function showTip(tip,el,x,y){tip.hidden=false;const tw=tip.offsetWidth,w=el.clientWidth;tip.style.left=(x+14+tw>w?Math.max(0,x-14-tw):x+14)+'px';tip.style.top=Math.max(0,y-10)+'px';}
 function rr(x,y,w,h,rl,rr_){w=Math.max(w,.5);rl=Math.min(rl,w/2,h/2);rr_=Math.min(rr_,w/2,h/2);return `M${x+rl} ${y}H${x+w-rr_}${rr_?`a${rr_} ${rr_} 0 0 1 ${rr_} ${rr_}`:''}V${y+h-rr_}${rr_?`a${rr_} ${rr_} 0 0 1 -${rr_} ${rr_}`:''}H${x+rl}${rl?`a${rl} ${rl} 0 0 1 -${rl} -${rl}`:''}V${y+rl}${rl?`a${rl} ${rl} 0 0 1 ${rl} -${rl}`:''}Z`;}
@@ -852,9 +885,9 @@ function columns(el,rows,opts){
 function lineChart(el,days,series){
   const w=el.clientWidth||600,h=240,m={l:36,r:84,t:14,b:28},n=days.length,iw=w-m.l-m.r,ih=h-m.t-m.b;
   const maxV=Math.max(...series.flatMap(s=>s.values)),yMax=Math.ceil(maxV/5)*5||5;
-  const X=i=>m.l+iw*i/(n-1),Y=v=>m.t+ih*(1-v/yMax);
+  const X=i=>m.l+iw*i/Math.max(1,n-1),Y=v=>m.t+ih*(1-v/yMax);
   let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="New problems and fixed problems per day">`;
-  for(let k=0;k<=4;k++){const v=yMax*k/4,y=Y(v);s+=`<line x1="${m.l}" x2="${m.l+iw}" y1="${y}" y2="${y}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l-8}" y="${y+4}" text-anchor="end">${v}</text>`;}
+  for(let k=0;k<=4;k++){const v=yMax*k/4,y=Y(v);s+=`<line x1="${m.l}" x2="${m.l+iw}" y1="${y}" y2="${y}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l-8}" y="${y+4}" text-anchor="end">${+v.toFixed(1)}</text>`;}
   const step=n>20?5:n>10?2:1;
   days.forEach((d,i)=>{if((n-1-i)%step===0)s+=`<text x="${X(i).toFixed(1)}" y="${h-8}" text-anchor="middle">${esc(d)}</text>`;});
   series.forEach(sr=>{s+=`<polyline points="${sr.values.map((v,i)=>`${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ')}" fill="none" stroke="${sr.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"${sr.dash?` stroke-dasharray="${sr.dash}"`:''}/>`;});
@@ -874,146 +907,29 @@ function lineChart(el,days,series){
   hit.addEventListener('pointerleave',()=>{xh.style.display='none';mks.forEach(mk=>mk.style.display='none');tip.hidden=true;});
 }
 function stacked(el,segs){
+  segs=segs.filter(s=>s.v>0);
   const w=el.clientWidth||520,h=70,y=8,bh=22,gap=2,total=segs.reduce((a,s)=>a+s.v,0),avail=w-gap*(segs.length-1);
   let s=`<svg class="chart" width="${w}" height="${h}" role="img" aria-label="How problems ended">`,x=0;const xs=[];
-  segs.forEach((sg,i)=>{const sw=avail*sg.v/total;xs.push([x,sw]);s+=`<path class="sg" data-i="${i}" d="${rr(+x.toFixed(1),y,+sw.toFixed(1),bh,i===0?5:0,i===segs.length-1?5:0)}" fill="${sg.color}"/><text class="val" x="${(x+sw/2).toFixed(1)}" y="${y+bh+19}" text-anchor="middle">${sg.v}%</text>`;x+=sw+gap;});
+  segs.forEach((sg,i)=>{const sw=avail*sg.v/total;xs.push([x,sw]);s+=`<path class="sg" data-i="${i}" d="${rr(+x.toFixed(1),y,+sw.toFixed(1),bh,i===0?5:0,i===segs.length-1?5:0)}" fill="${sg.color}"/><text class="val" x="${(x+sw/2).toFixed(1)}" y="${y+bh+19}" text-anchor="middle">${sg.v}</text>`;x+=sw+gap;});
   xs.forEach((p,i)=>{s+=`<rect class="hit" data-i="${i}" x="${p[0].toFixed(1)}" y="0" width="${p[1].toFixed(1)}" height="${h}" fill="transparent"/>`;});
   el.innerHTML=s+'</svg>'+`<div class="legend">${segs.map(sg=>`<span><i class="sw" style="--c:${sg.color}"></i>${esc(sg.label)}</span>`).join('')}</div>`;
-  bindHits(el,segs,sg=>`<b>${sg.v}%</b> ${esc(sg.label)}`,'.sg');
+  bindHits(el,segs,sg=>`<b>${sg.v}</b> ${esc(sg.label.toLowerCase())}`,'.sg');
 }
-function dayLabels(n){const end=new Date(2026,8,13);return Array.from({length:n},(_,i)=>{const d=new Date(end);d.setDate(end.getDate()-(n-1-i));return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});});}
-
+const emptyChart=(el,msg)=>{el.innerHTML=`<div class="empty" style="padding:30px 10px">${esc(msg||'No problems saved for these days yet.')}</div>`;};
 const TT={};
-function copyTable(key){const t=TT[key];if(!t)return;const tsv=[t.heads].concat(t.rows).map(r=>r.join('\t')).join('\n');
+function copyTable(key){const t=TT[key];if(!t||!t.rows.length){toast('There are no numbers to copy yet.');return;}const tsv=[t.heads].concat(t.rows).map(r=>r.join('\t')).join('\n');
   const ok=()=>toast('Copied. Paste it into Excel or PowerPoint.'),no=()=>toast('Copying is blocked here. Click Show numbers, then select the table and copy it.');
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tsv).then(ok,no);else no();}
-function renderTrends(){
-  const r=state.range,total=AN.causes[r].reduce((a,b)=>a+b,0);
-  $('#tStats').innerHTML=`
-    <div class="card stat"><div class="n num">${total}</div><div class="l">problems</div><div class="h warn">${ic('up',14)} ${AN.delta[r]}% more than before</div><div class="h ${rateNote(r).cls}">${rateNote(r).text}</div></div>
-    <div class="card stat"><div class="n" style="font-size:30px;padding-top:8px">${AN.median[r]}</div><div class="l">typical time to fix</div><div class="h">First report to fixed</div></div>
-    <div class="card stat"><div class="n num">${AN.before[r]}%</div><div class="l">fixed before the deadline</div><div class="h">Of problems closed</div></div>
-    <div class="card stat"><div class="n num">${AN.recurring[r]}%</div><div class="l">are repeat problems</div><div class="h">Same cause, same route, 3+ times</div></div>`;
-  $$('[data-table]').forEach(b=>{b.textContent=state.tables[b.dataset.table]?'Show chart':'Show numbers';});
-  const cause=AN.causeLabels.map((l,i)=>({label:l,value:AN.causes[r][i]}));
-  TT.cause={heads:['Cause','Problems','Share'],rows:cause.map(x=>[x.label,String(x.value),Math.round(x.value/total*100)+'%'])};
-  if(state.tables.cause)tableView($('#cCause'),['Cause','Problems','Share'],cause.map(x=>[x.label,String(x.value),Math.round(x.value/total*100)+'%']));
-  else hbar($('#cCause'),cause,{aria:'What goes wrong most',tip:x=>`<b>${x.value}</b> ${esc(x.label)} · ${Math.round(x.value/total*100)}% of all problems`});
-  const car=AN.carrierLabels.map((l,i)=>({label:l,value:AN.rates[r][i],count:AN.carriers[r][i]}));
-  TT.carrier={heads:['Carrier','Per 100 deliveries','Problems'],rows:car.map(x=>[x.label,x.value.toFixed(1),String(x.count)])};
-  if(state.tables.carrier)tableView($('#cCarrier'),['Carrier','Per 100 deliveries','Problems'],car.map(x=>[x.label,x.value.toFixed(1),String(x.count)]));
-  else hbar($('#cCarrier'),car,{aria:'Problems per 100 deliveries by carrier',fmt:v=>v.toFixed(1),tip:x=>`<b>${x.value.toFixed(1)}</b> per 100 deliveries · ${x.count} problems · ${esc(x.label)}`});
-  const days=dayLabels(r),op=AN.opened.slice(-r),rs=AN.resolved.slice(-r);
-  TT.trend={heads:['Day','New','Fixed'],rows:days.map((d,i)=>[d,String(op[i]),String(rs[i])])};
-  if(state.tables.trend)tableView($('#cTrend'),['Day','New','Fixed'],days.map((d,i)=>[d,String(op[i]),String(rs[i])]));
-  else lineChart($('#cTrend'),days,[{name:'New',values:op,color:'var(--s1)'},{name:'Fixed',values:rs,color:'var(--s2)',dash:'6 4'}]);
-  const bands=[['Under 30 min',30],['30 to 60 min',60],['1 to 2 h',120],['2 to 4 h',240],['Over 4 h',Infinity]];let prev=0;
-  const age=bands.map(b=>{const v=openCases().filter(c=>{const a=NOW-c.detected;return a>=prev&&a<b[1];}).length;prev=b[1];return{label:b[0],value:v};});
-  TT.aging={heads:['Waiting time','Open problems'],rows:age.map(x=>[x.label,String(x.value)])};
-  if(state.tables.aging)tableView($('#cAging'),['Waiting time','Open problems'],age.map(x=>[x.label,String(x.value)]));
-  else columns($('#cAging'),age,{aria:'How long open problems have waited',tip:x=>`<b>${x.value}</b> open ${x.value===1?'problem':'problems'}, ${esc(x.label.toLowerCase())}`});
-  const oc=AN.outcomes[r],segs=[{label:'Fixed before the deadline',v:oc[0],color:'var(--s1)'},{label:'Fixed after the deadline',v:oc[1],color:'var(--s2)'},{label:'Handed to the carrier',v:oc[2],color:'var(--s3)'}];
-  TT.outcome={heads:['How it ended','Share'],rows:segs.map(x=>[x.label,x.v+'%'])};
-  if(state.tables.outcome)tableView($('#cOutcome'),['How it ended','Share'],segs.map(x=>[x.label,x.v+'%']));else stacked($('#cOutcome'),segs);
-  $('#tPats').innerHTML=AN.patterns.map(p=>patHTML(p,r)).join('');
-}
-
-/* driver app */
-function reportRow(c){
-  const t=TYPES[c.type],last=c.timeline.slice().reverse().find(e=>e.kind==='action');
-  const st=!isOpen(c)?'Fixed. Nothing more to do.':c.owner?`${first(c.owner)} is on it.`:'Dispatch has it. Waiting for someone to take it.';
-  return `<div class="prow"><span class="ico ${isOpen(c)?'blue':'done'}">${ic(isOpen(c)?t.icon:'check',18)}</span><div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)} · ${clock12(c.detected)}</div><div class="p-state ${c.owner||!isOpen(c)?'ok':''}">${esc(st)}</div>${last?`<div class="p-msg"><b>From dispatch:</b> ${esc(last.text)}</div>`:''}</div></div>`;
-}
-function renderDriver(){
-  const d=state.drv,el=$('#view-driver');
-  const mine=CASES.filter(c=>c.driver==='Ray Okafor').sort((a,b)=>b.detected-a.detected);
-  let body='';
-  if(d.screen==='home'){
-    body=`<div class="p-hello">Hi Ray</div><div class="p-route">Route R-09 Lehigh · 28 stops · next is stop 12</div>
-      <button class="btn primary lg block" type="button" id="drvReport">${ic('alert',20)}Report a problem</button>
-      <p class="p-note">One tap. No forms. No phone calls.</p>
-      <div class="p-sec">My reports</div>
-      <div class="list">${mine.map(reportRow).join('')||'<div class="p-empty">No reports today.</div>'}</div>`;
-  }else if(d.screen==='pick'){
-    body=`<div class="p-nav"><button class="btn text" type="button" id="drvBack">${ic('back',20)}Back</button></div>
-      <div class="p-hello" style="font-size:28px;margin-bottom:16px">What happened?</div>
-      <div class="ptiles">${DRIVER_TYPES.map((t,i)=>`<button class="ptile" type="button" data-pt="${i}">${ic(TYPES[t.type].icon,28)}<span>${t.label}</span></button>`).join('')}
-      <button class="ptile" type="button" id="drvCall">${ic('call',28)}<span>Call dispatch</span></button></div>`;
-  }else if(d.screen==='details'){
-    const t=DRIVER_TYPES[d.type];
-    body=`<div class="p-nav"><button class="btn text" type="button" id="drvBack">${ic('back',20)}Back</button></div>
-      <div class="p-hello" style="font-size:28px">${t.label}</div><div class="p-route">Which stop is it?</div>
-      <div class="list">${RAY_STOPS.map((s,i)=>`<button class="pick" type="button" data-stop="${i}"><div><div class="r-title">Stop ${s.n} · ${esc(s.customer)}</div><div class="r-sub">${esc(s.city)} · due ${clock12(s.due)}</div></div><span class="ck">${d.stop===i?ic('check',20):''}</span></button>`).join('')}</div>
-      <div class="p-sec" style="font-size:15px;margin:18px 2px 8px">Anything dispatch should know? You can skip this.</div>
-      <textarea class="field" id="drvNote" rows="3" placeholder="For example: gate code does not work">${esc(d.note)}</textarea>
-      <div class="rowb"><button class="btn" type="button" id="drvPhoto">${ic(d.photo?'check':'camera',18)}${d.photo?'Photo added':'Add a photo'}</button></div>
-      <button class="btn primary lg block" type="button" id="drvSend" style="margin-top:18px">Send to dispatch</button>`;
-  }else{
-    body=`<div class="p-done"><div class="big">${ic('check',44)}</div><h3>Sent. Dispatch has it.</h3><p>You do not need to call. When someone takes it, you will see their name under My reports.</p><button class="btn primary lg" type="button" id="drvDone">Done</button></div>`;
-  }
-  const lastCase=d.lastId?CASES.find(c=>c.id===d.lastId):null;
-  const solo=P().solo;
-  el.innerHTML=`${solo?'<h1 class="lt center">Ray’s phone</h1><p class="sub center">This is all a driver sees. Send a report, then switch to Maria or Jamal to watch it arrive.</p>':'<h1 class="lt">Driver app</h1><p class="sub">What Ray, a RouteWise driver, sees on his phone. Try it: report a problem, then look for it under Problems.</p>'}
-  <div class="drv${solo?' solo':''}">
-    <div class="drv-side card pad"><h3>Made for the road</h3><ul>
-      <li>${ic('check',18)}<span>One tap to say what happened.</span></li>
-      <li>${ic('check',18)}<span>No typing needed. A note or a photo is optional.</span></li>
-      <li>${ic('check',18)}<span>The driver sees who is handling it, so nobody has to call three times.</span></li>
-      <li>${ic('check',18)}<span>Every report keeps its time. That protects the driver when a delay was not their fault.</span></li></ul></div>
-    <div class="phone"><div class="screen"><div class="island"></div>
-      <div class="p-status-bar"><span class="num">9:42</span><span><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="7" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="4" rx="1" fill="currentColor" opacity=".45"/></svg></span></div>
-      <div class="p-body">${body}</div><div class="p-home"></div></div></div>
-    <div class="drv-side card pad"><h3>What dispatch sees</h3>${lastCase?`<p class="lead" style="margin-bottom:10px">Ray's report arrived as a new problem, already ranked.</p><div class="list" style="box-shadow:none;background:var(--fill-2)">${rowHTML(lastCase).replace(/<span class="chev">[\s\S]*?<\/span><\/div>$/,'</div>')}</div><div class="rowb"><button class="btn primary" type="button" id="drvSee">See it in Problems</button></div>`:'<p class="lead" style="margin:0">Send a report from the phone. It shows up under Problems right away, already sorted by how urgent it is.</p>'}</div>
-  </div>`;
-  const on=(id,fn)=>{const e=$(id);if(e)e.addEventListener('click',fn);};
-  on('#drvReport',()=>{d.screen='pick';renderDriver();});
-  on('#drvBack',()=>{d.screen=d.screen==='details'?'pick':'home';renderDriver();});
-  on('#drvCall',()=>toast('Calling is turned off in this prototype'));
-  el.querySelectorAll('[data-pt]').forEach(b=>b.addEventListener('click',()=>{d.type=+b.dataset.pt;d.stop=0;d.note='';d.photo=false;d.screen='details';renderDriver();}));
-  el.querySelectorAll('[data-stop]').forEach(b=>b.addEventListener('click',()=>{const n=$('#drvNote');if(n)d.note=n.value;d.stop=+b.dataset.stop;renderDriver();}));
-  const note=$('#drvNote');if(note)note.addEventListener('input',e=>{d.note=e.target.value;});
-  on('#drvPhoto',()=>{d.photo=!d.photo;renderDriver();});
-  on('#drvSend',sendReport);
-  on('#drvDone',()=>{d.screen='home';renderDriver();});
-  on('#drvSee',()=>{state.sel=d.lastId;state.f={status:'open',type:'all',q:''};showView('problems');});
-  const mini=el.querySelector('.drv-side .row');if(mini){mini.style.cursor='default';mini.removeAttribute('tabindex');mini.removeAttribute('role');const tk=mini.querySelector('[data-take]');if(tk)tk.remove();}
-}
-function sendReport(){
-  const d=state.drv,t=DRIVER_TYPES[d.type],s=RAY_STOPS[d.stop],id='RW-'+(91470+state.newCount++),note=d.note.trim();
-  CASES.push({id,customer:s.customer,key:s.key,contact:s.contact,city:s.city,route:'R-09 Lehigh',carrier:'RouteWise fleet',driver:'Ray Okafor',type:t.type,detected:NOW,due:s.due,status:'New',owner:null,source:'the driver app',contents:s.contents,critical:false,
-    plain:t.plain+(note?` Driver note: "${note}"`:''),custDetail:t.cust,newEta:null,
-    timeline:[{t:NOW,who:'Ray Okafor',kind:'event',text:`Report from the driver app: ${t.label}.${note?` Note: "${note}"`:''}${d.photo?' Photo attached.':''}`}]});
-  d.lastId=id;d.screen='sent';renderSide();renderDriver();
-}
-
-/* data */
-function renderData(){
-  $('#sources').innerHTML=SOURCES.map(s=>{const warn=s.st!=='ok';const txt=s.st==='ok'?'Working':s.st==='stale'?`${s.msg}, ${dur(NOW-s.last)} old`:s.msg;
-    return `<div class="src"><span class="ico ${warn?'next':'blue'}">${ic(s.icon,18)}</span><div><div class="r-title">${esc(s.name)}</div><div class="r-sub">${esc(s.how)}</div></div><div><div class="st ${warn?'warn':''}"><i></i>${esc(txt)}</div><div class="sm num">Last update ${clock12(s.last)} · ${s.n} today</div></div></div>`;}).join('');
-}
-function renderPreview(){
-  const rows=[['RW-91461','Lancaster General Surgical Center','Allegheny Express','11:00 AM','Still at the carrier terminal'],['RW-91455','Berks Community Health','Our own truck','1:00 PM','25 min behind, road work'],['RW-91433','Lebanon Family Practice','Our own truck','2:00 PM','Delivered, signed at front desk'],['RW-91429','Hershey Pediatrics','Our own truck','3:30 PM','Out for delivery'],['RW-91418','Lancaster Optical','Our own truck','12:00 PM','Delivered, left at reception']];
-  const p=$('#preview');p.hidden=false;
-  p.innerHTML=`<div class="r-sub" style="margin-bottom:6px">deliveries_sep14.csv · 412 rows · here are the first 5</div><table><thead><tr><th>Order</th><th>Customer</th><th>Carrier</th><th>Promised by</th><th>Latest update</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map((v,i)=>`<td class="${i===0||i===3?'num':''}">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>
-    <div class="rowb" style="margin-top:12px"><button class="btn primary" type="button" id="importBtn" ${state.imported?'disabled':''}>${state.imported?'Added':'Add these 412 updates'}</button><span class="note" style="margin:0">Updates for a known problem go into its history. New trouble becomes a new problem.</span></div>`;
-  $('#importBtn').addEventListener('click',()=>{if(state.imported)return;state.imported=true;IMPORT_CASES.forEach(c=>CASES.push(c));renderSide();if(canSee('problems')){state.sel='RW-91461';state.f={status:'open',type:'all',q:''};showView('problems');}else renderPreview();toast('412 updates added. 2 new problems found.');});
-}
+function download(name,text,type){const b=new Blob([text],{type:type||'text/plain'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);}
+function toCSV(rows,cols){const q=v=>{const s=v==null?'':String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};return [cols.join(',')].concat(rows.map(r=>cols.map(c=>q(r[c])).join(','))).join('\n');}
+function parseCSV(text){const rows=[];let row=[],f='',q=false;for(let i=0;i<text.length;i++){const ch=text[i];
+  if(q){if(ch==='"'){if(text[i+1]==='"'){f+='"';i++;}else q=false;}else f+=ch;}
+  else if(ch==='"')q=true;else if(ch===','){row.push(f);f='';}else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(f);f='';if(row.some(x=>x.trim()))rows.push(row);row=[];}else f+=ch;}
+  row.push(f);if(row.some(x=>x.trim()))rows.push(row);return rows;}
 
 
-/* people: who is looking at the app */
-const PEOPLE=[
-  {id:'jamal',name:'Jamal Turner',role:'Dispatch manager',grp:'Our team',hue:211,views:['today','problems','trends','data','driver'],start:'today',take:true,team:true,does:'Sees everything and runs the desk'},
-  {id:'maria',name:'Maria Delgado',role:'Dispatcher',grp:'Our team',hue:330,views:['problems'],start:'problems',take:true,team:true,does:'Works the problem list all day'},
-  {id:'priya',name:'Priya Nair',role:'Customer service',grp:'Our team',hue:268,views:['lookup'],start:'lookup',does:'Answers customers on the phone'},
-  {id:'ray',name:'Ray Okafor',role:'Driver',grp:'Our team',hue:28,views:['driver'],start:'driver',solo:true,does:'Reports problems from his phone'},
-  {id:'helen',name:'Helen Marsh',role:'CEO',grp:'Leaders',hue:150,views:['boss','trends'],start:'boss',does:'Checks how the day is going'},
-  {id:'kevin',name:'Kevin Tran',role:'Operations analyst',grp:'Leaders',hue:190,views:['trends','data'],start:'trends',does:'Loads files and checks the numbers'},
-  {id:'linda',name:'Linda Cho',role:'Customer',grp:'Customers',hue:350,views:['track'],start:'track',solo:true,does:'Office manager at Bright Smiles Family Dentistry'}];
-const VIEWS={today:{label:'Today',ic:'today',sec:'Overview'},boss:{label:'Overview',ic:'today',sec:'Overview'},
-  problems:{label:'Problems',ic:'alert',sec:'Dispatch',count:true},lookup:{label:'Find a customer',short:'Customers',ic:'search',sec:'Customers'},
-  trends:{label:'Trends',ic:'chart',sec:'Numbers'},data:{label:'Data',ic:'tray',sec:'Numbers'},
-  driver:{label:'Driver app',short:'Driver',ic:'phone',sec:'On the road'},track:{label:'My order',ic:'box',sec:'My order'}};
-let PID='jamal';
+/* ---------- who is looking ---------- */
+let ME='Jamal Turner',PID='jamal';
 const P=()=>PEOPLE.find(p=>p.id===PID);
 const canSee=v=>P().views.includes(v);
 const avHTML=(p,cls)=>`<span class="av ${cls||''}" style="background:hsl(${p.hue} 62% 44%);color:#fff">${initials(p.name)}</span>`;
@@ -1031,182 +947,702 @@ function renderNav(){
   $('#meBox').innerHTML=`${avHTML(p)}<div><div class="me-name">${esc(p.name)}</div><div class="me-role">${esc(p.role)}</div></div>`;
   $('#whoBtn').innerHTML=`${avHTML(p,'sm')}<span class="wl">Viewing as</span> ${esc(first(p.name))}${ic('chevron',14)}`;
   $('#mineBtn').hidden=!p.take;
-  renderSide();
+  $('#newProblemBtn').hidden=!p.create;
+  $('#bellBtn').hidden=!p.alerts;
+  renderSide();renderBell();
 }
 function renderWho(){
-  $('#whoMenu').innerHTML=`<div class="wi">See the app the way each person sees it. Everyone shares the same live data, so a change made by one person shows up for the others.</div>`+
+  $('#whoMenu').innerHTML=`<div class="wi">See the app the way each person sees it. Everyone shares the same database, so what one person does shows up for the others.</div>`+
     ['Our team','Leaders','Customers'].map(g=>`<div class="wh">${g}</div>`+PEOPLE.filter(p=>p.grp===g).map(p=>
       `<button class="wp${p.id===PID?' on':''}" type="button" role="menuitem" data-who="${p.id}">${avHTML(p)}<div><div class="wn">${esc(p.name)} <span class="wr">· ${esc(p.role)}</span></div><div class="wr">${esc(p.does)}</div></div>${p.id===PID?`<span class="ck">${ic('check',18)}</span>`:''}</button>`).join('')).join('');
 }
-function openWho(){renderWho();$('#whoMenu').hidden=false;$('#whoBtn').setAttribute('aria-expanded','true');const on=$('#whoMenu .wp.on');if(on)on.focus();}
-function closeWho(){$('#whoMenu').hidden=true;$('#whoBtn').setAttribute('aria-expanded','false');}
+function closeMenus(){$('#whoMenu').hidden=true;$('#bellMenu').hidden=true;$('#whoBtn').setAttribute('aria-expanded','false');$('#bellBtn').setAttribute('aria-expanded','false');}
 function setPerson(id,quiet){
   if(!PEOPLE.some(p=>p.id===id))id='jamal';
   PID=id;ME=P().name;
   try{localStorage.setItem('rw-person',id);}catch(e){}
   try{history.replaceState(null,'','#as='+id);}catch(e){}
-  if(!P().take&&state.f.status==='mine')state.f.status='open';
-  if(P().take&&state.f.status==='mine'&&!openCases().some(c=>c.owner===ME))state.f.status='open';
-  closeWho();renderNav();showView(P().start);
+  if(state.f.status==='mine'&&!P().take)state.f.status='open';
+  state.drv.screen='home';$('#pops').innerHTML='';
+  closeMenus();renderNav();showView(P().start);checkAlerts();
   if(!quiet)toast(`Now viewing as ${P().name}, ${P().role.toLowerCase()}`);
 }
-$('#whoBtn').addEventListener('click',e=>{e.stopPropagation();$('#whoMenu').hidden?openWho():closeWho();});
-$('#whoMenu').addEventListener('click',e=>{const b=e.target.closest('[data-who]');if(b)setPerson(b.dataset.who);});
-document.addEventListener('click',e=>{if(!$('#whoMenu').hidden&&!e.target.closest('#whoMenu'))closeWho();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#whoMenu').hidden){closeWho();$('#whoBtn').focus();}});
-window.addEventListener('hashchange',()=>{const m=location.hash.match(/as=(\w+)/);if(m&&m[1]!==PID)setPerson(m[1]);});
 
-/* CEO overview */
-function renderBoss(){
-  const open=openCases(),nowN=open.filter(c=>priority(c).tier==='now').length,noOwner=open.filter(c=>!c.owner).length;
-  const keys=sorted(open.filter(c=>c.key));
-  const r=14,total=AN.causes[r].reduce((a,b)=>a+b,0),rn=rateNote(r);
-  const car=AN.carrierLabels.map((l,i)=>({l,v:AN.rates[r][i]})).sort((a,b)=>b.v-a.v),maxR=car[0].v;
-  const ratio=(AN.rates[r][1]/AN.rates[r][0]).toFixed(1);
-  const verdict=nowN>=4?'Today is harder than normal.':'Today looks like a normal day.';
-  const krow=c=>{const p=priority(c),d=dueInfo(c),t=TYPES[c.type];
-    return `<div class="row"><span class="ico ${p.tier}">${ic(t.icon,20)}</span><div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)}. ${esc(c.city)}.</div></div>
-    <div class="r-right"><span class="due ${d.cls} num">${esc(d.text)}</span>${c.owner?`<span class="owner"><span class="av sm">${initials(c.owner)}</span>${esc(first(c.owner))} is on it</span>`:'<span class="tag red">No owner yet</span>'}</div><span></span></div>`;};
-  $('#view-boss').innerHTML=`
-  <p class="eyebrow">Monday, September 14 · 9:42 AM</p>
-  <h1 class="hero">${verdict} <span class="hl">${keys.length} important ${keys.length===1?'customer has':'customers have'} a problem.</span></h1>
-  <p class="sub">${open.length} deliveries have a problem right now. ${nowN} need action now, and ${noOwner?`${noOwner} ${noOwner===1?'has':'have'} no owner yet`:'every one has an owner'}. Jamal’s team is working on them.</p>
-  <h2 class="sec-h">Important customers with a problem</h2>
-  <div class="list brief">${keys.map(krow).join('')||'<div class="card empty">None right now.</div>'}</div>
-  <h2 class="sec-h">The last 14 days</h2>
-  <div class="stats3" style="margin-top:0">
-    <div class="card stat"><div class="n num">${total}</div><div class="l">problems</div><div class="h ${rn.cls}">${esc(rn.text)}</div></div>
-    <div class="card stat"><div class="n num">${AN.before[r]}%</div><div class="l">fixed before the customer’s deadline</div><div class="h">The rest were fixed late</div></div>
-    <div class="card stat"><div class="n" style="font-size:34px;padding-top:6px">${AN.median[r]}</div><div class="l">typical time to fix one</div><div class="h">From first report to fixed</div></div>
-  </div>
-  <div class="card pad" style="margin-top:14px"><h3 style="font-size:17px;font-weight:600">Biggest risk: one carrier</h3><p class="lead">Keystone Freight has about ${ratio} times more problems than our own trucks. Numbers are problems per 100 deliveries.</p>
-    ${car.map(x=>`<div class="brow"><span>${x.l}</span><span class="bt"><i style="width:${Math.round(x.v/maxR*100)}%"></i></span><span class="bv num">${x.v.toFixed(1)}</span></div>`).join('')}</div>
-  <h2 class="sec-h">What to fix first</h2>
-  <div class="pats">${AN.patterns.slice(0,2).map(p=>patHTML(p,r)).join('')}</div>
-  <div class="rowb"><button class="btn" type="button" id="bossTrends">See all trends</button></div>
-  <p class="note">Helen sees the same numbers as Jamal, without the buttons to change anything.</p>`;
-  $('#bossTrends').addEventListener('click',()=>showView('trends'));
+/* ---------- alerts: the function that runs on Jamal's screen ---------- */
+const myAlerts=()=>P().alerts?D().alerts.filter(a=>a.for_role==='dispatch').sort((a,b)=>b.id-a.id):[];
+const unread=()=>myAlerts().filter(a=>!yes(a.read));
+function renderBell(){
+  const b=$('#bellBtn');if(b.hidden)return;const n=unread().length;
+  b.innerHTML=ic('bell',18)+(n?`<span class="bdg num">${n>99?'99+':n}</span>`:'');
+  b.setAttribute('aria-label',n?`Alerts, ${n} new`:'Alerts');
+  document.title=(n?`(${n}) `:'')+'RouteWise Desk';
+  if(!$('#bellMenu').hidden)renderBellMenu();
 }
+function renderBellMenu(){
+  const list=myAlerts().slice(0,40),perm=('Notification' in window)?Notification.permission:'none';
+  $('#bellMenu').innerHTML=`<div class="bm-h"><b>Alerts</b>${unread().length?'<button class="btn sm" type="button" data-act="readAll">Mark all as read</button>':''}</div>
+  ${perm==='default'?'<div class="wi" style="padding:0 10px 8px"><button class="btn sm tint" type="button" data-act="allowNotify">Also alert me when this window is in the background</button></div>':''}
+  ${list.length?list.map(a=>`<button class="al${yes(a.read)?'':' unread'}" type="button" data-act="openAlert" data-id="${a.id}"><i></i><div><div class="al-t">${esc(a.title)}</div><div class="al-b">${esc(a.body||'')}</div><div class="al-w">${fmtTime(a.t)}</div></div></button>`).join('')
+    :'<div class="wi" style="padding:10px 10px 14px">No alerts yet. When a driver reports a problem or someone asks for a call, it shows up here and pops up on screen.</div>'}`;
+}
+function seenKey(){return 'rw3-seen-'+PID;}
+function checkAlerts(){
+  renderBell();if(!P().alerts)return;
+  const maxId=Math.max(0,...D().alerts.map(a=>+a.id||0));
+  if(state.seen[PID]===undefined){let s=null;try{s=localStorage.getItem(seenKey());}catch(e){}state.seen[PID]=s===null?maxId:+s;}
+  const fresh=D().alerts.filter(a=>+a.id>state.seen[PID]&&LOUD.includes(a.kind)&&!yes(a.read)).sort((a,b)=>a.id-b.id);
+  state.seen[PID]=maxId;try{localStorage.setItem(seenKey(),String(maxId));}catch(e){}
+  fresh.slice(-3).forEach(onDriverAlert);
+}
+/* Runs on the dispatch screen when a driver, a customer, or customer service needs dispatch. */
+function onDriverAlert(a){
+  showPop(a);beep();
+  if('Notification' in window&&Notification.permission==='granted'&&document.hidden){try{new Notification(a.title,{body:a.body||''});}catch(e){}}
+}
+function showPop(a){
+  const box=$('#pops');while(box.children.length>=3)box.firstElementChild.remove();
+  const c=a.problem_id?findP(a.problem_id):null,ph=c?photosOf(c)[0]:null;
+  const kind={driver_report:'Driver report',call_request:'Call request',ask_dispatch:'Customer service'}[a.kind]||'Alert';
+  const el=document.createElement('div');el.className='pop'+(a.kind==='driver_report'?'':' soft');el.dataset.alert=a.id;
+  el.innerHTML=`<div class="pop-k">${kind} · ${fmtTime(a.t)}</div><div class="pop-t">${esc(a.title)}</div><div class="pop-b">${esc(a.body||'')}</div>${ph?`<img src="${ph.photo}" alt="Photo from the driver">`:''}
+    <div class="rowb">${c&&!c.owner?`<button class="btn sm primary" type="button" data-act="popTake" data-id="${a.id}">Take it</button>`:''}${c?`<button class="btn sm" type="button" data-act="openAlert" data-id="${a.id}">Open</button>`:`<button class="btn sm primary" type="button" data-act="popDone" data-id="${a.id}">Done</button>`}<button class="btn sm text" type="button" data-act="popLater" data-id="${a.id}">Later</button></div>`;
+  box.appendChild(el);
+}
+let audioCtx=null;
+function beep(){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();const t=audioCtx.currentTime;[0,.18].forEach((d,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=i?1046:784;g.gain.setValueAtTime(.0001,t+d);g.gain.exponentialRampToValueAtTime(.18,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.16);o.connect(g).connect(audioCtx.destination);o.start(t+d);o.stop(t+d+.18);});}catch(e){}}
+async function markRead(id){const a=D().alerts.find(x=>String(x.id)===String(id));if(a&&!yes(a.read))await Store.update('alerts',a.id,{read:1});}
+function dropPop(id){const el=document.querySelector(`.pop[data-alert="${id}"]`);if(el)el.remove();}
 
-/* customer service lookup */
-state.lk={q:'',sel:null};
-function lastTold(c){
-  if(c.msgs&&c.msgs.length){const m=c.msgs[c.msgs.length-1];return{t:m.t,who:m.who,text:m.text};}
-  const e=c.timeline.slice().reverse().find(x=>x.kind==='message');
-  return e?{t:e.t,who:e.who,text:e.summary||e.text}:null;
+/* ---------- sidebar and status ---------- */
+function renderSide(){
+  const open=openCases();$$('[data-count]').forEach(e=>e.textContent=open.length||'');
+  const rows=OWNERS.map(o=>[first(o)+' '+o.split(' ')[1][0]+'.',open.filter(c=>c.owner===o).length,false]);
+  rows.push(['No owner',open.filter(c=>!c.owner).length,true]);
+  const max=Math.max(1,...rows.map(r=>r[1]));
+  $('#team').innerHTML=rows.map(r=>`<li class="${r[2]&&r[1]?'warn':''}"><span>${esc(r[0])}</span><span class="num">${r[1]}</span><span class="tb"><i style="width:${Math.round(r[1]/max*100)}%"></i></span></li>`).join('');
 }
-function sayFor(c){
-  if(!isOpen(c)){const a=c.timeline.slice().reverse().find(x=>x.kind==='status'||x.kind==='action');return 'This one is fixed. '+(a?a.text:'');}
-  const t=TYPES[c.type].plain;
-  return `${t}: ${c.custDetail}. `+(c.newEta?`The new arrival time is about ${clock12(c.newEta)}.`:'There is no new time yet. Promise an update within the hour.');
+function renderMode(){
+  const t=$('#modeTag');
+  if(Store.mode==='server'){t.textContent=Store.online?'Saved in database':'Server stopped';t.className='tag '+(Store.online?'mode-ok':'mode-bad');t.title=Store.online?`Everything is saved in ${Store.dbFile}`:'Start the dashboard again with the Start dashboard file';}
+  else{t.textContent='Saved in this browser';t.className='tag';t.title='The database server is not running here, so data stays in this browser only';}
 }
-function renderLookup(){
-  const el=$('#view-lookup');
-  if(!el.dataset.ready){
-    el.innerHTML=`<h1 class="lt">Find a customer</h1><p class="sub">A customer is on the phone? Type their name. You see what happened, who has it, and what we already told them.</p>
-    <label class="bigsearch">${ic('search',22)}<input type="search" id="lkQ" placeholder="Customer, contact name, city, or order number" aria-label="Find a customer" autocomplete="off"></label>
-    <div class="lkgrid"><div id="lkList"></div><div id="lkAns"></div></div>`;
-    el.dataset.ready='1';
-    $('#lkQ').addEventListener('input',e=>{state.lk.q=e.target.value.trim();renderLookupBody();});
-    $('#lkList').addEventListener('click',e=>{const b=e.target.closest('[data-lk]');if(b){state.lk.sel=b.dataset.lk;renderLookupBody();}});
-  }
-  $('#lkQ').value=state.lk.q;renderLookupBody();
-  setTimeout(()=>{const q=$('#lkQ');if(q&&state.view==='lookup')q.focus();},50);
-}
-function renderLookupBody(){
-  const L=state.lk,q=L.q.toLowerCase();
-  const pool=q?CASES.filter(c=>[c.customer,c.contact,c.city,c.id].join(' ').toLowerCase().includes(q)):CASES.filter(isOpen);
-  const hits=pool.slice().sort((a,b)=>a.customer.localeCompare(b.customer));
-  if(hits.length===1)L.sel=hits[0].id;
-  $('#lkList').innerHTML=`<div class="group-h"><h3>${q?(hits.length?`${hits.length} ${hits.length===1?'match':'matches'}`:'No match'):'Customers with a problem today'}</h3></div>`+
-    (hits.length?`<div class="list">${hits.map(c=>`<button class="pick${c.id===L.sel?' sel':''}" type="button" data-lk="${c.id}"><div style="min-width:0"><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(c.contact)} · ${esc(c.city)} · ${esc(TYPES[c.type].plain)}</div></div><span style="margin-left:auto;flex:none">${!isOpen(c)?'<span class="tag green">Fixed</span>':c.owner?`<span class="tag">${esc(first(c.owner))}</span>`:'<span class="tag red">No owner</span>'}</span></button>`).join('')}</div>`
-      :'<div class="card empty">Nobody by that name has a problem today. Their delivery is probably on time.</div>');
-  const c=CASES.find(x=>x.id===L.sel);
-  if(!c){$('#lkAns').innerHTML=`<div class="card pad lkans"><p class="lead" style="margin:0">Pick a customer on the left, or type a name above.</p></div>`;return;}
-  const told=lastTold(c);
-  $('#lkAns').innerHTML=`<div class="card answer lkans">
-    <div class="r-sub">${esc(c.customer)} · ${esc(c.city)} · Order <span class="num">${c.id}</span></div>
-    <h4 style="margin-top:12px">What to tell ${esc(c.contact)}</h4>
-    <div class="say">${esc(sayFor(c))}</div>
-    <div class="facts">
-      <div class="fact${c.owner?'':' warn'}"><div class="fl">Who has it</div><div class="fv">${c.owner?esc(c.owner):'Nobody yet'}</div></div>
-      <div class="fact${c.newEta||!isOpen(c)?'':' warn'}"><div class="fl">New arrival time</div><div class="fv num">${!isOpen(c)?'Fixed':c.newEta?clock12(c.newEta):'Not known yet'}</div></div>
-      <div class="fact"><div class="fl">We promised it by</div><div class="fv num">${clock12(c.due)}</div></div>
-    </div>
-    <h4>Last thing we told them</h4>
-    ${told?`<div class="lktold"><div class="tt">${clock12(told.t)} · ${esc(told.who)}</div>${esc(told.text.length>260?told.text.slice(0,260)+'...':told.text)}</div>`:'<div class="lktold none"><div class="tt">Nothing yet</div>Nobody has told them anything. You are the first.</div>'}
-    ${isOpen(c)?`<h4>Message to send</h4>
-    <textarea class="field" id="lkDraft" rows="8">${esc(c.draft||draftFor(c))}</textarea>
-    <div class="rowb"><button class="btn" type="button" id="lkCopy">Copy</button><button class="btn primary" type="button" id="lkSent">Mark as sent</button>${c.owner?'':`<button class="btn tint" type="button" id="lkAsk" ${c.asked?'disabled':''}>${c.asked?'Dispatch was asked':'Ask dispatch to take it'}</button>`}</div>
-    <p class="note">You always read and edit it first. Nothing is sent by itself.</p>`:''}
-  </div>`;
-  const on=(id,fn)=>{const e=$(id);if(e)e.addEventListener('click',fn);};
-  on('#lkCopy',()=>{const tx=$('#lkDraft').value;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(()=>toast('Copied'),()=>toast('Select the text and copy it yourself'));else toast('Select the text and copy it yourself');});
-  on('#lkSent',()=>{const tx=$('#lkDraft').value.trim();if(!tx)return;c.draft=tx;c.msgs=(c.msgs||[]).concat([{t:NOW,text:tx,who:ME}]);
-    const snip=tx.replace(/\s+/g,' ').slice(0,100);log(c,'message',`Message sent to ${c.contact}: "${snip}${tx.length>100?'...':''}"`);
-    c.timeline[c.timeline.length-1].summary=`Told ${c.contact} what happened and what comes next.`;
-    refreshAll();toast(`Marked as sent to ${c.contact}`);});
-  on('#lkAsk',()=>{c.asked=true;log(c,'action',`Priya asked dispatch to take this. ${c.contact} is waiting for an answer.`);refreshAll();toast('Dispatch will see your note on this problem');});
-}
+function tick(){$('#clock').textContent=new Date().toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
 
-/* the customer's own page */
-const LINDA_ORDER='RW-91388';
-function renderTrack(){
-  const c=CASES.find(x=>x.id===LINDA_ORDER),el=$('#view-track');if(!c){el.innerHTML='';return;}
-  const fixed=!isOpen(c);
-  const head=fixed?'Your delivery problem is fixed.':c.owner?`${first(c.owner)} at RouteWise is fixing a problem with your delivery.`:'There is a problem with your delivery. RouteWise is looking at it.';
-  const steps=[['Ordered','ok'],['On the truck','ok'],[fixed?'Problem fixed':'Problem found',fixed?'ok':'bad'],['Delivered',fixed?'ok':'']];
-  const msgs=c.msgs||[];
-  el.innerHTML=`<div class="track">
-    <div class="tip">${ic('info',20)}<div>This is what Linda, the customer, sees from a link in a text or an email. Try it: switch to Priya or Jamal, open Bright Smiles Family Dentistry, write the message, and mark it as sent. Then come back here.</div></div>
-    <h1 class="lt">Hi Linda</h1>
-    <p class="sub">Order <span class="num">${c.id}</span> · ${esc(c.contents)} · Bright Smiles Family Dentistry, Reading</p>
-    <div class="card pad" style="margin-top:20px">
-      <div class="steps">${steps.map(x=>`<div class="step ${x[1]}"><i></i>${x[0]}</div>`).join('')}</div>
-      <div class="state-big">${esc(head)}</div>
-      <div class="facts" style="grid-template-columns:1fr 1fr">
-        <div class="fact${c.newEta||fixed?'':' warn'}"><div class="fl">Expected by</div><div class="fv num">${fixed?'Done':c.newEta?clock12(c.newEta):'New time coming soon'}</div></div>
-        <div class="fact"><div class="fl">First promised by</div><div class="fv num">${clock12(c.due)}</div></div>
-      </div>
-    </div>
-    <h2 class="sec-h">Messages from RouteWise</h2>
-    ${msgs.length?msgs.map(m=>`<div class="bubble-t">${clock12(m.t)} · from ${esc(first(m.who))} at RouteWise</div><div class="bubble">${esc(m.text)}</div>`).join(''):'<div class="card pad"><p class="lead" style="margin:0">No message yet. When someone at RouteWise sends an update, it shows up here.</p></div>'}
-    <div class="rowb" style="margin-top:18px"><button class="btn" type="button" id="trackCall">${ic('call',18)}Call RouteWise</button></div>
-  </div>`;
-  $('#trackCall').addEventListener('click',()=>toast('Calling is turned off in this prototype'));
+/* ---------- redraw without losing what someone is typing ---------- */
+function withPreserve(fn){
+  const a=document.activeElement,vals={};
+  $$('.content input[id], .content textarea[id], .content select[id]').forEach(e=>{if(e.type!=='file')vals[e.id]=e.value;});
+  const fid=a&&a.id&&a.closest&&a.closest('.content')?a.id:null;let ss=null,se=null;try{ss=a.selectionStart;se=a.selectionEnd;}catch(e){}
+  fn();
+  Object.entries(vals).forEach(([id,v])=>{const e=document.getElementById(id);if(e&&e.type!=='file'&&e.value!==v)e.value=v;});
+  if(fid){const e=document.getElementById(fid);if(e){e.focus();try{if(ss!=null)e.setSelectionRange(ss,se);}catch(x){}}}
 }
-
-/* navigation */
-const TITLES={today:'Today',problems:'Problems',trends:'Trends',driver:'Driver app',data:'Data',boss:'Overview',lookup:'Find a customer',track:'My order'};
-function showView(v){
-  if(!canSee(v))v=P().start;
-  state.view=v;$$('.view').forEach(s=>{s.hidden=s.id!=='view-'+v;});
-  $$('[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v));
-  $('#barTitle').textContent=TITLES[v];
+function renderView(v){
   if(v==='today')renderToday();
-  if(v==='problems'){$$('[data-status]').forEach(x=>x.classList.toggle('on',x.dataset.status===state.f.status));$('#fType').value=state.f.type;$('#fQ').value=state.f.q;if(!state.sel||!visible().some(c=>c.id===state.sel)){const f=visible()[0];state.sel=f?f.id:null;}renderGroups();renderDetail();}
+  if(v==='problems'){$$('[data-status]').forEach(x=>x.classList.toggle('on',x.dataset.status===state.f.status));$('#fType').value=state.f.type;
+    if(!state.sel||!visible().some(c=>c.id===state.sel)){const f=visible()[0];state.sel=f?f.id:null;}renderGroups();renderDetail();}
+  if(v==='deliveries')renderDeliveries();
   if(v==='trends')renderTrends();
   if(v==='driver')renderDriver();
   if(v==='data')renderData();
   if(v==='boss')renderBoss();
   if(v==='lookup')renderLookup();
   if(v==='track')renderTrack();
-  window.scrollTo({top:0});
 }
-$$('[data-ic]').forEach(e=>e.insertAdjacentHTML('afterbegin',ic(e.dataset.ic,+e.dataset.size||18)));
-document.addEventListener('click',e=>{const b=e.target.closest('[data-view]');if(b&&!b.closest('.view'))showView(b.dataset.view);});
-$$('[data-status]').forEach(b=>b.addEventListener('click',()=>{state.f.status=b.dataset.status;$$('[data-status]').forEach(x=>x.classList.toggle('on',x===b));const l=visible();if(!l.some(c=>c.id===state.sel))state.sel=l[0]?l[0].id:null;renderGroups();renderDetail();}));
-Object.keys(TYPES).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=TYPES[k].plain;$('#fType').appendChild(o);});
-$('#fType').addEventListener('change',e=>{state.f.type=e.target.value;renderGroups();});
-$('#fQ').addEventListener('input',e=>{state.f.q=e.target.value.trim();const l=visible();if(state.f.q&&l.length===1&&state.sel!==l[0].id){state.sel=l[0].id;renderGroups();renderDetail();}else renderGroups();});
-$$('[data-range]').forEach(b=>b.addEventListener('click',()=>{state.range=+b.dataset.range;$$('[data-range]').forEach(x=>x.classList.toggle('on',x===b));renderTrends();}));
-$$('[data-table]').forEach(b=>b.addEventListener('click',()=>{state.tables[b.dataset.table]=!state.tables[b.dataset.table];renderTrends();}));
-$$('[data-copy]').forEach(b=>b.addEventListener('click',()=>copyTable(b.dataset.copy)));
-$('#chooseFile').addEventListener('click',()=>toast('Picking a file is turned off in this prototype. Use the sample file.'));
-$('#loadSample').addEventListener('click',()=>{renderPreview();toast('Sample file loaded');});
-let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(state.view==='trends')renderTrends();},150);});
-(function(){let id=null;const m=location.hash.match(/as=(\w+)/);if(m)id=m[1];if(!id){try{id=localStorage.getItem('rw-person');}catch(e){}}setPerson(id||'jamal',true);})();
-</script>
+function onData(){renderSide();withPreserve(()=>renderView(state.view));checkAlerts();setTimeout(aiQueue,0);}
+function showView(v){
+  if(!canSee(v))v=P().start;
+  state.view=v;$$('.view').forEach(s=>{s.hidden=s.id!=='view-'+v;});
+  $$('[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v));
+  $('#barTitle').textContent=TITLES[v];
+  renderView(v);window.scrollTo({top:0});
+}
 
+/* ---------- Today (Jamal) ---------- */
+function emptyStart(who){
+  return `<div class="card welcome"><h2>The database is empty</h2><p class="lead" style="margin-top:6px">Nothing is made up. ${esc(who)} sees real entries only, once someone adds them.</p>
+  <ol><li>Add today's deliveries, one by one or from a CSV file.</li><li>Give each delivery a driver. Ray Okafor sees his stops on his phone.</li><li>When something goes wrong, the driver reports it and dispatch gets an alert.</li></ol>
+  <div class="rowb" style="margin-top:16px">${canSee('deliveries')?`<button class="btn primary" type="button" data-act="newDelivery">${ic('plus',18)}Add a delivery</button>`:''}${P().create?'<button class="btn" type="button" data-act="newProblem">Report a problem</button>':''}${canSee('data')?'<button class="btn" type="button" data-act="goData">Import a file</button>':''}</div></div>`;
+}
+function renderToday(){
+  const el=$('#view-today'),open=openCases(),dl=D().deliveries;
+  const tip=state.tipHidden?'':`<div class="tip">${ic('info',20)}<div>Everything here comes from the database. Try this: add a delivery for Ray Okafor, then click Viewing as and switch to Ray. Report a problem from his phone and come back. Jamal gets an alert.</div><button class="btn sm" type="button" data-act="hideTip">Hide</button></div>`;
+  if(!D().problems.length&&!dl.length){el.innerHTML=`${tip}<p class="eyebrow">${todayLabel()}</p><h1 class="hero">Nothing here yet.</h1>${emptyStart('Everyone')}`;return;}
+  const nowN=open.filter(c=>priority(c).tier==='now').length,soon=open.filter(c=>c.due&&c.due-Date.now()<=120*MIN).length,noOwner=open.filter(c=>!c.owner).length,keys=open.filter(c=>yes(c.important)).length;
+  const top=sorted(open)[0],tp=top?priority(top):null,A=analytics(14);
+  const tdy=dl.filter(d=>sameDay(new Date(d.due||d.created),new Date()));
+  const cnt=s=>tdy.filter(d=>d.status===s).length;
+  el.innerHTML=`${tip}<p class="eyebrow">${todayLabel()}</p>
+  <h1 class="hero">${open.length?`${open.length} ${open.length===1?'delivery has':'deliveries have'} a problem. <span class="hl">${nowN} ${nowN===1?'needs':'need'} action right now.</span>`:'No open problems right now.'}</h1>
+  <div class="stats3">
+    <div class="card stat"><div class="n num ${soon?'red':''}">${soon}</div><div class="l">late or due within 2 hours</div><div class="h">These come first</div></div>
+    <div class="card stat"><div class="n num">${noOwner}</div><div class="l">${noOwner===1?'has':'have'} no owner yet</div><div class="h">Nobody is working on ${noOwner===1?'it':'them'}</div></div>
+    <div class="card stat"><div class="n num">${keys}</div><div class="l">important customers affected</div><div class="h">They call leadership when it goes wrong</div></div>
+  </div>
+  ${top?`<div class="card start"><span class="ico ${tp.tier}" style="width:44px;height:44px;border-radius:12px">${ic(TYPES[top.type].icon,24)}</span>
+    <div><div class="r-sub" style="font-weight:600">Start here</div><div class="r-title" style="font-size:17px">${esc(top.customer)}</div><div class="r-sub">${esc(whatHappened(top))}</div><div class="r-meta">${reasons(top).map(tagHTML).join('')}${top.owner?'':'<span class="tag red">No owner</span>'}</div></div>
+    <button class="btn primary" type="button" data-act="openProblem" data-id="${top.id}">Open this problem</button></div>`:''}
+  <h2 class="sec-h">Today's deliveries</h2>
+  <div class="card pad"><div class="counts">
+    <div class="fact"><div class="fl">Scheduled</div><div class="fv num">${cnt('Scheduled')}</div></div>
+    <div class="fact"><div class="fl">Out for delivery</div><div class="fv num">${cnt('Out for delivery')}</div></div>
+    <div class="fact"><div class="fl">Delivered</div><div class="fv num">${cnt('Delivered')}</div></div>
+    <div class="fact${cnt('Problem')?' warn':''}"><div class="fl">With a problem</div><div class="fv num">${cnt('Problem')}</div></div></div>
+    <div class="rowb" style="margin-top:14px"><button class="btn" type="button" data-view="deliveries">See all deliveries</button><button class="btn" type="button" data-act="newDelivery">${ic('plus',16)}Add a delivery</button></div></div>
+  <h2 class="sec-h">The last 14 days</h2>
+  <div class="stats3" style="margin-top:0">
+    <div class="card stat"><div class="n num">${A.total}</div><div class="l">${A.total===1?'problem':'problems'}</div><div class="h">${A.closedN} fixed so far</div></div>
+    <div class="card stat"><div class="n num">${A.before==null?'–':A.before+'%'}</div><div class="l">fixed before the customer's deadline</div><div class="h">${A.before==null?'Shows once problems with a deadline are fixed':'Of fixed problems that had a deadline'}</div></div>
+    <div class="card stat"><div class="n" style="font-size:34px;padding-top:6px">${A.median==null?'–':dur(A.median)}</div><div class="l">typical time to fix one</div><div class="h">From first report to Done</div></div>
+  </div>
+  <h2 class="sec-h">What to fix first</h2>
+  ${A.patterns.length?`<div class="pats">${A.patterns.slice(0,2).map(patHTML).join('')}</div>`:'<div class="card pad"><p class="lead" style="margin:0">Nothing repeats yet. A pattern shows up here when the same kind of problem happens 2 or more times on one route.</p></div>'}
+  <div class="rowb"><button class="btn" type="button" data-view="trends">See all trends</button></div>`;
+}
+
+/* ---------- Problems ---------- */
+function whatHappened(c){const pl=(TYPES[c.type]||{plain:''}).plain,dt=String(c.detail||'').trim();return !dt?pl+'.':dt.toLowerCase().startsWith(pl.toLowerCase())?dt:`${pl}. ${dt}`;}
+function visible(){
+  let list=D().problems.slice();const f=state.f;
+  if(f.status==='open')list=list.filter(isOpen);else if(f.status==='mine')list=list.filter(c=>isOpen(c)&&c.owner===ME);else if(f.status==='noowner')list=list.filter(c=>isOpen(c)&&!c.owner);else list=list.filter(c=>!isOpen(c));
+  if(f.type!=='all')list=list.filter(c=>c.type===f.type);
+  if(f.q){const q=f.q.toLowerCase();list=list.filter(c=>[c.id,c.delivery_id,c.customer,c.contact,c.city,c.route,c.owner,TYPES[c.type]&&TYPES[c.type].plain,c.driver].join(' ').toLowerCase().includes(q));}
+  return f.status==='done'?list.sort((a,b)=>(b.closed_at||0)-(a.closed_at||0)):sorted(list);
+}
+function rowHTML(c){
+  const p=priority(c),d=dueInfo(c),t=TYPES[c.type]||TYPES['Traffic delay'],tier=isOpen(c)?p.tier:'done';
+  return `<div class="row${c.id===state.sel?' sel':''}" role="button" tabindex="0" data-pick="${c.id}" aria-label="${esc(c.customer)}, ${esc(t.plain)}">
+    <span class="ico ${tier}">${ic(isOpen(c)?t.icon:'check',20)}</span>
+    <div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(whatHappened(c))}</div><div class="r-meta">${reasons(c).map(tagHTML).join('')}<span class="r-id num">${c.id}${c.city?' · '+esc(c.city):''}</span></div></div>
+    <div class="r-right"><span class="due ${d.cls} num">${esc(d.text)}</span>${c.owner?`<span class="owner"><span class="av sm">${initials(c.owner)}</span>${esc(first(c.owner))}</span>`:(isOpen(c)&&P().take?`<button class="btn sm tint" type="button" data-act="take" data-id="${c.id}">Take it</button>`:'')}</div>
+    <span class="chev">${ic('chevron',16)}</span></div>`;
+}
+function renderGroups(){
+  const list=visible(),el=$('#groups');
+  if(!D().problems.length){el.innerHTML=`<div class="card welcome"><h2>No problems yet</h2><p class="lead" style="margin-top:6px">When a driver reports one from the phone, it shows up here right away and you get an alert. You can also add one yourself.</p><div class="rowb">${P().create?'<button class="btn primary" type="button" data-act="newProblem">New problem</button>':''}</div></div>`;return;}
+  if(!list.length){el.innerHTML=`<div class="card empty" style="margin-top:22px">${state.f.status==='mine'?'You have no open problems. Take one from the Open list.':'Nothing here. Try a different filter.'}</div>`;return;}
+  let html='';
+  if(state.f.status==='done'){html=`<div class="group-h"><h3>Done</h3><span>${list.length}</span></div><div class="list">${list.map(rowHTML).join('')}</div>`;}
+  else{const G=[['now','Do now','Late, or about to be late'],['next','Do next','Due later today, and important'],['later','Can wait','On track for now']];
+    G.forEach(g=>{const items=list.filter(c=>priority(c).tier===g[0]);if(items.length)html+=`<div class="group-h"><h3>${g[1]}</h3><span>${items.length} · ${g[2]}</span></div><div class="list">${items.map(rowHTML).join('')}</div>`;});}
+  el.innerHTML=html;
+}
+function toldBox(c){
+  const m=messagesOf(c).slice(-1)[0];
+  return m?`<div class="told ok">${ic('check',16)}<span><b>Last told the customer at ${fmtTime(m.t)}.</b> ${esc(m.summary||m.text)}</span></div>`:(isOpen(c)?`<div class="told warn">${ic('info',16)}<span><b>Customer not told yet.</b> Write the message below before they call us.</span></div>`:'');
+}
+function renderDetail(){
+  const c=findP(state.sel),el=$('#detail');
+  if(!c){el.innerHTML=`<div class="empty">${D().problems.length?'Pick a problem on the left to see what happened and what to do.':'Problems you add or drivers report show up here.'}</div>`;return;}
+  const p=priority(c),t=TYPES[c.type]||TYPES['Traffic delay'],d=dueInfo(c),C=2*Math.PI*26,col={now:'var(--red)',next:'var(--orange)',later:'var(--ink-3)'}[p.tier];
+  const draft=state.drafts[c.id]||'',photos=photosOf(c),owners=[...new Set([...OWNERS,...(c.owner?[c.owner]:[])])];
+  el.innerHTML=`
+  <div class="d-head"><div class="r-meta" style="margin:0">${statusTag(c.status)}${isOpen(c)?`<span class="tag ${p.tier==='now'?'red':p.tier==='next'?'orange':''}">${p.label}</span>`:''}${yes(c.important)?`<span class="tag">${ic('star',12)}Important customer</span>`:''}</div>
+    <h2 class="d-title">${esc(c.customer)}</h2><div class="r-sub" style="font-size:15px">${esc(whatHappened(c))}</div>${toldBox(c)}</div>
+  <div class="d-sec"><dl class="kv">
+    ${c.city?`<dt>Deliver to</dt><dd>${esc(c.city)}</dd>`:''}
+    <dt>Promised by</dt><dd><span class="due ${d.cls} num">${esc(d.text)}</span>${isOpen(c)&&c.due&&d.cls!=='gray'?` <span class="r-id">(${fmtTime(c.due)})</span>`:''}</dd>
+    ${c.new_eta?`<dt>New arrival</dt><dd class="num">${fmtTime(c.new_eta)}</dd>`:''}
+    ${c.contact||c.phone?`<dt>Contact</dt><dd>${esc(c.contact||'')}${c.phone?` · <a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>`:''}</dd>`:''}
+    ${c.driver?`<dt>Driver</dt><dd>${esc(c.driver)}</dd>`:''}
+    <dt>Carrier</dt><dd>${esc(carrierName(c))}${c.route?' · route '+esc(c.route):''}</dd>
+    ${c.contents?`<dt>In the box</dt><dd>${esc(c.contents)}</dd>`:''}
+    <dt>Order</dt><dd class="num">${esc(c.delivery_id||'Not linked to a delivery')} · problem ${c.id}</dd>
+    <dt>Reported</dt><dd>${fmtTime(c.created)}${c.reported_by?' by '+esc(c.reported_by):''}${c.source?', '+esc(c.source):''}</dd></dl>
+    ${photos.map(e=>`<img class="photo" src="${e.photo}" alt="Photo from ${esc(e.who)}">`).join('')}</div>
+  ${isOpen(c)?`<div class="d-sec"><h4>Why this is ${p.tier==='later'?'lower on the list':'urgent'}</h4>
+    <div class="gauge"><svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Urgency ${p.score} out of 100"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--fill)" stroke-width="6"/><circle cx="32" cy="32" r="26" fill="none" stroke="${col}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(p.score/100*C).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 32 32)"/><text x="32" y="38" text-anchor="middle" font-size="18" font-weight="700" fill="var(--ink)" font-family="inherit">${p.score}</text></svg>
+      <div><div class="gt">${p.label}</div><div class="gs">${p.manual?`Moved by hand: ${esc(c.manual_reason||'no reason given')}`:`Urgency ${p.score} out of 100: rules ${p.rules}${p.aiPts?` + note ${p.aiPts}`:''}`}</div></div></div>
+    <ul class="factors">${p.factors.map(f=>`<li class="${f.ai?'aif':''}"><span>${f.name}</span><span class="fp num">${f.pts} of ${f.max}</span><span class="ft"><i style="width:${Math.round(f.pts/f.max*100)}%"></i></span><span class="fw">${esc(f.why)}</span></li>`).join('')}</ul>
+    ${P().take?`<div class="inline"><select class="field" id="tierSel" aria-label="Move this problem" style="flex:none;width:auto"><option value="">Automatic order</option><option value="now"${c.manual_tier==='now'?' selected':''}>Move to Do now</option><option value="next"${c.manual_tier==='next'?' selected':''}>Move to Do next</option><option value="later"${c.manual_tier==='later'?' selected':''}>Move to Can wait</option></select><input class="field" id="tierWhy" placeholder="Why? One line" aria-label="Why you moved it"><button class="btn" type="button" data-act="setTier" data-id="${c.id}">Save</button></div>`:''}
+    <p class="note">Every problem is scored the same way. A person can still move it, with a reason everyone can see.</p></div>
+  ${noteOf(c)?`<div class="d-sec"><h4>What the AI read</h4><div class="next airead">${hiNote(noteOf(c),p.ai)}</div>
+    <p class="note">${p.ai.state==='checked'?`${esc(AI_MODEL)} picked <b>${esc(p.ai.plain)}</b> and quoted the highlighted words. Our code checked they are really in the note and added ${p.aiPts} of ${AI_MAX} points.${p.ai.seconds?` Read in ${p.ai.seconds} seconds.`:''}`:esc(aiWhy(p.ai))+'.'} The AI never sets the order alone: hard facts give up to 80 points, the note at most ${AI_MAX}.</p></div>`:''}
+  <div class="d-sec"><h4>Suggested next step</h4><div class="next">${esc(NEXT[c.type]||'')}</div>
+    <div class="rowb"><button class="btn sm" type="button" data-act="useNext" data-id="${c.id}">Copy to my note</button><span class="note" style="margin:0">Only a suggestion. Nothing happens by itself.</span></div></div>`:''}
+  ${P().take?`<div class="d-sec"><h4>Who is on it</h4>
+    <div class="rowb" style="margin-top:0"><select class="field" id="ownerSel" data-id="${c.id}" aria-label="Owner" style="flex:1;min-width:0"><option value="">No owner</option>${owners.map(o=>`<option value="${esc(o)}" ${c.owner===o?'selected':''}>${esc(o)}</option>`).join('')}</select><button class="btn tint" type="button" data-act="take" data-id="${c.id}" ${c.owner===ME?'disabled':''}>Take it</button></div>
+    <div class="seg full" role="group" aria-label="Status" style="margin-top:10px">${STATUSES.map(s=>`<button type="button" data-act="setStatus" data-id="${c.id}" data-st="${s}" class="${c.status===s?'on':''}">${s}</button>`).join('')}</div></div>
+  ${isOpen(c)?`<div class="d-sec"><h4>New arrival time</h4><div class="inline" style="margin-top:0"><input class="field" type="datetime-local" id="etaIn" value="${toInput(c.new_eta)}" aria-label="New arrival time"><button class="btn" type="button" data-act="setEta" data-id="${c.id}">Save</button></div><p class="note">The customer sees this time on their order page.</p></div>`:''}
+  ${isOpen(c)&&c.driver?`<div class="d-sec"><h4>Tell ${esc(first(c.driver))} what to do</h4><div class="rowb" style="margin-top:0">${NEXT_STEPS.map(s=>`<button class="btn sm ${c.next_step===s?'primary':'tint'}" type="button" data-act="tellDriver" data-id="${c.id}" data-v="${s}">${s}</button>`).join('')}</div><p class="note">${c.next_step?`The driver's phone shows: ${esc(c.next_step)}.`:'The driver sees your answer in big letters on the phone.'}</p></div>`:''}`:''}
+  <div class="d-sec"><h4>Notes and history</h4>
+    <form class="inline" id="noteForm" data-id="${c.id}" style="margin-top:0"><input class="field" type="text" id="noteInput" placeholder="What did you do?" aria-label="What did you do?"><button class="btn primary" type="submit">Add</button></form>
+    <p class="note err" id="noteErr" hidden>Write what you did first.</p>
+    <ul class="tl">${eventsOf(c).slice().reverse().map(e=>`<li class="k-${e.kind==='message'?'message':e.kind==='status'?'status':e.kind==='event'?'event':'action'}"><span class="t num">${fmtTime(e.t)}</span><div><div class="who"><i></i>${esc(e.who||'')}</div><div>${esc(e.kind==='message'?(e.summary||'Message sent'):e.text)}</div></div></li>`).join('')||'<li><span></span><div class="r-sub">Nothing yet.</div></li>'}</ul></div>
+  ${isOpen(c)?`<div class="d-sec"><h4>Message to the customer</h4>
+    <textarea class="field" id="draft" data-id="${c.id}" rows="9" placeholder="Click Write it for me to start from the facts above.">${esc(draft)}</textarea>
+    <div class="rowb"><button class="btn" type="button" data-act="writeDraft" data-id="${c.id}">${draft?'Write it again':'Write it for me'}</button><button class="btn" type="button" data-act="copyDraft" data-src="#draft" ${draft?'':'disabled'} id="copyBtn">Copy</button><button class="btn primary" type="button" data-act="sendMsg" data-id="${c.id}" data-src="#draft" ${draft?'':'disabled'} id="sentBtn">Mark as sent</button></div>
+    <p class="note">You always read and edit it first. Nothing is sent by itself. Mark as sent saves it, and the customer sees it on their order page.</p></div>`:''}
+  ${P().take?`<div class="d-sec">${state.delAsk===c.id?`<p class="lead" style="margin:0 0 10px">Delete this problem and its history for good?</p><div class="rowb" style="margin-top:0"><button class="btn danger" type="button" data-act="doDelete" data-id="${c.id}">Yes, delete it</button><button class="btn" type="button" data-act="cancelDelete">Keep it</button></div>`:`<button class="btn sm text" type="button" data-act="askDelete" data-id="${c.id}" style="color:var(--red-ink)">${ic('trash',16)}Delete this problem</button>`}</div>`:''}`;
+}
+
+/* ---------- Deliveries ---------- */
+function renderDeliveries(){
+  const el=$('#view-deliveries'),all=D().deliveries,f=state.dl.f;
+  const list=all.filter(d=>f==='all'?true:f==='done'?d.status==='Delivered':d.status!=='Delivered').sort((a,b)=>(a.due||9e15)-(b.due||9e15));
+  const row=d=>{const pr=D().problems.find(p=>p.delivery_id===d.id&&isOpen(p));const late=d.due&&d.status!=='Delivered'&&d.due<Date.now();
+    return `<div class="dlrow"><span class="ico ${d.status==='Delivered'?'done':d.status==='Problem'?'now':'blue'}">${ic(d.status==='Delivered'?'check':d.status==='Problem'?'alert':'truck',20)}</span>
+    <div style="min-width:0"><div class="r-title">${esc(d.customer)}${yes(d.important)?` <span class="tag">${ic('star',12)}Important</span>`:''}</div>
+      <div class="r-sub">${d.id}${d.city?' · '+esc(d.city):''} · ${d.driver?esc(d.driver):'No driver yet'} · ${esc(carrierName(d))}</div>
+      ${d.contents?`<div class="r-sub">${esc(d.contents)}</div>`:''}</div>
+    <div class="dl-right"><div class="statusline">${dTag(d.status)}<span class="due ${late?'red':'gray'} num">${d.status==='Delivered'?'Delivered '+fmtTime(d.delivered_at):d.due?(late?'Late, was due ':'Due ')+fmtTime(d.due):'No time set'}</span></div>
+      <div class="dl-act">${d.status==='Scheduled'?`<button class="btn sm" type="button" data-act="dlOut" data-id="${d.id}">On the truck</button>`:''}
+      ${d.status!=='Delivered'?`<button class="btn sm" type="button" data-act="dlDone" data-id="${d.id}">Delivered</button>`:''}
+      ${pr?`<button class="btn sm tint" type="button" data-act="openProblem" data-id="${pr.id}">See problem</button>`:d.status!=='Delivered'?`<button class="btn sm tint" type="button" data-act="newProblem" data-delivery="${d.id}">Report a problem</button>`:''}
+      ${state.delAsk===d.id?`<button class="btn sm danger" type="button" data-act="doDeleteDl" data-id="${d.id}">Delete for good</button><button class="btn sm" type="button" data-act="cancelDelete">Keep</button>`:`<button class="btn sm text" type="button" data-act="askDelete" data-id="${d.id}" aria-label="Delete ${esc(d.customer)}">${ic('trash',16)}</button>`}</div></div></div>`;};
+  el.innerHTML=`<div class="headrow"><h1 class="lt">Deliveries</h1><button class="btn primary" type="button" data-act="newDelivery">${ic('plus',18)}Add a delivery</button></div>
+  <p class="sub">Every order RouteWise has to deliver. Each driver sees their own stops on their phone.</p>
+  <div class="toolbar"><div class="seg" role="group" aria-label="Which deliveries to show">${[['open','Not delivered'],['done','Delivered'],['all','All']].map(x=>`<button type="button" data-act="dlFilter" data-v="${x[0]}" class="${f===x[0]?'on':''}">${x[1]}</button>`).join('')}</div>
+  ${canSee('data')?'<button class="btn" type="button" data-act="goData">Import a file</button>':''}</div>
+  ${!all.length?emptyStart('Everyone'):list.length?`<div class="list" style="margin-top:14px">${list.map(row).join('')}</div>`:'<div class="card empty" style="margin-top:14px">Nothing here. Try a different filter.</div>'}`;
+}
+
+/* ---------- Trends ---------- */
+function renderTrends(){
+  const r=state.range,A=analytics(r),none=A.total===0;
+  $$('[data-range]').forEach(x=>x.classList.toggle('on',+x.dataset.range===r));
+  $('#tStats').innerHTML=`
+    <div class="card stat"><div class="n num">${A.total}</div><div class="l">${A.total===1?'problem':'problems'}</div><div class="h">In the last ${r} days</div></div>
+    <div class="card stat"><div class="n" style="font-size:30px;padding-top:8px">${A.median==null?'–':dur(A.median)}</div><div class="l">typical time to fix</div><div class="h">First report to Done</div></div>
+    <div class="card stat"><div class="n num">${A.before==null?'–':A.before+'%'}</div><div class="l">fixed before the deadline</div><div class="h">Of fixed problems with a deadline</div></div>
+    <div class="card stat"><div class="n num">${A.repeat==null?'–':A.repeat+'%'}</div><div class="l">are repeat problems</div><div class="h">Same kind, same route, 2+ times</div></div>`;
+  $$('[data-table]').forEach(b=>{b.textContent=state.tables[b.dataset.table]?'Show chart':'Show numbers';});
+  const causes=A.causes.filter(x=>x.value>0);
+  TT.cause={heads:['Kind of problem','Problems','Share'],rows:causes.map(x=>[x.label,String(x.value),Math.round(x.value/A.total*100)+'%'])};
+  if(none)emptyChart($('#cCause'));else if(state.tables.cause)tableView($('#cCause'),TT.cause.heads,TT.cause.rows);
+  else hbar($('#cCause'),causes,{aria:'What goes wrong most',tip:x=>`<b>${x.value}</b> ${esc(x.label)} · ${Math.round(x.value/A.total*100)}% of all problems`});
+  $('#carrierTitle').textContent=A.rate?'Problems per 100 deliveries':'Problems';
+  TT.carrier={heads:['Carrier',A.rate?'Per 100 deliveries':'Problems','Deliveries'],rows:A.carriers.map(x=>[x.label,A.rate?x.value.toFixed(1):String(x.count),String(x.deliveries)])};
+  if(!A.carriers.length)emptyChart($('#cCarrier'),'No deliveries or problems saved for these days yet.');else if(state.tables.carrier)tableView($('#cCarrier'),TT.carrier.heads,TT.carrier.rows);
+  else hbar($('#cCarrier'),A.carriers,{aria:'Problems by carrier',fmt:v=>A.rate?v.toFixed(1):String(v),tip:x=>A.rate?`<b>${x.value.toFixed(1)}</b> per 100 deliveries · ${x.count} problems in ${x.deliveries} deliveries`:`<b>${x.count}</b> problems · ${esc(x.label)}`});
+  TT.trend={heads:['Day','New','Fixed'],rows:A.days.map((d,i)=>[d,String(A.opened[i]),String(A.fixed[i])])};
+  if(!A.opened.some(Boolean)&&!A.fixed.some(Boolean))emptyChart($('#cTrend'));else if(state.tables.trend)tableView($('#cTrend'),TT.trend.heads,TT.trend.rows);
+  else lineChart($('#cTrend'),A.days,[{name:'New',values:A.opened,color:'var(--s1)'},{name:'Fixed',values:A.fixed,color:'var(--s2)',dash:'6 4'}]);
+  const bands=[['Under 30 min',30],['30 to 60 min',60],['1 to 2 h',120],['2 to 4 h',240],['Over 4 h',Infinity]];let prev=0;
+  const age=bands.map(b=>{const v=openCases().filter(c=>{const a=(Date.now()-c.created)/MIN;return a>=prev&&a<b[1];}).length;prev=b[1];return{label:b[0],value:v};});
+  TT.aging={heads:['Waiting time','Open problems'],rows:age.map(x=>[x.label,String(x.value)])};
+  if(!openCases().length)emptyChart($('#cAging'),'No open problems right now.');else if(state.tables.aging)tableView($('#cAging'),TT.aging.heads,TT.aging.rows);
+  else columns($('#cAging'),age,{aria:'How long open problems have waited',tip:x=>`<b>${x.value}</b> open ${x.value===1?'problem':'problems'}, ${esc(x.label.toLowerCase())}`});
+  const segs=[{label:'Fixed before the deadline',v:A.outcomes[0],color:'var(--s1)'},{label:'Fixed late or with no deadline',v:A.outcomes[1],color:'var(--s2)'},{label:'Still open',v:A.outcomes[2],color:'var(--s3)'}];
+  TT.outcome={heads:['How it ended','Problems'],rows:segs.map(x=>[x.label,String(x.v)])};
+  if(none)emptyChart($('#cOutcome'));else if(state.tables.outcome)tableView($('#cOutcome'),TT.outcome.heads,TT.outcome.rows);else stacked($('#cOutcome'),segs);
+  $('#tPats').innerHTML=A.patterns.length?A.patterns.map(patHTML).join(''):'<div class="card pad"><p class="lead" style="margin:0">Nothing repeats yet. A pattern shows up when the same kind of problem happens 2 or more times on one route.</p></div>';
+}
+
+/* ---------- Driver (Ray) ---------- */
+const stopsFor=name=>D().deliveries.filter(d=>d.driver===name&&d.status!=='Delivered').sort((a,b)=>(a.due||9e15)-(b.due||9e15));
+function reportRow(c){
+  const t=TYPES[c.type]||TYPES['Traffic delay'],last=eventsOf(c).slice().reverse().find(e=>e.kind==='action'&&e.who!==ME&&!/^(Moved to|Back to the automatic|Told |New arrival time)/.test(e.text||''));
+  const st=!isOpen(c)?'Fixed. Nothing more to do.':c.owner?`${first(c.owner)} is on it.`:'Dispatch has it. Waiting for someone to take it.';
+  return `<div class="prow"><span class="ico ${isOpen(c)?'blue':'done'}">${ic(isOpen(c)?t.icon:'check',18)}</span><div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)} · ${fmtTime(c.created)}</div><div class="p-state ${c.owner||!isOpen(c)?'ok':''}">${esc(st)}</div>${c.next_step&&isOpen(c)?`<div class="nextbig">Dispatch says: ${esc(c.next_step)}</div>`:''}${last?`<div class="p-msg"><b>From ${esc(first(last.who))}:</b> ${esc(last.text)}</div>`:''}</div></div>`;
+}
+function renderDriver(){
+  const d=state.drv,el=$('#view-driver'),stops=stopsFor(ME);
+  const mine=D().problems.filter(c=>c.reported_by===ME&&c.source==='driver app').sort((a,b)=>b.created-a.created).slice(0,8);
+  let body='';
+  if(d.screen==='home'){
+    body=`<div class="p-hello">Hi ${esc(first(ME))}</div><div class="p-route">${todayLabel()} · ${stops.length} ${stops.length===1?'stop':'stops'} left</div>
+      <button class="btn primary lg block" type="button" data-act="drvReport">${ic('alert',20)}Report a problem</button>
+      <button class="btn block" type="button" data-act="drvCall" style="margin-top:10px;min-height:44px">${ic('call',18)}Ask dispatch to call me</button>
+      <p class="p-note">Or call dispatch yourself: <a href="tel:${DISPATCH_PHONE.replace(/\D/g,'')}">${DISPATCH_PHONE}</a></p>
+      <div class="p-sec">My stops</div>
+      <div class="list">${stops.map(s=>`<div class="prow"><span class="ico ${s.status==='Problem'?'now':'blue'}">${ic(s.status==='Problem'?'alert':'pin',18)}</span><div><div class="r-title">${esc(s.customer)}</div><div class="r-sub">${esc(s.city||s.address||'')}${s.due?' · by '+fmtTime(s.due):''}</div>${s.status==='Problem'?'<div class="p-state">Problem reported</div>':''}
+        <div class="stopacts"><button class="btn sm primary" type="button" data-act="drvDelivered" data-id="${s.id}">${ic('check',16)}Delivered</button><button class="btn sm" type="button" data-act="drvProblemAt" data-id="${s.id}">Problem here</button></div></div></div>`).join('')||'<div class="p-empty">No stops yet. Dispatch adds them on the Deliveries page.</div>'}</div>
+      <div class="p-sec">My reports</div>
+      <div class="list">${mine.map(reportRow).join('')||'<div class="p-empty">No reports yet.</div>'}</div>`;
+  }else if(d.screen==='pick'){
+    body=`<div class="p-nav"><button class="btn text" type="button" data-act="drvBack">${ic('back',20)}Back</button></div>
+      <div class="p-hello" style="font-size:28px;margin-bottom:16px">What happened?</div>
+      <div class="ptiles">${DRIVER_TYPES.map((t,i)=>`<button class="ptile" type="button" data-act="drvType" data-i="${i}">${ic(TYPES[t.type].icon,28)}<span>${t.label}</span></button>`).join('')}
+      <button class="ptile" type="button" data-act="drvCall">${ic('call',28)}<span>Call dispatch</span></button></div>`;
+  }else if(d.screen==='details'){
+    const t=DRIVER_TYPES[d.type];
+    body=`<div class="p-nav"><button class="btn text" type="button" data-act="drvBack">${ic('back',20)}Back</button></div>
+      <div class="p-hello" style="font-size:28px">${t.label}</div><div class="p-route">Which stop is it?</div>
+      <div class="list">${stops.map((s,i)=>`<button class="pick" type="button" data-act="drvStop" data-i="${i}"><div><div class="r-title">${esc(s.customer)}</div><div class="r-sub">${esc(s.city||'')}${s.due?' · by '+fmtTime(s.due):''}</div></div><span class="ck">${d.stop===i?ic('check',20):''}</span></button>`).join('')}
+        <button class="pick" type="button" data-act="drvStop" data-i="-1"><div><div class="r-title">Somewhere else</div><div class="r-sub">Type the place below</div></div><span class="ck">${d.stop===-1?ic('check',20):''}</span></button></div>
+      ${d.stop===-1?`<input class="field" id="drvWhere" style="width:100%;margin-top:10px;min-height:44px" placeholder="Customer or place" value="${esc(d.where)}" aria-label="Customer or place">`:''}
+      <div class="p-sec" style="font-size:15px;margin:18px 2px 8px">Anything dispatch should know? You can skip this.</div>
+      <textarea class="field" id="drvNote" rows="3" placeholder="For example: gate code does not work">${esc(d.note)}</textarea>
+      <div class="rowb">${d.photo?`<img src="${d.photo}" alt="Your photo" style="width:64px;height:64px;object-fit:cover;border-radius:10px"><button class="btn sm" type="button" data-act="drvNoPhoto">Remove photo</button>`:`<label class="btn filebtn">${ic('camera',18)}Add a photo<input type="file" id="drvPhotoIn" accept="image/*" capture="environment" aria-label="Add a photo"></label>`}</div>
+      <button class="btn primary lg block" type="button" data-act="drvSend" style="margin-top:18px">Send to dispatch</button>`;
+  }else{
+    body=`<div class="p-done"><div class="big">${ic('check',44)}</div><h3>Sent. Dispatch has it.</h3><p>Dispatch got an alert. You do not need to call. When someone takes it, you will see their name under My reports.</p><button class="btn primary lg" type="button" data-act="drvDone">Done</button></div>`;
+  }
+  el.innerHTML=`<h1 class="lt center">${esc(first(ME))}’s phone</h1><p class="sub center">This is all a driver sees. Report a problem, then switch to Jamal to see the alert.</p>
+  <div class="drv solo"><div class="phone"><div class="screen"><div class="island"></div>
+    <div class="p-status-bar"><span class="num">${new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}).replace(/\s?[AP]M/,'')}</span><span>${ic('phone',14)}</span></div>
+    <div class="p-body">${body}</div><div class="p-home"></div></div></div></div>`;
+}
+function shrinkPhoto(file){return new Promise((ok,bad)=>{const r=new FileReader();r.onerror=bad;r.onload=()=>{const img=new Image();img.onerror=bad;img.onload=()=>{const k=Math.min(1,900/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.72));};img.src=r.result;};r.readAsDataURL(file);});}
+async function sendReport(){
+  const d=state.drv,t=DRIVER_TYPES[d.type],stops=stopsFor(ME),s=d.stop!=null&&d.stop>=0?stops[d.stop]:null;
+  const w=$('#drvWhere');if(w)d.where=w.value;const n=$('#drvNote');if(n)d.note=n.value;
+  const where=s?s.customer:d.where.trim();if(!where){toast('Pick a stop, or choose Somewhere else and type the place.');return;}
+  const note=d.note.trim();
+  const p=await Store.insert('problems',{delivery_id:s?s.id:null,customer:where,contact:s?s.contact:'',phone:s?s.phone:'',city:s?s.city:'',route:s?s.route:'',driver:ME,carrier:s?s.carrier:'',contents:s?s.contents:'',
+    important:s?s.important:0,cannot_wait:s?s.cannot_wait:0,type:t.type,detail:TYPES[t.type].plain+'.'+(note?` Driver note: "${note}"`:''),source:'driver app',reported_by:ME,due:s?s.due:null,status:'New',created:Date.now()});
+  await Store.insert('events',{problem_id:p.id,delivery_id:p.delivery_id||null,t:Date.now(),who:ME,kind:'event',text:`Report from the driver app: ${t.label}.${note?` Note: "${note}"`:''}${d.photo?' Photo attached.':''}`,photo:d.photo||null});
+  Object.assign(d,{lastId:p.id,screen:'sent',photo:null,note:'',where:'',stop:null});renderDriver();
+}
+
+/* ---------- Overview (Helen) ---------- */
+function renderBoss(){
+  const el=$('#view-boss'),open=openCases(),nowN=open.filter(c=>priority(c).tier==='now').length,noOwner=open.filter(c=>!c.owner).length,keys=sorted(open.filter(c=>yes(c.important)));
+  if(!D().problems.length&&!D().deliveries.length){el.innerHTML=`<p class="eyebrow">${todayLabel()}</p><h1 class="hero">Nothing to report yet.</h1><p class="sub">The database is empty. Once the team adds deliveries and problems, this page sums up the day in a few lines.</p>`;return;}
+  const A=analytics(14),dl=D().deliveries.filter(d=>sameDay(new Date(d.due||d.created),new Date())),done=dl.filter(d=>d.status==='Delivered').length;
+  const verdict=!open.length?'Today looks calm.':nowN>=4?'Today is harder than normal.':'Today looks like a normal day.';
+  const krow=c=>{const p=priority(c),d=dueInfo(c),t=TYPES[c.type]||TYPES['Traffic delay'];
+    return `<div class="row"><span class="ico ${p.tier}">${ic(t.icon,20)}</span><div><div class="r-title">${esc(c.customer)}</div><div class="r-sub">${esc(t.plain)}${c.city?'. '+esc(c.city):''}.</div></div>
+    <div class="r-right"><span class="due ${d.cls} num">${esc(d.text)}</span>${c.owner?`<span class="owner"><span class="av sm">${initials(c.owner)}</span>${esc(first(c.owner))} is on it</span>`:'<span class="tag red">No owner yet</span>'}</div><span></span></div>`;};
+  el.innerHTML=`<p class="eyebrow">${todayLabel()}</p>
+  <h1 class="hero">${verdict}${keys.length?` <span class="hl">${keys.length} important ${keys.length===1?'customer has':'customers have'} a problem.</span>`:''}</h1>
+  <p class="sub">${!open.length?'No delivery has':open.length===1?'1 delivery has':open.length+' deliveries have'} a problem right now${open.length?`. ${nowN} ${nowN===1?'needs':'need'} action now, and ${noOwner?`${noOwner} ${noOwner===1?'has':'have'} no owner yet`:'every one has an owner'}`:''}. ${done} of ${dl.length} deliveries due today are delivered.</p>
+  <h2 class="sec-h">Important customers with a problem</h2>
+  <div class="list brief">${keys.map(krow).join('')||'<div class="empty">None right now.</div>'}</div>
+  <h2 class="sec-h">The last 14 days</h2>
+  <div class="stats3" style="margin-top:0">
+    <div class="card stat"><div class="n num">${A.total}</div><div class="l">${A.total===1?'problem':'problems'}</div><div class="h">${A.closedN} fixed</div></div>
+    <div class="card stat"><div class="n num">${A.before==null?'–':A.before+'%'}</div><div class="l">fixed before the customer’s deadline</div><div class="h">Of fixed problems with a deadline</div></div>
+    <div class="card stat"><div class="n" style="font-size:34px;padding-top:6px">${A.median==null?'–':dur(A.median)}</div><div class="l">typical time to fix one</div><div class="h">From first report to Done</div></div>
+  </div>
+  <h2 class="sec-h">What to fix first</h2>
+  ${A.patterns.length?`<div class="pats">${A.patterns.slice(0,2).map(patHTML).join('')}</div>`:'<div class="card pad"><p class="lead" style="margin:0">Nothing repeats yet.</p></div>'}
+  <div class="rowb"><button class="btn" type="button" data-view="trends">See all trends</button></div>
+  <p class="note">Helen sees the same numbers as Jamal, without the buttons to change anything.</p>`;
+}
+
+/* ---------- Find a customer (Priya) ---------- */
+function lastTold(c){const m=messagesOf(c).slice(-1)[0];return m?{t:m.t,who:m.who,text:m.text}:null;}
+function sayFor(c){
+  if(!isOpen(c))return 'This one is fixed.';
+  const t=(TYPES[c.type]||{plain:'A problem'}).plain;
+  return `${t}: ${CUST[c.type]||c.detail}. `+(c.new_eta?`The new arrival time is about ${fmtTime(c.new_eta)}.`:'There is no new time yet. Promise an update within the hour.');
+}
+function renderLookup(){
+  const el=$('#view-lookup');
+  if(!el.dataset.ready){
+    el.innerHTML=`<div class="headrow"><h1 class="lt">Find a customer</h1><button class="btn primary" type="button" data-act="newProblem" data-source="A customer called">Log a problem from a call</button></div>
+    <p class="sub">A customer is on the phone? Type their name or order number. You see what happened, who has it, and what we already told them.</p>
+    <label class="bigsearch">${ic('search',22)}<input type="search" id="lkQ" placeholder="Customer, contact name, city, or order number" aria-label="Find a customer" autocomplete="off"></label>
+    <div class="lkgrid"><div id="lkList"></div><div id="lkAns"></div></div>`;
+    el.dataset.ready='1';
+  }
+  renderLookupBody();
+}
+function renderLookupBody(){
+  const L=state.lk,q=L.q.toLowerCase(),match=x=>[x.customer,x.contact,x.city,x.id,x.delivery_id].join(' ').toLowerCase().includes(q);
+  const probs=(q?D().problems.filter(match):openCases()).map(c=>({kind:'p',x:c}));
+  const dels=q?D().deliveries.filter(d=>match(d)&&!D().problems.some(p=>p.delivery_id===d.id)).map(d=>({kind:'d',x:d})):[];
+  const hits=probs.concat(dels).sort((a,b)=>a.x.customer.localeCompare(b.x.customer));
+  if(hits.length===1)L.sel=hits[0].x.id;
+  const tag=h=>h.kind==='d'?(h.x.status==='Delivered'?'<span class="tag green">Delivered</span>':'<span class="tag">On track</span>'):!isOpen(h.x)?'<span class="tag green">Fixed</span>':h.x.owner?`<span class="tag">${esc(first(h.x.owner))}</span>`:'<span class="tag red">No owner</span>';
+  $('#lkList').innerHTML=`<div class="group-h"><h3>${q?(hits.length?`${hits.length} ${hits.length===1?'match':'matches'}`:'No match'):'Customers with a problem now'}</h3></div>`+
+    (hits.length?`<div class="list">${hits.map(h=>`<button class="pick${h.x.id===L.sel?' sel':''}" type="button" data-act="lkPick" data-id="${h.x.id}"><div style="min-width:0"><div class="r-title">${esc(h.x.customer)}</div><div class="r-sub">${esc(h.x.contact||'No contact')}${h.x.city?' · '+esc(h.x.city):''} · ${h.kind==='p'?esc((TYPES[h.x.type]||{plain:''}).plain):h.x.id}</div></div><span style="margin-left:auto;flex:none">${tag(h)}</span></button>`).join('')}</div>`
+      :`<div class="card empty">${q?'Nobody by that name or number is in the database.':'No customer has an open problem right now.'}</div>`);
+  const c=findP(L.sel),dl=!c?findD(L.sel):null;
+  if(dl){$('#lkAns').innerHTML=`<div class="card answer lkans"><div class="r-sub">${esc(dl.customer)}${dl.city?' · '+esc(dl.city):''} · Order <span class="num">${dl.id}</span></div>
+    <h4 style="margin-top:12px">What to tell ${esc(dl.contact||'them')}</h4><div class="say">${dl.status==='Delivered'?`It was delivered ${fmtTime(dl.delivered_at)}.`:`No problem is reported. It is ${dl.status==='Out for delivery'?'on the truck':'scheduled'}${dl.due?` and promised by ${fmtTime(dl.due)}`:''}.`}</div>
+    <div class="facts"><div class="fact"><div class="fl">Status</div><div class="fv">${esc(dl.status)}</div></div><div class="fact"><div class="fl">Driver</div><div class="fv">${esc(dl.driver||'Not set')}</div></div><div class="fact"><div class="fl">Promised by</div><div class="fv num">${dl.due?fmtTime(dl.due):'Not set'}</div></div></div>
+    ${dl.status!=='Delivered'?`<div class="rowb" style="margin-top:16px"><button class="btn tint" type="button" data-act="newProblem" data-delivery="${dl.id}" data-source="A customer called">Log a problem for this order</button></div>`:''}</div>`;return;}
+  if(!c){$('#lkAns').innerHTML=`<div class="card pad lkans"><p class="lead" style="margin:0">${D().problems.length||D().deliveries.length?'Pick a customer on the left, or type a name above.':'The database is empty. When a delivery or a problem is added, you can find it here.'}</p></div>`;return;}
+  const told=lastTold(c),draft=state.drafts[c.id]||draftFor(c);
+  $('#lkAns').innerHTML=`<div class="card answer lkans">
+    <div class="r-sub">${esc(c.customer)}${c.city?' · '+esc(c.city):''} · ${c.delivery_id?'Order <span class="num">'+c.delivery_id+'</span>':'Problem '+c.id}</div>
+    <h4 style="margin-top:12px">What to tell ${esc(c.contact||'them')}</h4>
+    <div class="say">${esc(sayFor(c))}</div>
+    <div class="facts">
+      <div class="fact${c.owner?'':' warn'}"><div class="fl">Who has it</div><div class="fv">${c.owner?esc(c.owner):'Nobody yet'}</div></div>
+      <div class="fact${c.new_eta||!isOpen(c)?'':' warn'}"><div class="fl">New arrival time</div><div class="fv num">${!isOpen(c)?'Fixed':c.new_eta?fmtTime(c.new_eta):'Not known yet'}</div></div>
+      <div class="fact"><div class="fl">We promised it by</div><div class="fv num">${c.due?fmtTime(c.due):'Not set'}</div></div>
+    </div>
+    <h4>Last thing we told them</h4>
+    ${told?`<div class="lktold"><div class="tt">${fmtTime(told.t)} · ${esc(told.who)}</div>${esc(told.text.length>260?told.text.slice(0,260)+'...':told.text)}</div>`:'<div class="lktold none"><div class="tt">Nothing yet</div>Nobody has told them anything. You are the first.</div>'}
+    ${isOpen(c)?`<h4>Message to send</h4>
+    <textarea class="field" id="lkDraft" data-id="${c.id}" rows="8">${esc(draft)}</textarea>
+    <div class="rowb"><button class="btn" type="button" data-act="copyDraft" data-src="#lkDraft">Copy</button><button class="btn primary" type="button" data-act="sendMsg" data-id="${c.id}" data-src="#lkDraft">Mark as sent</button>${c.owner?'':`<button class="btn tint" type="button" data-act="askDispatch" data-id="${c.id}">Ask dispatch to take it</button>`}</div>
+    <p class="note">You always read and edit it first. Nothing is sent by itself.</p>`:''}
+  </div>`;
+}
+
+/* ---------- My order (the customer) ---------- */
+function renderTrack(){
+  const el=$('#view-track'),id=state.trackId.trim().toUpperCase();
+  const dl=id?findD(id):null,pr0=id&&!dl?findP(id):null,dlv=dl||(pr0&&pr0.delivery_id?findD(pr0.delivery_id):null);
+  const probs=D().problems.filter(p=>(dlv&&p.delivery_id===dlv.id)||(pr0&&p.id===pr0.id));
+  const open=probs.find(isOpen),any=dlv||pr0;
+  let card='';
+  if(id&&!any)card=`<div class="card pad" style="margin-top:18px"><p class="lead" style="margin:0">We could not find order ${esc(id)}. Check the number on your order email, or call us at ${DISPATCH_PHONE}.</p></div>`;
+  else if(any){
+    const name=(dlv||pr0).customer,contents=(dlv||pr0).contents,delivered=dlv&&dlv.status==='Delivered';
+    const head=delivered?'Your order was delivered.':open?(open.owner?`${first(open.owner)} at RouteWise is fixing a problem with your delivery.`:'There is a problem with your delivery. RouteWise is looking at it.'):dlv&&dlv.status==='Out for delivery'?'Your order is on the truck.':'Your order is on schedule.';
+    const steps=[['Ordered','ok'],['On the truck',dlv&&['Out for delivery','Delivered','Problem'].includes(dlv.status)||open?'ok':''],[open?'Problem found':'No problems',open?'bad':'ok'],['Delivered',delivered?'ok':'']];
+    const expected=delivered?'Done':open?(open.new_eta?fmtTime(open.new_eta):'New time coming soon'):(dlv&&dlv.due?fmtTime(dlv.due):'Not set');
+    const msgs=probs.flatMap(messagesOf).sort((a,b)=>a.t-b.t);
+    const asked=state.trackAsked===(dlv||pr0).id;
+    card=`<div class="card pad" style="margin-top:18px"><div class="r-sub">${esc(name)}${contents?' · '+esc(contents):''}</div>
+      <div class="steps" style="margin-top:12px">${steps.map(x=>`<div class="step ${x[1]}"><i></i>${x[0]}</div>`).join('')}</div>
+      <div class="state-big">${esc(head)}</div>
+      <div class="facts" style="grid-template-columns:1fr 1fr"><div class="fact${open&&!open.new_eta?' warn':''}"><div class="fl">Expected by</div><div class="fv num">${expected}</div></div><div class="fact"><div class="fl">First promised by</div><div class="fv num">${(dlv&&dlv.due)||(pr0&&pr0.due)?fmtTime((dlv&&dlv.due)||pr0.due):'Not set'}</div></div></div></div>
+    <h2 class="sec-h">Messages from RouteWise</h2>
+    ${msgs.length?msgs.map(m=>`<div class="bubble-t">${fmtTime(m.t)} · from ${esc(first(m.who))} at RouteWise</div><div class="bubble">${esc(m.text)}</div>`).join(''):'<div class="card pad"><p class="lead" style="margin:0">No message yet. When someone at RouteWise sends an update, it shows up here.</p></div>'}
+    <div class="rowb" style="margin-top:18px">${asked?'<span class="tag green">We got your request. Someone will call you soon.</span>':`<button class="btn primary" type="button" data-act="trackCall" data-id="${(dlv||pr0).id}">${ic('call',18)}Ask RouteWise to call me</button>`}<span class="note" style="margin:0">Or call us: <a href="tel:${DISPATCH_PHONE.replace(/\D/g,'')}">${DISPATCH_PHONE}</a></span></div>`;
+  }
+  el.innerHTML=`<div class="track"><h1 class="lt">Track your order</h1><p class="sub">Type the order number from your RouteWise email. It looks like RW-10001.</p>
+    <form id="trackForm" class="inline" style="margin-top:16px"><input class="field" id="trackIn" placeholder="Order number" aria-label="Order number" value="${esc(state.trackId)}" autocomplete="off" style="min-height:44px;font-size:17px"><button class="btn primary" type="submit" style="min-height:44px">Find my order</button></form>${card}</div>`;
+}
+
+/* ---------- Data (Jamal and Kevin) ---------- */
+const CSV_COLS=['customer','contact','phone','city','address','route','driver','carrier','contents','important','cannot_wait','promised_by'];
+function parseWhen(v){v=String(v||'').trim();if(!v)return null;const t=Date.parse(v);if(!isNaN(t))return t;const m=v.match(/^(\d{1,2})(?::(\d{2}))?\s*([ap]\.?m\.?)?$/i);if(!m)return null;let h=+m[1];const mi=+(m[2]||0),ap=(m[3]||'').toLowerCase();if(ap.startsWith('p')&&h<12)h+=12;if(ap.startsWith('a')&&h===12)h=0;const d=new Date();d.setHours(h,mi,0,0);return d.getTime();}
+function readCSV(text,name){
+  const rows=parseCSV(text);if(rows.length<2){state.imp={name,rows:[],errors:['The file needs a header row and at least one delivery.']};return;}
+  const head=rows[0].map(h=>h.trim().toLowerCase().replace(/[^a-z]+/g,'_').replace(/^_|_$/g,''));
+  const idx=k=>head.indexOf(k)>=0?head.indexOf(k):head.indexOf({promised_by:'due',customer:'customer_name'}[k]);
+  if(idx('customer')<0){state.imp={name,rows:[],errors:['The file needs a column called customer.']};return;}
+  const out=[],errors=[];
+  rows.slice(1).forEach((r,i)=>{const g=k=>idx(k)>=0?(r[idx(k)]||'').trim():'';if(!g('customer')){errors.push(`Row ${i+2} has no customer, so it was skipped.`);return;}
+    const due=parseWhen(g('promised_by'));if(g('promised_by')&&!due)errors.push(`Row ${i+2}: could not read the time "${g('promised_by')}".`);
+    const flag=v=>/^(1|y|yes|true|x)$/i.test(v)?1:0;
+    out.push({customer:g('customer'),contact:g('contact'),phone:g('phone'),city:g('city'),address:g('address'),route:g('route'),driver:g('driver'),carrier:g('carrier'),contents:g('contents'),important:flag(g('important')),cannot_wait:flag(g('cannot_wait')),due,status:'Scheduled'});});
+  state.imp={name,rows:out,errors};
+}
+function renderData(){
+  if(!AI.status&&Store.mode==='server'){AI.check().then(()=>{if(state.view==='data')renderData();});}
+  else if(AI.status&&!AI.status.connected&&!AI.status.noServer&&!AI.recheck){AI.recheck=setTimeout(()=>{AI.recheck=null;AI.status=null;if(state.view==='data')renderData();},3000);}
+  const el=$('#view-data'),d=D(),imp=state.imp;
+  el.innerHTML=`<h1 class="lt">Data</h1><p class="sub">Where everything is saved, how to add deliveries from a file, and how to take your data out.</p>
+  <div class="card pad datacard"><h3>Where your data is saved</h3>
+    <p class="lead">${Store.mode==='server'?`In a SQLite database file called <b>${esc(Store.dbFile)}</b>, in the routewise-dashboard folder on this computer. Everyone who opens this address shares it.`:'In this browser only, because the dashboard server is not running here. Start it with the Start dashboard file to use the SQLite database instead.'}</p>
+    <div class="counts">${[['Deliveries',d.deliveries.length],['Problems',d.problems.length],['Notes and messages',d.events.length],['Alerts',d.alerts.length]].map(x=>`<div class="fact"><div class="fl">${x[0]}</div><div class="fv num">${x[1]}</div></div>`).join('')}</div></div>
+  ${aiCard()}
+  <div class="card pad datacard"><h3>Add deliveries from a file</h3>
+    <p class="lead">Use a CSV file with one row per delivery. Only the customer column is required. Excel can save any sheet as CSV.</p>
+    <div class="rowb"><label class="btn primary filebtn">${ic('upload',18)}Choose a CSV file<input type="file" id="csvIn" accept=".csv,text/csv" aria-label="Choose a CSV file"></label><button class="btn" type="button" data-act="csvTemplate">${ic('download',18)}Download a blank template</button></div>
+    ${imp?`<div class="preview"><div class="r-sub" style="margin:12px 0 6px">${esc(imp.name)} · ${imp.rows.length} ${imp.rows.length===1?'delivery':'deliveries'} found${imp.rows.length>5?' · here are the first 5':''}</div>
+      ${imp.rows.length?`<table><thead><tr><th>Customer</th><th>City</th><th>Driver</th><th>Promised by</th></tr></thead><tbody>${imp.rows.slice(0,5).map(r=>`<tr><td>${esc(r.customer)}</td><td>${esc(r.city)}</td><td>${esc(r.driver)}</td><td class="num">${r.due?fmtTime(r.due):''}</td></tr>`).join('')}</tbody></table>`:''}
+      ${imp.errors.length?`<ul class="note" style="padding-left:18px">${imp.errors.slice(0,6).map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`:''}
+      <div class="rowb" style="margin-top:12px">${imp.rows.length?`<button class="btn primary" type="button" data-act="doImport">Add these ${imp.rows.length} deliveries</button>`:''}<button class="btn" type="button" data-act="cancelImport">Cancel</button></div></div>`:''}</div>
+  <div class="card pad datacard"><h3>Take your data out</h3>
+    <p class="lead">Download what is saved, to open in Excel or to keep as a backup.</p>
+    <div class="rowb"><button class="btn" type="button" data-act="exportDeliveries">${ic('download',18)}Deliveries as CSV</button><button class="btn" type="button" data-act="exportProblems">${ic('download',18)}Problems as CSV</button><button class="btn" type="button" data-act="exportAll">${ic('download',18)}Everything as JSON</button></div></div>
+  ${canSee('deliveries')?`<div class="card pad datacard"><h3>Start over</h3>
+    ${state.resetAsk?`<p class="lead">This deletes every delivery, problem, note and alert. Type DELETE to confirm.</p><div class="inline"><input class="field" id="resetIn" placeholder="DELETE" aria-label="Type DELETE to confirm" autocomplete="off"><button class="btn danger" type="button" data-act="doReset">Delete everything</button><button class="btn" type="button" data-act="cancelReset">Cancel</button></div>`
+      :`<p class="lead">Empty the database and begin again.</p><button class="btn danger" type="button" data-act="askReset">${ic('trash',18)}Delete all data</button>`}</div>`:''}`;
+}
+
+
+function aiCard(){
+  const s=AI.status||{},t=state.aiTest;
+  const st=s.noServer?'<span class="tag">Runs on the team laptop</span>':s.connected?'<span class="tag mode-ok">Running on this computer</span>':s.state==='starting'?'<span class="tag">Starting, about 30 seconds</span>':'<span class="tag mode-bad">Not running</span>';
+  return `<div class="card pad datacard"><div class="statusline" style="margin-top:0"><h3>AI note reader from Hugging Face</h3>${st}</div>
+    <p class="lead">Drivers tap a button to say what happened. <a href="https://huggingface.co/${AI_MODEL}" target="_blank" rel="noopener">${AI_MODEL}</a> only reads the driver's optional note and picks one reason from a fixed list: medicine or health, someone's safety, goods going bad, customer closes soon, customer is upset, or nothing. It must quote the words it used. Our code turns the reason into points, at most ${AI_MAX} of 100, and gives 0 if the quote is not really in the note.</p>
+    <div class="counts">${[['Medicine or health',20],['Someone\u2019s safety',20],['Goods going bad',15],['Closes soon',12],['Customer upset',8],['Nothing extra',0]].map(x=>`<div class="fact"><div class="fl">${x[0]}</div><div class="fv num">+${x[1]}</div></div>`).join('')}</div>
+    ${s.noServer?'<p class="note">This online copy has no AI. Notes we scored on the laptop still show their points. Start the dashboard on the team laptop to read new notes.</p>'
+    :!s.connected?`<p class="lead">${s.state==='starting'?'The model is loading. Give it about 30 seconds.':'The model is not running. Close and reopen the dashboard with the Start dashboard file.'}</p><button class="btn sm" type="button" data-act="aiRecheck">Check again</button>`
+    :`<div class="inline"><input class="field" id="aiTestIn" value="${esc(state.aiTestNote||'')}" placeholder="Try it: customer is a pharmacy, insulin in the box" aria-label="A driver note for the AI to read"><button class="btn primary" type="button" data-act="aiTest" ${state.aiBusy?'disabled':''}>${state.aiBusy?'Reading, about 6 seconds...':'Read this note'}</button></div>
+      ${t?(t.error?`<p class="note err">${esc(t.error)}</p>`:`<div class="next airead" style="margin-top:12px">${hiNote(state.aiTestNote||'',t)}</div><p class="note"><b>${esc(t.plain)}</b>, +${t.points} points. ${t.state==='instruction'?'The note tries to give the AI orders, so it gets 0 points.':t.state==='quote not found'?'The model quoted words that are not in the note, so it gets 0 points.':t.state==='checked'?'The quote was checked against the note.':''}${t.cached?' Read before, so it came from the database.':` Read in ${t.seconds} seconds on this computer, free and without internet.`}</p>`):''}`}</div>`;
+}
+
+/* ---------- forms ---------- */
+function openSheet(html){$('#sheet').innerHTML=html;$('#modal').hidden=false;const f=$('#sheet input:not([type=checkbox]),#sheet select,#sheet textarea');if(f)setTimeout(()=>f.focus(),30);}
+function closeSheet(){$('#modal').hidden=true;$('#sheet').innerHTML='';}
+const drivers=()=>[...new Set(['Ray Okafor',...D().deliveries.map(d=>d.driver).filter(Boolean)])];
+const carriers=()=>[...new Set(['Our own truck',...D().deliveries.map(d=>d.carrier).filter(Boolean)])];
+const field=(id,label,attrs,full)=>`<label class="${full?'full':''}">${label}<input class="field" id="${id}" ${attrs||''}></label>`;
+function deliveryForm(){
+  openSheet(`<form id="sheetForm" data-kind="delivery"><h2 id="sheetTitle">Add a delivery</h2><p class="lead" style="margin-top:4px">The order number is made for you when you save.</p>
+  <div class="form">${field('fCustomer','Customer *','required autocomplete="off"',true)}${field('fContact','Contact person')}${field('fPhone','Phone','type="tel"')}
+  ${field('fCity','City')}${field('fAddress','Address and suite')}
+  <label>Driver<input class="field" id="fDriver" list="driverList" autocomplete="off"></label>
+  <label>Carrier<input class="field" id="fCarrier" list="carrierList" value="Our own truck" autocomplete="off"></label>
+  ${field('fRoute','Route','placeholder="For example R-12 Berks"')}${field('fContents','What is in the box')}
+  <label class="full">Promised by *<input class="field" type="datetime-local" id="fDue" value="${toInput(inHours(3))}" required></label>
+  <label class="chk"><input type="checkbox" id="fImportant">Important customer</label><label class="chk"><input type="checkbox" id="fCritical">Contents cannot wait</label>
+  <p class="note err full" id="sheetErr" hidden></p></div>
+  <datalist id="driverList">${drivers().map(x=>`<option value="${esc(x)}">`).join('')}</datalist><datalist id="carrierList">${carriers().map(x=>`<option value="${esc(x)}">`).join('')}</datalist>
+  <div class="sheet-actions"><button class="btn" type="button" data-act="closeSheet">Cancel</button><button class="btn primary" type="submit">Save delivery</button></div></form>`);
+}
+function problemForm(preset){
+  preset=preset||{};state.aiForm=null;const open=D().deliveries.filter(d=>d.status!=='Delivered');
+  openSheet(`<form id="sheetForm" data-kind="problem"><h2 id="sheetTitle">New problem</h2>
+  <div class="form">
+  ${open.length?`<label class="full">Which delivery? (optional)<select class="field" id="fDelivery"><option value="">Not linked to a delivery</option>${open.map(d=>`<option value="${d.id}" ${preset.delivery===d.id?'selected':''}>${d.id} · ${esc(d.customer)}</option>`).join('')}</select></label>`:''}
+  ${field('fCustomer','Customer *','required autocomplete="off"',true)}${field('fContact','Contact person')}${field('fPhone','Phone','type="tel"')}
+  <label>What happened *<select class="field" id="fKind">${TYPE_KEYS.map(k=>`<option value="${k}">${TYPES[k].plain}</option>`).join('')}</select></label>
+  <label>How we heard<select class="field" id="fSource">${SOURCES.map(s=>`<option ${preset.source===s?'selected':''}>${s}</option>`).join('')}</select></label>
+  <label class="full">In a few words *<textarea class="field" id="fDetail" rows="3" required placeholder="For example: the label has no suite number"></textarea></label>
+  ${field('fCity','City')}<label>Driver<input class="field" id="fDriver" list="driverList" autocomplete="off"></label>
+  <label>Carrier<input class="field" id="fCarrier" list="carrierList" value="Our own truck" autocomplete="off"></label>${field('fRoute','Route')}
+  <label class="full">Promised by<input class="field" type="datetime-local" id="fDue"></label>
+  <label class="chk"><input type="checkbox" id="fImportant">Important customer</label><label class="chk"><input type="checkbox" id="fCritical">Contents cannot wait</label>
+  ${P().take?'<label class="chk full"><input type="checkbox" id="fTake" checked>I will take it</label>':''}
+  <p class="note err full" id="sheetErr" hidden></p></div>
+  <datalist id="driverList">${drivers().map(x=>`<option value="${esc(x)}">`).join('')}</datalist><datalist id="carrierList">${carriers().map(x=>`<option value="${esc(x)}">`).join('')}</datalist>
+  <div class="sheet-actions"><button class="btn" type="button" data-act="closeSheet">Cancel</button><button class="btn primary" type="submit">Save problem</button></div></form>`);
+  if(preset.delivery)fillFromDelivery(preset.delivery);
+}
+function fillFromDelivery(id){const d=findD(id);if(!d)return;const set=(k,v)=>{const e=$('#'+k);if(e)e.value=v||'';};
+  set('fCustomer',d.customer);set('fContact',d.contact);set('fPhone',d.phone);set('fCity',d.city);set('fDriver',d.driver);set('fCarrier',d.carrier||'Our own truck');set('fRoute',d.route);set('fDue',toInput(d.due));
+  $('#fImportant').checked=yes(d.important);$('#fCritical').checked=yes(d.cannot_wait);}
+async function submitSheet(form){
+  const v=k=>{const e=$('#'+k);return e?e.value.trim():'';},chk=k=>{const e=$('#'+k);return e&&e.checked?1:0;},err=m=>{const e=$('#sheetErr');e.textContent=m;e.hidden=false;};
+  if(!v('fCustomer'))return err('Type the customer name.');
+  if(form.dataset.kind==='delivery'){
+    const due=fromInput(v('fDue'));if(!due)return err('Pick the time the delivery is promised by.');
+    const r=await Store.insert('deliveries',{customer:v('fCustomer'),contact:v('fContact'),phone:v('fPhone'),city:v('fCity'),address:v('fAddress'),driver:v('fDriver'),carrier:v('fCarrier'),route:v('fRoute'),contents:v('fContents'),important:chk('fImportant'),cannot_wait:chk('fCritical'),due,status:'Scheduled'});
+    closeSheet();toast(`Saved order ${r.id}${r.driver?'. '+first(r.driver)+' sees it on the phone.':''}`);
+  }else{
+    if(!v('fDetail'))return err('Write in a few words what happened.');
+    const take=chk('fTake'),did=v('fDelivery')||null,d=did?findD(did):null;
+    const r=await Store.insert('problems',{delivery_id:did,customer:v('fCustomer'),contact:v('fContact'),phone:v('fPhone'),city:v('fCity'),driver:v('fDriver'),carrier:v('fCarrier'),route:v('fRoute'),contents:d?d.contents:'',
+      important:chk('fImportant'),cannot_wait:chk('fCritical'),type:v('fKind'),detail:v('fDetail'),source:v('fSource'),reported_by:ME,due:fromInput(v('fDue')),status:take?'Working':'New',owner:take?ME:null,created:Date.now()});
+    await Store.insert('events',{problem_id:r.id,delivery_id:did,t:Date.now(),who:ME,kind:'event',text:`${ME} added this problem (${v('fSource').toLowerCase()}): ${v('fDetail')}`});
+    closeSheet();toast(`Saved problem ${r.id}`);
+    if(canSee('problems')){state.sel=r.id;state.f={status:'open',type:'all',q:''};$('#fQ').value='';showView('problems');}
+    else if(state.view==='lookup'){state.lk.sel=r.id;renderLookupBody();}
+  }
+}
+
+/* ---------- every button ---------- */
+async function takeCase(c,name){await Store.update('problems',c.id,{owner:name||null,status:name&&c.status==='New'?'Working':c.status});await ev(c,'status',name?`${name} took this problem.`:'Owner removed.');}
+const ACT={
+  hideTip(){state.tipHidden=true;renderToday();},
+  goData(){showView('data');},
+  newDelivery(){deliveryForm();},
+  newProblem(b){problemForm({delivery:b.dataset.delivery,source:b.dataset.source});},
+  closeSheet(){closeSheet();},
+  openProblem(b){state.sel=b.dataset.id;state.f={status:findP(b.dataset.id)&&!isOpen(findP(b.dataset.id))?'done':'open',type:'all',q:''};$('#fQ').value='';showView('problems');},
+  async take(b){const c=findP(b.dataset.id);if(!c)return;state.sel=c.id;await takeCase(c,ME);toast(`You own ${c.customer} now`);},
+  async setStatus(b){const c=findP(b.dataset.id),s=b.dataset.st;if(!c||c.status===s)return;
+    await Store.update('problems',c.id,{status:s,closed_at:s==='Done'?Date.now():null});await ev(c,'status',`Status changed to ${s}.`);
+    if(s==='Done'&&c.delivery_id){const d=findD(c.delivery_id);if(d&&d.status==='Problem')await Store.update('deliveries',d.id,{status:'Out for delivery'});}
+    toast(s==='Done'?'Marked as done. You can find it under Done.':`Status is now ${s}`);},
+  async setEta(b){const c=findP(b.dataset.id),t=fromInput($('#etaIn').value);if(!t){toast('Pick a date and time first.');return;}
+    await Store.update('problems',c.id,{new_eta:t});await ev(c,'action',`New arrival time set to ${fmtTime(t)}.`);toast('New arrival time saved');},
+  async tellDriver(b){const c=findP(b.dataset.id),s=b.dataset.v;await Store.update('problems',c.id,{next_step:s});await ev(c,'action',`Told ${first(c.driver)}: ${s}.`);toast(`${first(c.driver)} sees "${s}" on the phone`);},
+  async setTier(b){const c=findP(b.dataset.id),t=$('#tierSel').value,why=$('#tierWhy').value.trim();
+    if(t&&!why){toast('Write one line about why you moved it.');$('#tierWhy').focus();return;}
+    await Store.update('problems',c.id,{manual_tier:t||null,manual_reason:t?why:null});
+    await ev(c,'action',t?`Moved to ${{now:'Do now',next:'Do next',later:'Can wait'}[t]}: ${why}`:'Back to the automatic order.');$('#tierWhy').value='';toast('Saved');},
+  useNext(b){const c=findP(b.dataset.id),i=$('#noteInput');i.value=NEXT[c.type]||'';i.focus();},
+  writeDraft(b){const c=findP(b.dataset.id);state.drafts[c.id]=draftFor(c);renderDetail();$('#draft').focus();},
+  copyDraft(b){const tx=$(b.dataset.src).value;if(!tx.trim())return;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(()=>toast('Copied'),()=>toast('Select the text and copy it yourself'));else toast('Select the text and copy it yourself');},
+  async sendMsg(b){const c=findP(b.dataset.id),box=$(b.dataset.src),tx=box.value.trim();if(!tx)return;box.value='';
+    await ev(c,'message',tx,{summary:`Told ${c.contact||'the customer'} what happened and what comes next.`+(c.new_eta?` New arrival about ${fmtTime(c.new_eta)}.`:' No new time given yet.')});
+    if(c.status==='New')await Store.update('problems',c.id,{status:'Working'});delete state.drafts[c.id];toast(`Saved as sent to ${c.contact||'the customer'}. They see it on their order page.`);},
+  async askDispatch(b){const c=findP(b.dataset.id);await ev(c,'ask_dispatch',`${c.customer}: ${c.contact||'The customer'} is waiting for an answer. Please take this problem.`);toast('Dispatch got an alert');},
+  askDelete(b){state.delAsk=b.dataset.id;renderView(state.view);},
+  cancelDelete(){state.delAsk=null;renderView(state.view);},
+  async doDelete(b){state.delAsk=null;await Store.remove('problems',b.dataset.id);state.sel=null;toast('Problem deleted');},
+  async doDeleteDl(b){state.delAsk=null;await Store.remove('deliveries',b.dataset.id);toast('Delivery deleted');},
+  dlFilter(b){state.dl.f=b.dataset.v;renderDeliveries();},
+  async dlOut(b){await Store.update('deliveries',b.dataset.id,{status:'Out for delivery'});toast('Marked as on the truck');},
+  async dlDone(b){await Store.update('deliveries',b.dataset.id,{status:'Delivered',delivered_at:Date.now()});toast('Marked as delivered');},
+  lkPick(b){state.lk.sel=b.dataset.id;renderLookupBody();},
+  /* driver */
+  drvReport(){Object.assign(state.drv,{screen:'pick',stop:null,note:'',where:'',photo:null});renderDriver();},
+  drvBack(){const d=state.drv;d.screen=d.screen==='details'?'pick':'home';renderDriver();},
+  drvType(b){Object.assign(state.drv,{type:+b.dataset.i,stop:state.drv.stop,screen:'details'});renderDriver();},
+  drvStop(b){const d=state.drv,n=$('#drvNote');if(n)d.note=n.value;const w=$('#drvWhere');if(w)d.where=w.value;d.stop=+b.dataset.i;renderDriver();if(d.stop===-1){const e=$('#drvWhere');if(e)e.focus();}},
+  drvProblemAt(b){const i=stopsFor(ME).findIndex(s=>s.id===b.dataset.id);Object.assign(state.drv,{stop:i,screen:'pick'});renderDriver();},
+  drvNoPhoto(){state.drv.photo=null;renderDriver();},
+  drvSend(){sendReport();},
+  drvDone(){state.drv.screen='home';renderDriver();},
+  async drvDelivered(b){await Store.update('deliveries',b.dataset.id,{status:'Delivered',delivered_at:Date.now()});toast('Delivered. Dispatch can see it.');},
+  async drvCall(){await Store.insert('events',{problem_id:null,delivery_id:null,t:Date.now(),who:ME,kind:'call_request',text:`${ME} asks dispatch to call back.`});state.drv.screen='home';renderDriver();toast('Dispatch got an alert and will call you.');},
+  /* customer */
+  async trackCall(b){const id=b.dataset.id,pr=findP(id)||D().problems.find(p=>p.delivery_id===id&&isOpen(p)),dl=findD(id)||(pr&&pr.delivery_id?findD(pr.delivery_id):null),who=(dl||pr).contact||'A customer';
+    await Store.insert('events',{problem_id:pr?pr.id:null,delivery_id:dl?dl.id:null,t:Date.now(),who:`${who} (customer)`,kind:'call_request',text:`${(dl||pr).customer} asks for a call back about order ${dl?dl.id:id}.`});state.trackAsked=(dl||pr).id;renderTrack();},
+  /* alerts */
+  async readAll(){await Store.readAll();$('#pops').innerHTML='';},
+  allowNotify(){if('Notification' in window)Notification.requestPermission().then(()=>renderBellMenu());},
+  async openAlert(b){const a=D().alerts.find(x=>String(x.id)===String(b.dataset.id));dropPop(b.dataset.id);closeMenus();if(!a)return;await markRead(a.id);
+    if(a.problem_id&&findP(a.problem_id)){ACT.openProblem({dataset:{id:a.problem_id}});}else if(a.delivery_id&&canSee('deliveries')){showView('deliveries');}},
+  async popTake(b){const a=D().alerts.find(x=>String(x.id)===String(b.dataset.id));dropPop(b.dataset.id);if(!a)return;const c=findP(a.problem_id);await markRead(a.id);if(c){await takeCase(c,ME);ACT.openProblem({dataset:{id:c.id}});toast(`You own ${c.customer} now`);}},
+  async popDone(b){dropPop(b.dataset.id);await markRead(b.dataset.id);},
+  popLater(b){dropPop(b.dataset.id);},
+
+  /* AI */
+  async aiTest(){const tx=($('#aiTestIn').value||'').trim();if(!tx){toast('Type a note for the AI to read.');return;}
+    state.aiBusy=true;state.aiTestNote=tx;renderData();try{state.aiTest=await AI.score(tx);NOTE_AI[tx]=state.aiTest;}catch(e){state.aiTest={error:e.message};}state.aiBusy=false;renderData();},
+  async aiRecheck(){AI.status=null;await AI.check();renderData();toast(AI.status.connected?'The AI model is running on this computer':'The AI model is not running yet');},
+  /* data */
+  csvTemplate(){download('routewise-deliveries-template.csv',CSV_COLS.join(',')+'\n','text/csv');toast('Template downloaded. Fill it in, then choose it here.');},
+  cancelImport(){state.imp=null;renderData();},
+  async doImport(){const n=state.imp.rows.length;await Store.importDeliveries(state.imp.rows);state.imp=null;renderData();toast(`Added ${n} deliveries`);},
+  exportDeliveries(){download('routewise-deliveries.csv',toCSV(D().deliveries.map(d=>Object.assign({},d,{due:d.due?new Date(d.due).toISOString():'',created:new Date(d.created).toISOString(),delivered_at:d.delivered_at?new Date(d.delivered_at).toISOString():''})),COLS.deliveries),'text/csv');},
+  exportProblems(){download('routewise-problems.csv',toCSV(D().problems.map(p=>Object.assign({},p,{due:p.due?new Date(p.due).toISOString():'',new_eta:p.new_eta?new Date(p.new_eta).toISOString():'',created:new Date(p.created).toISOString(),closed_at:p.closed_at?new Date(p.closed_at).toISOString():''})),COLS.problems),'text/csv');},
+  exportAll(){download('routewise-data.json',JSON.stringify(D(),null,2),'application/json');},
+  askReset(){state.resetAsk=true;renderData();setTimeout(()=>$('#resetIn').focus(),20);},
+  cancelReset(){state.resetAsk=false;renderData();},
+  async doReset(){if($('#resetIn').value.trim()!=='DELETE'){toast('Type DELETE in capital letters to confirm.');return;}state.resetAsk=false;state.sel=null;state.drafts={};await Store.reset();toast('All data deleted. The database is empty.');}
+};
+
+/* ---------- wiring ---------- */
+document.addEventListener('click',async e=>{
+  const w=e.target.closest('[data-who]');if(w){setPerson(w.dataset.who);return;}
+  const v=e.target.closest('[data-view]');if(v){closeMenus();showView(v.dataset.view);return;}
+  const a=e.target.closest('[data-act]');
+  if(a&&!a.disabled&&ACT[a.dataset.act]){e.stopPropagation();try{await ACT[a.dataset.act](a,e);}catch(err){console.warn(err);}return;}
+  const st=e.target.closest('[data-status]');if(st){state.f.status=st.dataset.status;$$('[data-status]').forEach(x=>x.classList.toggle('on',x===st));const l=visible();if(!l.some(c=>c.id===state.sel))state.sel=l[0]?l[0].id:null;renderGroups();renderDetail();return;}
+  const rg=e.target.closest('[data-range]');if(rg){state.range=+rg.dataset.range;renderTrends();return;}
+  const tb=e.target.closest('[data-table]');if(tb){state.tables[tb.dataset.table]=!state.tables[tb.dataset.table];renderTrends();return;}
+  const cp=e.target.closest('[data-copy]');if(cp){copyTable(cp.dataset.copy);return;}
+  const pk=e.target.closest('[data-pick]');if(pk){state.sel=pk.dataset.pick;state.delAsk=null;renderGroups();renderDetail();if(window.innerWidth<=1180)$('#detail').scrollIntoView({behavior:'smooth',block:'start'});return;}
+  if(e.target===$('#modal')){closeSheet();return;}
+  if(!e.target.closest('#whoMenu')&&!e.target.closest('#bellMenu'))closeMenus();
+});
+$('#whoBtn').addEventListener('click',e=>{e.stopPropagation();const open=$('#whoMenu').hidden;closeMenus();if(open){renderWho();$('#whoMenu').hidden=false;$('#whoBtn').setAttribute('aria-expanded','true');const on=$('#whoMenu .wp.on');if(on)on.focus();}});
+$('#bellBtn').addEventListener('click',e=>{e.stopPropagation();const open=$('#bellMenu').hidden;closeMenus();if(open){renderBellMenu();$('#bellMenu').hidden=false;$('#bellBtn').setAttribute('aria-expanded','true');}});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(!$('#modal').hidden)closeSheet();else closeMenus();}
+  const r=e.target.closest&&e.target.closest('[data-pick]');if(r&&(e.key==='Enter'||e.key===' ')&&e.target===r){e.preventDefault();r.click();}
+});
+document.addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.target;
+  try{
+    if(f.id==='noteForm'){const i=$('#noteInput'),v=i.value.trim();if(!v){$('#noteErr').hidden=false;i.focus();return;}const c=findP(f.dataset.id);i.value='';
+      await ev(c,'action',v);if(!c.owner&&P().take)await takeCase(c,ME);else if(c.status==='New')await Store.update('problems',c.id,{status:'Working'});toast('Note added');}
+    if(f.id==='sheetForm')await submitSheet(f);
+    if(f.id==='trackForm'){state.trackId=$('#trackIn').value.trim();state.trackAsked=null;try{localStorage.setItem('rw3-order',state.trackId);}catch(x){}renderTrack();}
+  }catch(err){console.warn(err);}
+});
+document.addEventListener('change',async e=>{
+  const t=e.target;
+  try{
+    if(t.id==='ownerSel'){const c=findP(t.dataset.id),v=t.value||null;await takeCase(c,v);toast(v?`${first(v)} owns this now`:'This problem has no owner now');}
+    if(t.id==='fDelivery'&&t.value)fillFromDelivery(t.value);
+    if(t.id==='csvIn'&&t.files[0]){const file=t.files[0],text=await file.text();readCSV(text,file.name);renderData();}
+    if(t.id==='drvPhotoIn'&&t.files[0]){const n=$('#drvNote');if(n)state.drv.note=n.value;state.drv.photo=await shrinkPhoto(t.files[0]);renderDriver();}
+  }catch(err){toast('That did not work. Try again.');console.warn(err);}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='noteInput')$('#noteErr').hidden=true;
+  if(t.id==='draft'){state.drafts[t.dataset.id]=t.value;const has=!!t.value.trim();$('#copyBtn').disabled=!has;$('#sentBtn').disabled=!has;}
+  if(t.id==='lkDraft')state.drafts[t.dataset.id]=t.value;
+  if(t.id==='fQ'){state.f.q=t.value.trim();const l=visible();if(state.f.q&&l.length===1&&state.sel!==l[0].id){state.sel=l[0].id;renderDetail();}renderGroups();}
+  if(t.id==='lkQ'){state.lk.q=t.value.trim();renderLookupBody();}
+  if(t.id==='drvNote')state.drv.note=t.value;
+  if(t.id==='drvWhere')state.drv.where=t.value;
+});
+$('#fType').addEventListener('change',e=>{state.f.type=e.target.value;renderGroups();});
+TYPE_KEYS.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=TYPES[k].plain;$('#fType').appendChild(o);});
+$$('[data-ic]').forEach(e=>e.insertAdjacentHTML('afterbegin',ic(e.dataset.ic,+e.dataset.size||18)));
+window.addEventListener('hashchange',()=>{const m=location.hash.match(/as=(\w+)/);if(m&&m[1]!==PID)setPerson(m[1]);});
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(state.view==='trends')renderTrends();},150);});
+
+(async function start(){
+  tick();setInterval(tick,30000);
+  try{state.trackId=localStorage.getItem('rw3-order')||'';}catch(e){}
+  await Store.init();renderMode();
+  await AI.loadSaved();AI.check().then(()=>{if(state.view==='data')renderData();});
+  let id=null;const m=location.hash.match(/as=(\w+)/);if(m)id=m[1];if(!id){try{id=localStorage.getItem('rw-person');}catch(e){}}
+  setPerson(id||'jamal',true);
+  setInterval(()=>{if($('#modal').hidden&&['today','problems','boss','deliveries'].includes(state.view))withPreserve(()=>renderView(state.view));},60000);
+})();
+
+</script>
 </body>
 </html>
